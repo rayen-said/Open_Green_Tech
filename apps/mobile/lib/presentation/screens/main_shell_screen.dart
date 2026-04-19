@@ -3,8 +3,8 @@ import 'package:flutter_riverpod/flutter_riverpod.dart';
 
 import '../../data/models/device.dart';
 import '../providers/app_providers.dart';
+import 'assistant_screen.dart';
 import 'gamification_screen.dart';
-import 'home_screen.dart';
 import 'insights_screen.dart';
 import 'settings_screen.dart';
 import 'system_screen.dart';
@@ -20,7 +20,7 @@ class _MainShellScreenState extends ConsumerState<MainShellScreen> {
   int _index = 0;
 
   static const List<Widget> _pages = [
-    HomeScreen(),
+    AssistantScreen(),
     InsightsScreen(),
     GamificationScreen(),
     SystemScreen(),
@@ -62,8 +62,8 @@ class _MainShellScreenState extends ConsumerState<MainShellScreen> {
         },
         destinations: const [
           NavigationDestination(
-            icon: Icon(Icons.dashboard_outlined),
-            label: 'Dashboard',
+            icon: Icon(Icons.spa_outlined),
+            label: 'Buddy',
           ),
           NavigationDestination(
             icon: Icon(Icons.insights_outlined),

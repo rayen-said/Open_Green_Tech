@@ -59,6 +59,9 @@ class EnvConfig {
   final String devLoginEmail;
   final String devLoginPassword;
 
+  bool get hasSupabaseCredentials =>
+      supabaseUrl.isNotEmpty && supabaseAnonKey.isNotEmpty;
+
   /// Ensures the global Nest prefix `api` (see `apps/backend/src/main.ts`).
   static String _normalizeApiBaseUrl(String raw) {
     var b = raw.trim();

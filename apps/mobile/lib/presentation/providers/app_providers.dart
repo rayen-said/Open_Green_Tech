@@ -1,5 +1,6 @@
 import 'package:dio/dio.dart';
 import 'package:flutter_riverpod/flutter_riverpod.dart';
+import 'package:supabase_flutter/supabase_flutter.dart' hide AuthUser;
 
 import '../../core/config/env_config.dart';
 import '../../data/models/alert_item.dart';
@@ -124,10 +125,60 @@ class AuthNotifier extends AsyncNotifier<AuthSession?> {
   Future<void> login(String email, String password) async {
     state = const AsyncLoading();
     state = await AsyncValue.guard(() async {
-      final session = await ref.read(authServiceProvider).login(
-            email: email,
-            password: password,
+      final auth = ref.read(authServiceProvider);
+      final AuthSession session;
+      if (EnvConfig.instance.hasSupabaseCredentials) {
+        final res = await Supabase.instance.client.auth.signInWithPassword(
+          email: email.trim(),
+          password: password,
+        );
+        final at = res.session?.accessToken;
+        if (at == null || at.isEmpty) {
+          throw StateError('No Supabase session. Confirm your email if required.');
+        }
+        session = await auth.loginWithSupabaseAccessToken(at);
+      } else {
+        session = await auth.login(email: email.trim(), password: password);
+      }
+      await OfflineStore.instance.saveUser(session.user);
+      _invalidateData();
+      return session;
+    });
+  }
+
+  Future<void> signup({
+    required String fullName,
+    required String email,
+    required String password,
+  }) async {
+    state = const AsyncLoading();
+    state = await AsyncValue.guard(() async {
+      final auth = ref.read(authServiceProvider);
+      final AuthSession session;
+      if (EnvConfig.instance.hasSupabaseCredentials) {
+        await Supabase.instance.client.auth.signUp(
+          email: email.trim(),
+          password: password,
+          data: {'full_name': fullName.trim()},
+        );
+        final res = await Supabase.instance.client.auth.signInWithPassword(
+          email: email.trim(),
+          password: password,
+        );
+        final at = res.session?.accessToken;
+        if (at == null || at.isEmpty) {
+          throw StateError(
+            'Account created. Sign in after confirming your email, or try signing in now.',
           );
+        }
+        session = await auth.loginWithSupabaseAccessToken(at);
+      } else {
+        session = await auth.signup(
+          fullName: fullName.trim(),
+          email: email.trim(),
+          password: password,
+        );
+      }
       await OfflineStore.instance.saveUser(session.user);
       _invalidateData();
       return session;
@@ -147,6 +198,13 @@ class AuthNotifier extends AsyncNotifier<AuthSession?> {
         ),
       );
       return;
+    }
+    if (EnvConfig.instance.hasSupabaseCredentials) {
+      try {
+        await Supabase.instance.client.auth.signOut();
+      } catch (_) {
+        // Ignore if Supabase session already cleared.
+      }
     }
     await ref.read(authServiceProvider).logout();
     await OfflineStore.instance.clearSessionCaches();

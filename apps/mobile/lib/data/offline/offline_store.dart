@@ -41,6 +41,16 @@ class OfflineStore {
   static String keyFarmerProfile() => 'farmer_profile';
   static String keyGamification() => 'gamification';
 
+  static String keyPermissionsDone(String userId) => 'perm_done_$userId';
+
+  bool readPermissionsDoneForUser(String userId) {
+    return _b.get(keyPermissionsDone(userId)) == '1';
+  }
+
+  Future<void> markPermissionsDoneForUser(String userId) async {
+    await _b.put(keyPermissionsDone(userId), '1');
+  }
+
   Future<void> saveDevices(List<Device> devices) async {
     await _b.put(
       keyDevices(),
