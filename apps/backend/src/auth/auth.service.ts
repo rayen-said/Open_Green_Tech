@@ -17,6 +17,14 @@ type JwtPayload = {
   role: Role;
 };
 
+function getRequiredConfig(configService: ConfigService, key: string): string {
+  const value = configService.get<string>(key)?.trim();
+  if (!value) {
+    throw new Error(`${key} must be defined`);
+  }
+  return value;
+}
+
 type SupabaseUserMetadata = {
   full_name?: string;
   name?: string;
@@ -171,9 +179,7 @@ export class AuthService {
     const payload = await this.jwtService.verifyAsync<JwtPayload>(
       dto.refreshToken,
       {
-        secret:
-          this.configService.get<string>('JWT_REFRESH_SECRET') ??
-          'change-this-refresh-secret',
+        secret: getRequiredConfig(this.configService, 'JWT_REFRESH_SECRET'),
       },
     );
 
@@ -246,15 +252,12 @@ export class AuthService {
     );
 
     const accessToken = await this.jwtService.signAsync(payload, {
-      secret:
-        this.configService.get<string>('JWT_SECRET') ?? 'change-this-secret',
+      secret: getRequiredConfig(this.configService, 'JWT_SECRET'),
       expiresIn: jwtExpiresIn,
     });
 
     const refreshToken = await this.jwtService.signAsync(payload, {
-      secret:
-        this.configService.get<string>('JWT_REFRESH_SECRET') ??
-        'change-this-refresh-secret',
+      secret: getRequiredConfig(this.configService, 'JWT_REFRESH_SECRET'),
       expiresIn: refreshExpiresIn,
     });
 

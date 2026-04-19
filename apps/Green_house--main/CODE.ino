@@ -13,13 +13,13 @@
 // =============================================================
 //  WIFI + MQTT
 // =============================================================
-const char* WIFI_SSID   = "msi";
-const char* WIFI_PASS   = "12345678";
+const char* WIFI_SSID   = "YOUR_WIFI_SSID";
+const char* WIFI_PASS   = "YOUR_WIFI_PASSWORD";
 
-const char* MQTT_SERVER = "da5e9c9f3af6499b92bdd5819d675d8c.s1.eu.hivemq.cloud";
+const char* MQTT_SERVER = "YOUR_HIVEMQ_HOST";
 const int   MQTT_PORT   = 8883;
-const char* MQTT_USER   = "mohamedsaid";
-const char* MQTT_PASS   = "13025651aB";
+const char* MQTT_USER   = "YOUR_HIVEMQ_USERNAME";
+const char* MQTT_PASS   = "YOUR_HIVEMQ_PASSWORD";
 
 const char* DEVICE_ID   = "esp32-gh-01";
 

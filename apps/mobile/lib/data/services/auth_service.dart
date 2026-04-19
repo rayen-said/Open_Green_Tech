@@ -26,8 +26,11 @@ class AuthService {
   final Dio _dio;
   final TokenStorage _tokenStorage;
 
-  Dio _publicAuthDio() {
-    return Dio(
+  Future<AuthSession> login({
+    required String email,
+    required String password,
+  }) async {
+    final loginDio = Dio(
       BaseOptions(
         baseUrl: EnvConfig.instance.apiBaseUrl,
         connectTimeout: const Duration(seconds: 12),
@@ -35,9 +38,11 @@ class AuthService {
         headers: {'Content-Type': 'application/json'},
       ),
     );
-  }
-
-  Future<AuthSession> _sessionFromAuthResponse(Map<String, dynamic> data) async {
+    final res = await loginDio.post<Map<String, dynamic>>(
+      'auth/login',
+      data: {'email': email, 'password': password},
+    );
+    final data = res.data ?? {};
     final access = data['accessToken']?.toString() ?? '';
     final refresh = data['refreshToken']?.toString() ?? '';
     final userMap = data['user'] as Map<String, dynamic>? ?? {};
@@ -51,45 +56,6 @@ class AuthService {
       refreshToken: refresh,
       user: user,
     );
-  }
-
-  Future<AuthSession> login({
-    required String email,
-    required String password,
-  }) async {
-    final loginDio = _publicAuthDio();
-    final res = await loginDio.post<Map<String, dynamic>>(
-      'auth/login',
-      data: {'email': email, 'password': password},
-    );
-    return _sessionFromAuthResponse(res.data ?? {});
-  }
-
-  Future<AuthSession> signup({
-    required String fullName,
-    required String email,
-    required String password,
-  }) async {
-    final loginDio = _publicAuthDio();
-    final res = await loginDio.post<Map<String, dynamic>>(
-      'auth/signup',
-      data: {
-        'fullName': fullName,
-        'email': email,
-        'password': password,
-      },
-    );
-    return _sessionFromAuthResponse(res.data ?? {});
-  }
-
-  /// Exchanges a Supabase access JWT for Nest API tokens (`POST auth/supabase`).
-  Future<AuthSession> loginWithSupabaseAccessToken(String supabaseAccessToken) async {
-    final loginDio = _publicAuthDio();
-    final res = await loginDio.post<Map<String, dynamic>>(
-      'auth/supabase',
-      data: {'accessToken': supabaseAccessToken},
-    );
-    return _sessionFromAuthResponse(res.data ?? {});
   }
 
   Future<AuthSession?> restoreSession() async {

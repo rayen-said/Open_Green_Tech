@@ -14,6 +14,13 @@ const config_1 = require("@nestjs/config");
 const auth_controller_1 = require("./auth.controller");
 const auth_service_1 = require("./auth.service");
 const jwt_strategy_1 = require("./jwt.strategy");
+function getRequiredConfig(configService, key) {
+    const value = configService.get(key)?.trim();
+    if (!value) {
+        throw new Error(`${key} must be defined`);
+    }
+    return value;
+}
 function parseExpiryToSeconds(value, fallbackSeconds) {
     const match = /^(\d+)([smhd])$/.exec(value.trim());
     if (!match) {
@@ -40,7 +47,7 @@ exports.AuthModule = AuthModule = __decorate([
             jwt_1.JwtModule.registerAsync({
                 inject: [config_1.ConfigService],
                 useFactory: (configService) => ({
-                    secret: configService.get('JWT_SECRET') ?? 'change-this-secret',
+                    secret: getRequiredConfig(configService, 'JWT_SECRET'),
                     signOptions: {
                         expiresIn: parseExpiryToSeconds(configService.get('JWT_EXPIRES_IN') ?? '7d', 60 * 60 * 24 * 7),
                     },

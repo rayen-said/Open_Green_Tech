@@ -13,22 +13,84 @@ var __param = (this && this.__param) || function (paramIndex, decorator) {
 };
 Object.defineProperty(exports, "__esModule", { value: true });
 exports.TelemetryGateway = void 0;
+const config_1 = require("@nestjs/config");
+const client_1 = require("@prisma/client");
+const jsonwebtoken_1 = require("jsonwebtoken");
 const websockets_1 = require("@nestjs/websockets");
 const socket_io_1 = require("socket.io");
 let TelemetryGateway = class TelemetryGateway {
+    configService;
     server;
+    constructor(configService) {
+        this.configService = configService;
+    }
+    handleConnection(client) {
+        try {
+            const token = this.extractToken(client);
+            if (!token) {
+                client.disconnect(true);
+                return;
+            }
+            const payload = (0, jsonwebtoken_1.verify)(token, this.jwtSecret());
+            if (!payload?.sub || !payload?.role) {
+                client.disconnect(true);
+                return;
+            }
+            void client.join(this.userRoom(payload.sub));
+            if (payload.role === client_1.Role.ADMIN) {
+                void client.join(this.adminRoom());
+            }
+        }
+        catch {
+            client.disconnect(true);
+        }
+    }
     emitTelemetry(payload) {
-        this.server.emit('telemetry:update', payload);
+        this.server
+            .to([this.userRoom(payload.ownerId), this.adminRoom()])
+            .emit('telemetry:update', payload.telemetry);
     }
     emitAlert(payload) {
-        this.server.emit('alerts:new', payload);
+        if (payload.userId) {
+            this.server
+                .to([this.userRoom(payload.userId), this.adminRoom()])
+                .emit('alerts:new', payload);
+            return;
+        }
+        this.server.to(this.adminRoom()).emit('alerts:new', payload);
     }
-    onPing(body) {
+    onPing(client, body) {
+        if (!client.rooms.has(this.adminRoom()) && client.rooms.size <= 1) {
+            throw new websockets_1.WsException('Unauthorized websocket client');
+        }
         return {
             ok: true,
             body,
             at: new Date().toISOString(),
         };
+    }
+    extractToken(client) {
+        const rawAuthUnknown = client.handshake.auth?.token ??
+            client.handshake.headers.authorization;
+        if (typeof rawAuthUnknown !== 'string' || !rawAuthUnknown) {
+            return null;
+        }
+        return rawAuthUnknown.startsWith('Bearer ')
+            ? rawAuthUnknown.slice(7)
+            : rawAuthUnknown;
+    }
+    jwtSecret() {
+        const jwtSecret = this.configService.get('JWT_SECRET')?.trim();
+        if (!jwtSecret) {
+            throw new Error('JWT_SECRET must be defined');
+        }
+        return jwtSecret;
+    }
+    userRoom(userId) {
+        return `user:${userId}`;
+    }
+    adminRoom() {
+        return 'role:ADMIN';
     }
 };
 exports.TelemetryGateway = TelemetryGateway;
@@ -38,9 +100,10 @@ __decorate([
 ], TelemetryGateway.prototype, "server", void 0);
 __decorate([
     (0, websockets_1.SubscribeMessage)('telemetry:ping'),
-    __param(0, (0, websockets_1.MessageBody)()),
+    __param(0, (0, websockets_1.ConnectedSocket)()),
+    __param(1, (0, websockets_1.MessageBody)()),
     __metadata("design:type", Function),
-    __metadata("design:paramtypes", [Object]),
+    __metadata("design:paramtypes", [socket_io_1.Socket, Object]),
     __metadata("design:returntype", void 0)
 ], TelemetryGateway.prototype, "onPing", null);
 exports.TelemetryGateway = TelemetryGateway = __decorate([
@@ -48,6 +111,7 @@ exports.TelemetryGateway = TelemetryGateway = __decorate([
         cors: {
             origin: '*',
         },
-    })
+    }),
+    __metadata("design:paramtypes", [config_1.ConfigService])
 ], TelemetryGateway);
 //# sourceMappingURL=telemetry.gateway.js.map

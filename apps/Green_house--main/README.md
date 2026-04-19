@@ -16,6 +16,15 @@ The firmware publishes telemetry every 5 seconds, publishes alert events when an
 
 ## Python Publisher (`ei-random-test/publish_file_json_hivemq.py`)
 
+You can bootstrap variables from `hivemq.env.example`:
+
+```bash
+cp hivemq.env.example .env.hivemq
+set -a
+source .env.hivemq
+set +a
+```
+
 Required environment variables:
 
 - `HIVEMQ_HOST`

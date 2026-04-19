@@ -6,6 +6,14 @@ import { AuthController } from './auth.controller';
 import { AuthService } from './auth.service';
 import { JwtStrategy } from './jwt.strategy';
 
+function getRequiredConfig(configService: ConfigService, key: string): string {
+  const value = configService.get<string>(key)?.trim();
+  if (!value) {
+    throw new Error(`${key} must be defined`);
+  }
+  return value;
+}
+
 function parseExpiryToSeconds(value: string, fallbackSeconds: number): number {
   const match = /^(\d+)([smhd])$/.exec(value.trim());
   if (!match) {
@@ -32,7 +40,7 @@ function parseExpiryToSeconds(value: string, fallbackSeconds: number): number {
     JwtModule.registerAsync({
       inject: [ConfigService],
       useFactory: (configService: ConfigService) => ({
-        secret: configService.get<string>('JWT_SECRET') ?? 'change-this-secret',
+        secret: getRequiredConfig(configService, 'JWT_SECRET'),
         signOptions: {
           expiresIn: parseExpiryToSeconds(
             configService.get<string>('JWT_EXPIRES_IN') ?? '7d',

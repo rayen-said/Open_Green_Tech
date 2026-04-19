@@ -24,6 +24,9 @@ export default function LiveMonitoringPage() {
 
     const socket: Socket = io(process.env.NEXT_PUBLIC_WS_URL ?? "http://localhost:3000", {
       transports: ["websocket"],
+      auth: {
+        token: `Bearer ${token}`,
+      },
     });
 
     socket.on("telemetry:update", (payload: TelemetryPoint) => {

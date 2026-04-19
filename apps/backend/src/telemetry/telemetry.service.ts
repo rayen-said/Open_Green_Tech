@@ -61,7 +61,10 @@ export class TelemetryService {
       },
     });
 
-    this.gateway.emitTelemetry(telemetry);
+    this.gateway.emitTelemetry({
+      ownerId,
+      telemetry,
+    });
 
     if (
       telemetry.anomaly ||

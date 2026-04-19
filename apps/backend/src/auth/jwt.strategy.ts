@@ -10,14 +10,21 @@ type JwtPayload = {
   role: Role;
 };
 
+function getRequiredConfig(configService: ConfigService, key: string): string {
+  const value = configService.get<string>(key)?.trim();
+  if (!value) {
+    throw new Error(`${key} must be defined`);
+  }
+  return value;
+}
+
 @Injectable()
 export class JwtStrategy extends PassportStrategy(Strategy) {
   constructor(private readonly configService: ConfigService) {
     super({
       jwtFromRequest: ExtractJwt.fromAuthHeaderAsBearerToken(),
       ignoreExpiration: false,
-      secretOrKey:
-        configService.get<string>('JWT_SECRET') ?? 'change-this-secret',
+      secretOrKey: getRequiredConfig(configService, 'JWT_SECRET'),
     });
   }
 

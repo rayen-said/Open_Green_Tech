@@ -50,7 +50,10 @@ let TelemetryService = class TelemetryService {
                 ...dto,
             },
         });
-        this.gateway.emitTelemetry(telemetry);
+        this.gateway.emitTelemetry({
+            ownerId,
+            telemetry,
+        });
         if (telemetry.anomaly ||
             telemetry.humidity < 25 ||
             telemetry.temperature > 38) {

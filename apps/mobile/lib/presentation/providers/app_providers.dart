@@ -1,6 +1,6 @@
 import 'package:dio/dio.dart';
 import 'package:flutter_riverpod/flutter_riverpod.dart';
-import 'package:supabase_flutter/supabase_flutter.dart' hide AuthUser;
+import 'dart:async';
 
 import '../../core/config/env_config.dart';
 import '../../data/models/alert_item.dart';
@@ -23,6 +23,7 @@ import '../../data/services/devices_service.dart';
 import '../../data/services/location_service.dart';
 import '../../data/services/mock_data_service.dart';
 import '../../data/services/recommendation_service.dart';
+import '../../data/services/realtime_service.dart';
 import '../../data/services/telemetry_service.dart';
 import '../../data/services/token_storage.dart';
 import '../../data/services/user_portal_service.dart';
@@ -91,6 +92,14 @@ final authServiceProvider = Provider<AuthService>((ref) {
   );
 });
 
+final realtimeServiceProvider = Provider<RealtimeService>((ref) {
+  final service = RealtimeService(tokenStorage: ref.watch(tokenStorageProvider));
+  ref.onDispose(() {
+    unawaited(service.stop());
+  });
+  return service;
+});
+
 final selectedDeviceIdProvider =
     NotifierProvider<SelectedDeviceIdNotifier, String?>(
       SelectedDeviceIdNotifier.new,
@@ -125,60 +134,10 @@ class AuthNotifier extends AsyncNotifier<AuthSession?> {
   Future<void> login(String email, String password) async {
     state = const AsyncLoading();
     state = await AsyncValue.guard(() async {
-      final auth = ref.read(authServiceProvider);
-      final AuthSession session;
-      if (EnvConfig.instance.hasSupabaseCredentials) {
-        final res = await Supabase.instance.client.auth.signInWithPassword(
-          email: email.trim(),
-          password: password,
-        );
-        final at = res.session?.accessToken;
-        if (at == null || at.isEmpty) {
-          throw StateError('No Supabase session. Confirm your email if required.');
-        }
-        session = await auth.loginWithSupabaseAccessToken(at);
-      } else {
-        session = await auth.login(email: email.trim(), password: password);
-      }
-      await OfflineStore.instance.saveUser(session.user);
-      _invalidateData();
-      return session;
-    });
-  }
-
-  Future<void> signup({
-    required String fullName,
-    required String email,
-    required String password,
-  }) async {
-    state = const AsyncLoading();
-    state = await AsyncValue.guard(() async {
-      final auth = ref.read(authServiceProvider);
-      final AuthSession session;
-      if (EnvConfig.instance.hasSupabaseCredentials) {
-        await Supabase.instance.client.auth.signUp(
-          email: email.trim(),
-          password: password,
-          data: {'full_name': fullName.trim()},
-        );
-        final res = await Supabase.instance.client.auth.signInWithPassword(
-          email: email.trim(),
-          password: password,
-        );
-        final at = res.session?.accessToken;
-        if (at == null || at.isEmpty) {
-          throw StateError(
-            'Account created. Sign in after confirming your email, or try signing in now.',
+      final session = await ref.read(authServiceProvider).login(
+            email: email,
+            password: password,
           );
-        }
-        session = await auth.loginWithSupabaseAccessToken(at);
-      } else {
-        session = await auth.signup(
-          fullName: fullName.trim(),
-          email: email.trim(),
-          password: password,
-        );
-      }
       await OfflineStore.instance.saveUser(session.user);
       _invalidateData();
       return session;
@@ -198,13 +157,6 @@ class AuthNotifier extends AsyncNotifier<AuthSession?> {
         ),
       );
       return;
-    }
-    if (EnvConfig.instance.hasSupabaseCredentials) {
-      try {
-        await Supabase.instance.client.auth.signOut();
-      } catch (_) {
-        // Ignore if Supabase session already cleared.
-      }
     }
     await ref.read(authServiceProvider).logout();
     await OfflineStore.instance.clearSessionCaches();
@@ -300,4 +252,36 @@ final syncBootstrapProvider = Provider<void>((ref) {
   final sync = ref.read(syncRepositoryProvider);
   sync.start();
   ref.onDispose(sync.dispose);
+});
+
+final realtimeBootstrapProvider = Provider<void>((ref) {
+  final realtime = ref.read(realtimeServiceProvider);
+
+  void refreshRealtimeData() {
+    ref.invalidate(telemetrySeriesProvider);
+    ref.invalidate(alertsProvider);
+    ref.invalidate(recommendationsProvider);
+  }
+
+  unawaited(
+    realtime.start(
+      onTelemetryUpdate: refreshRealtimeData,
+      onAlert: refreshRealtimeData,
+    ),
+  );
+
+  ref.listen(authNotifierProvider, (_, next) {
+    next.whenData((session) {
+      if (session == null) {
+        unawaited(realtime.stop());
+        return;
+      }
+      unawaited(
+        realtime.restart(
+          onTelemetryUpdate: refreshRealtimeData,
+          onAlert: refreshRealtimeData,
+        ),
+      );
+    });
+  });
 });

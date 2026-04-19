@@ -51,6 +51,13 @@ const prisma_service_1 = require("../prisma/prisma.service");
 const bcryptjs_1 = require("bcryptjs");
 const client_1 = require("@prisma/client");
 const jwt = __importStar(require("jsonwebtoken"));
+function getRequiredConfig(configService, key) {
+    const value = configService.get(key)?.trim();
+    if (!value) {
+        throw new Error(`${key} must be defined`);
+    }
+    return value;
+}
 function extractSupabaseUserMetadata(value) {
     if (typeof value !== 'object' || value === null) {
         return {};
@@ -211,12 +218,11 @@ let AuthService = class AuthService {
         const jwtExpiresIn = parseExpiryToSeconds(this.configService.get('JWT_EXPIRES_IN') ?? '7d', 60 * 60 * 24 * 7);
         const refreshExpiresIn = parseExpiryToSeconds(this.configService.get('JWT_REFRESH_EXPIRES_IN') ?? '30d', 60 * 60 * 24 * 30);
         const accessToken = await this.jwtService.signAsync(payload, {
-            secret: this.configService.get('JWT_SECRET') ?? 'change-this-secret',
+            secret: getRequiredConfig(this.configService, 'JWT_SECRET'),
             expiresIn: jwtExpiresIn,
         });
         const refreshToken = await this.jwtService.signAsync(payload, {
-            secret: this.configService.get('JWT_REFRESH_SECRET') ??
-                'change-this-refresh-secret',
+            secret: getRequiredConfig(this.configService, 'JWT_REFRESH_SECRET'),
             expiresIn: refreshExpiresIn,
         });
         const refreshTokenHash = await (0, bcryptjs_1.hash)(refreshToken, 10);

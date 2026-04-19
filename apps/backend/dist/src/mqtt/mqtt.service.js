@@ -86,7 +86,7 @@ let MqttService = MqttService_1 = class MqttService {
     }
     async publishCommand(deviceId, command, issuedByUserId) {
         if (!this.client || !this.client.connected) {
-            throw new Error('MQTT broker is not connected.');
+            throw new common_1.ServiceUnavailableException('MQTT broker is not connected.');
         }
         const topic = this.commandsTopicTemplate.replace('{deviceId}', deviceId);
         const payload = JSON.stringify({
@@ -282,7 +282,7 @@ let MqttService = MqttService_1 = class MqttService {
         if (!raw) {
             return configured;
         }
-        return raw === 'true';
+        return raw.trim().toLowerCase() === 'true';
     }
 };
 exports.MqttService = MqttService;

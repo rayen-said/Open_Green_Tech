@@ -3,6 +3,7 @@ import {
   Logger,
   OnModuleDestroy,
   OnModuleInit,
+  ServiceUnavailableException,
 } from '@nestjs/common';
 import { ConfigService } from '@nestjs/config';
 import { AlertSeverity } from '@prisma/client';
@@ -96,7 +97,7 @@ export class MqttService implements OnModuleInit, OnModuleDestroy {
     issuedByUserId: string,
   ) {
     if (!this.client || !this.client.connected) {
-      throw new Error('MQTT broker is not connected.');
+      throw new ServiceUnavailableException('MQTT broker is not connected.');
     }
 
     const topic = this.commandsTopicTemplate.replace('{deviceId}', deviceId);
@@ -365,6 +366,6 @@ export class MqttService implements OnModuleInit, OnModuleDestroy {
       return configured;
     }
 
-    return raw === 'true';
+    return raw.trim().toLowerCase() === 'true';
   }
 }
