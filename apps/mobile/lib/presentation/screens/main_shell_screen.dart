@@ -1,18 +1,21 @@
 import 'package:flutter/material.dart';
+import 'package:flutter_riverpod/flutter_riverpod.dart';
 
+import '../../data/models/device.dart';
+import '../providers/app_providers.dart';
 import 'home_screen.dart';
 import 'insights_screen.dart';
 import 'settings_screen.dart';
 import 'system_screen.dart';
 
-class MainShellScreen extends StatefulWidget {
+class MainShellScreen extends ConsumerStatefulWidget {
   const MainShellScreen({super.key});
 
   @override
-  State<MainShellScreen> createState() => _MainShellScreenState();
+  ConsumerState<MainShellScreen> createState() => _MainShellScreenState();
 }
 
-class _MainShellScreenState extends State<MainShellScreen> {
+class _MainShellScreenState extends ConsumerState<MainShellScreen> {
   int _index = 0;
 
   static const List<Widget> _pages = [
@@ -24,6 +27,20 @@ class _MainShellScreenState extends State<MainShellScreen> {
 
   @override
   Widget build(BuildContext context) {
+    ref.listen<AsyncValue<List<Device>>>(devicesProvider, (prev, next) {
+      next.whenData((devices) {
+        if (devices.isEmpty) {
+          return;
+        }
+        final cur = ref.read(selectedDeviceIdProvider);
+        final exists =
+            cur != null && devices.any((element) => element.id == cur);
+        if (cur == null || cur.isEmpty || !exists) {
+          ref.read(selectedDeviceIdProvider.notifier).set(devices.first.id);
+        }
+      });
+    });
+
     return Scaffold(
       body: SafeArea(child: _pages[_index]),
       bottomNavigationBar: NavigationBar(
@@ -34,13 +51,16 @@ class _MainShellScreenState extends State<MainShellScreen> {
           });
         },
         destinations: const [
-          NavigationDestination(icon: Icon(Icons.home_outlined), label: 'Home'),
+          NavigationDestination(
+            icon: Icon(Icons.dashboard_outlined),
+            label: 'Dashboard',
+          ),
           NavigationDestination(
             icon: Icon(Icons.insights_outlined),
             label: 'Insights',
           ),
           NavigationDestination(
-            icon: Icon(Icons.memory_outlined),
+            icon: Icon(Icons.monitor_heart_outlined),
             label: 'System',
           ),
           NavigationDestination(

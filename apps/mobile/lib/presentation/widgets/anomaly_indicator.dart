@@ -1,32 +1,19 @@
 import 'package:flutter/material.dart';
 
+import '../../core/theme/app_theme.dart';
+
+/// Visualizes boolean anomaly flag as a 0–100% bar (matches web “risk / healthy”).
 class AnomalyIndicator extends StatelessWidget {
-  const AnomalyIndicator({super.key, required this.score});
+  const AnomalyIndicator({super.key, required this.anomaly});
 
-  final double score;
-
-  Color _scoreColor() {
-    if (score > 0.75) {
-      return Colors.red;
-    }
-    if (score > 0.5) {
-      return Colors.orange;
-    }
-    return Colors.green;
-  }
-
-  String _label() {
-    if (score > 0.75) {
-      return 'High';
-    }
-    if (score > 0.5) {
-      return 'Medium';
-    }
-    return 'Low';
-  }
+  final bool anomaly;
 
   @override
   Widget build(BuildContext context) {
+    final score = anomaly ? 1.0 : 0.0;
+    final color = anomaly ? AppColors.danger : AppColors.green500;
+    final label = anomaly ? 'Elevated risk window' : 'Stable readings';
+
     return Card(
       child: Padding(
         padding: const EdgeInsets.all(16),
@@ -34,21 +21,28 @@ class AnomalyIndicator extends StatelessWidget {
           crossAxisAlignment: CrossAxisAlignment.start,
           children: [
             Text(
-              'Anomaly Score',
-              style: Theme.of(context).textTheme.titleMedium,
+              'Anomaly indicator',
+              style: Theme.of(context).textTheme.titleMedium?.copyWith(
+                    fontWeight: FontWeight.w700,
+                  ),
             ),
             const SizedBox(height: 10),
             ClipRRect(
               borderRadius: BorderRadius.circular(8),
               child: LinearProgressIndicator(
                 minHeight: 12,
-                value: score.clamp(0.0, 1.0).toDouble(),
-                color: _scoreColor(),
-                backgroundColor: Colors.grey.shade200,
+                value: score,
+                color: color,
+                backgroundColor: AppColors.bgSoft,
               ),
             ),
             const SizedBox(height: 8),
-            Text('${(score * 100).toStringAsFixed(1)}% ($_label())'),
+            Text(
+              '${(score * 100).toStringAsFixed(0)}% · $label',
+              style: Theme.of(context).textTheme.bodySmall?.copyWith(
+                    color: AppColors.textMuted,
+                  ),
+            ),
           ],
         ),
       ),

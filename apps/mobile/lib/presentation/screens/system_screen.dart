@@ -1,8 +1,10 @@
+import 'package:fl_chart/fl_chart.dart';
 import 'package:flutter/material.dart';
 import 'package:flutter_riverpod/flutter_riverpod.dart';
 
+import '../../core/theme/app_theme.dart';
+import '../../data/models/telemetry_point.dart';
 import '../providers/app_providers.dart';
-import '../providers/telemetry_provider.dart';
 
 class SystemScreen extends ConsumerWidget {
   const SystemScreen({super.key});
@@ -10,83 +12,133 @@ class SystemScreen extends ConsumerWidget {
   @override
   Widget build(BuildContext context, WidgetRef ref) {
     final onlineAsync = ref.watch(connectivityStatusProvider);
-    final historyAsync = ref.watch(telemetryHistoryProvider);
+    final seriesAsync = ref.watch(telemetrySeriesProvider);
+    final anomaly = ref.watch(anomalySummaryProvider);
 
     return Scaffold(
-      appBar: AppBar(title: const Text('System')),
+      appBar: AppBar(title: const Text('System health')),
       body: ListView(
         padding: const EdgeInsets.all(16),
         children: [
           Card(
             child: ListTile(
-              leading: const Icon(Icons.cloud_done_outlined),
-              title: const Text('Connectivity Status'),
+              leading: const Icon(Icons.cloud_outlined),
+              title: const Text('Connectivity'),
               subtitle: onlineAsync.when(
                 data: (online) => Text(online ? 'Online' : 'Offline'),
-                loading: () => const Text('Checking...'),
-                error: (error, stack) => const Text('Unknown'),
+                loading: () => const Text('Checking…'),
+                error: (_, __) => const Text('Unknown'),
               ),
             ),
           ),
+          const SizedBox(height: 10),
           Card(
             child: Padding(
-              padding: const EdgeInsets.all(12),
+              padding: const EdgeInsets.all(14),
               child: Column(
                 crossAxisAlignment: CrossAxisAlignment.start,
                 children: [
                   Text(
-                    'Anomaly Trend (latest samples)',
-                    style: Theme.of(context).textTheme.titleMedium,
+                    'Anomaly score trend',
+                    style: Theme.of(context).textTheme.titleMedium?.copyWith(
+                          fontWeight: FontWeight.w700,
+                        ),
+                  ),
+                  const SizedBox(height: 6),
+                  Text(
+                    '${anomaly.anomalyPercent.toStringAsFixed(0)}% of last ${anomaly.sampleCount} samples flagged · reliability ${(anomaly.sensorReliability * 100).toStringAsFixed(0)}%',
+                    style: TextStyle(color: AppColors.textMuted, fontSize: 13),
+                  ),
+                  const SizedBox(height: 12),
+                  seriesAsync.when(
+                    data: (series) => _AnomalyBars(series: series),
+                    loading: () => const Center(child: CircularProgressIndicator()),
+                    error: (e, _) => Text('$e'),
+                  ),
+                ],
+              ),
+            ),
+          ),
+          const SizedBox(height: 10),
+          Card(
+            child: Padding(
+              padding: const EdgeInsets.all(14),
+              child: Column(
+                crossAxisAlignment: CrossAxisAlignment.start,
+                children: [
+                  Text(
+                    'Sensor reliability',
+                    style: Theme.of(context).textTheme.titleMedium?.copyWith(
+                          fontWeight: FontWeight.w700,
+                        ),
                   ),
                   const SizedBox(height: 8),
-                  historyAsync.when(
-                    data: (history) {
-                      if (history.isEmpty) {
-                        return const Text('No telemetry history yet.');
-                      }
-
-                      return Column(
-                        children: history.take(8).map((entry) {
-                          final score = entry.anomalyScore.clamp(0, 1);
-                          return Padding(
-                            padding: const EdgeInsets.symmetric(vertical: 6),
-                            child: Row(
-                              children: [
-                                Expanded(
-                                  flex: 2,
-                                  child: Text(
-                                    '${entry.timestamp.hour.toString().padLeft(2, '0')}:${entry.timestamp.minute.toString().padLeft(2, '0')}',
-                                  ),
-                                ),
-                                Expanded(
-                                  flex: 8,
-                                  child: LinearProgressIndicator(
-                                    value: score.toDouble(),
-                                  ),
-                                ),
-                                const SizedBox(width: 8),
-                                SizedBox(
-                                  width: 44,
-                                  child: Text(
-                                    '${(score * 100).toStringAsFixed(0)}%',
-                                  ),
-                                ),
-                              ],
-                            ),
-                          );
-                        }).toList(),
-                      );
-                    },
-                    loading: () =>
-                        const Center(child: CircularProgressIndicator()),
-                    error: (error, stack) =>
-                        Text('Failed to load history: $error'),
+                  ClipRRect(
+                    borderRadius: BorderRadius.circular(10),
+                    child: LinearProgressIndicator(
+                      minHeight: 14,
+                      value: anomaly.sensorReliability.clamp(0.0, 1.0),
+                      color: AppColors.green500,
+                      backgroundColor: AppColors.bgSoft,
+                    ),
+                  ),
+                  const SizedBox(height: 8),
+                  Text(
+                    'Heuristic from temperature variance across cached telemetry (offline-first).',
+                    style: TextStyle(color: AppColors.textMuted, fontSize: 12),
                   ),
                 ],
               ),
             ),
           ),
         ],
+      ),
+    );
+  }
+}
+
+class _AnomalyBars extends StatelessWidget {
+  const _AnomalyBars({required this.series});
+
+  final List<TelemetryPoint> series;
+
+  @override
+  Widget build(BuildContext context) {
+    if (series.isEmpty) {
+      return Text(
+        'No samples yet.',
+        style: TextStyle(color: AppColors.textMuted),
+      );
+    }
+    final sorted = [...series]..sort((a, b) => a.timestamp.compareTo(b.timestamp));
+    final window = sorted.length > 16 ? sorted.sublist(sorted.length - 16) : sorted;
+    final spots = <BarChartGroupData>[];
+    for (var i = 0; i < window.length; i++) {
+      final p = window[i];
+      spots.add(
+        BarChartGroupData(
+          x: i,
+          barRods: [
+            BarChartRodData(
+              toY: p.anomaly ? 1 : 0.08,
+              width: 10,
+              borderRadius: BorderRadius.circular(4),
+              color: p.anomaly ? AppColors.danger : AppColors.green500.withValues(alpha: 0.35),
+            ),
+          ],
+        ),
+      );
+    }
+    return SizedBox(
+      height: 180,
+      child: BarChart(
+        BarChartData(
+          maxY: 1.2,
+          gridData: const FlGridData(show: false),
+          borderData: FlBorderData(show: false),
+          titlesData: const FlTitlesData(show: false),
+          barGroups: spots,
+        ),
       ),
     );
   }

@@ -1,50 +1,64 @@
 import 'dart:async';
 
-import '../models/user_profile.dart';
+import '../../core/config/env_config.dart';
 import '../services/connectivity_service.dart';
-import 'recommendations_repository.dart';
-import 'telemetry_repository.dart';
-import 'user_profile_repository.dart';
+import 'crop_repository.dart';
 
 class SyncRepository {
   SyncRepository({
-    required ConnectivityService connectivityService,
-    required TelemetryRepository telemetryRepository,
-    required RecommendationsRepository recommendationsRepository,
-    required UserProfileRepository userProfileRepository,
-  }) : _connectivityService = connectivityService,
-       _telemetryRepository = telemetryRepository,
-       _recommendationsRepository = recommendationsRepository,
-       _userProfileRepository = userProfileRepository;
+    required ConnectivityService connectivity,
+    required CropRepository repository,
+    required void Function() onSynced,
+    required String? Function() selectedDeviceId,
+  })  : _connectivity = connectivity,
+        _repository = repository,
+        _onSynced = onSynced,
+        _selectedDeviceId = selectedDeviceId;
 
-  final ConnectivityService _connectivityService;
-  final TelemetryRepository _telemetryRepository;
-  final RecommendationsRepository _recommendationsRepository;
-  final UserProfileRepository _userProfileRepository;
+  final ConnectivityService _connectivity;
+  final CropRepository _repository;
+  final void Function() _onSynced;
+  final String? Function() _selectedDeviceId;
 
   StreamSubscription<bool>? _subscription;
+  Timer? _timer;
 
   void start() {
-    _subscription ??= _connectivityService.statusStream.listen((online) async {
+    _subscription ??= _connectivity.statusStream.listen((online) async {
       if (!online) {
         return;
       }
       await syncNow();
     });
+    _timer ??= Timer.periodic(const Duration(minutes: 2), (_) async {
+      if (await _connectivity.isOnline()) {
+        await syncNow();
+      }
+    });
   }
 
   Future<void> syncNow() async {
-    final UserProfile profile = await _userProfileRepository.loadProfile();
-    final telemetry = await _telemetryRepository.fetchLatest(online: true);
-    await _recommendationsRepository.fetchLatest(
-      profile: profile,
-      telemetry: telemetry,
-      online: true,
-    );
+    final id = _selectedDeviceId();
+    await _repository.loadDevices();
+    if (id != null && id.isNotEmpty) {
+      await _repository.loadTelemetrySeries(id);
+      await _repository.loadRecommendations(id);
+    }
+    await _repository.loadAlerts();
+    if (!EnvConfig.instance.mockMode) {
+      try {
+        await _repository.loadUser();
+      } catch (_) {
+        // Offline or session expired — cache path already handled in repository.
+      }
+    }
+    _onSynced();
   }
 
   Future<void> dispose() async {
     await _subscription?.cancel();
     _subscription = null;
+    _timer?.cancel();
+    _timer = null;
   }
 }
