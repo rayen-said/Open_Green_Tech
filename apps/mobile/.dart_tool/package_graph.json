@@ -13,6 +13,7 @@
         "fl_chart",
         "flutter",
         "flutter_dotenv",
+        "flutter_local_notifications",
         "flutter_riverpod",
         "flutter_secure_storage",
         "geolocator",
@@ -48,6 +49,17 @@
         "stream_channel",
         "test_api",
         "vector_math"
+      ]
+    },
+    {
+      "name": "flutter_local_notifications",
+      "version": "18.0.1",
+      "dependencies": [
+        "clock",
+        "flutter",
+        "flutter_local_notifications_linux",
+        "flutter_local_notifications_platform_interface",
+        "timezone"
       ]
     },
     {
@@ -259,6 +271,34 @@
         "stream_channel",
         "string_scanner",
         "term_glyph"
+      ]
+    },
+    {
+      "name": "timezone",
+      "version": "0.10.1",
+      "dependencies": [
+        "http",
+        "path"
+      ]
+    },
+    {
+      "name": "flutter_local_notifications_platform_interface",
+      "version": "8.0.0",
+      "dependencies": [
+        "flutter",
+        "plugin_platform_interface"
+      ]
+    },
+    {
+      "name": "flutter_local_notifications_linux",
+      "version": "5.0.0",
+      "dependencies": [
+        "dbus",
+        "ffi",
+        "flutter",
+        "flutter_local_notifications_platform_interface",
+        "path",
+        "xdg_directories"
       ]
     },
     {
@@ -535,6 +575,36 @@
       ]
     },
     {
+      "name": "plugin_platform_interface",
+      "version": "2.1.8",
+      "dependencies": [
+        "meta"
+      ]
+    },
+    {
+      "name": "xdg_directories",
+      "version": "1.1.0",
+      "dependencies": [
+        "meta",
+        "path"
+      ]
+    },
+    {
+      "name": "ffi",
+      "version": "2.2.0",
+      "dependencies": []
+    },
+    {
+      "name": "dbus",
+      "version": "0.7.12",
+      "dependencies": [
+        "args",
+        "ffi",
+        "meta",
+        "xml"
+      ]
+    },
+    {
       "name": "path_provider_windows",
       "version": "2.3.0",
       "dependencies": [
@@ -599,20 +669,8 @@
       ]
     },
     {
-      "name": "ffi",
-      "version": "2.2.0",
-      "dependencies": []
-    },
-    {
       "name": "js",
       "version": "0.6.7",
-      "dependencies": [
-        "meta"
-      ]
-    },
-    {
-      "name": "plugin_platform_interface",
-      "version": "2.1.8",
       "dependencies": [
         "meta"
       ]
@@ -626,32 +684,28 @@
       ]
     },
     {
-      "name": "dbus",
-      "version": "0.7.12",
+      "name": "vm_service",
+      "version": "15.1.0",
+      "dependencies": []
+    },
+    {
+      "name": "xml",
+      "version": "6.6.1",
       "dependencies": [
-        "args",
-        "ffi",
+        "collection",
         "meta",
-        "xml"
+        "petitparser"
       ]
     },
     {
-      "name": "vm_service",
-      "version": "15.1.0",
+      "name": "args",
+      "version": "2.7.0",
       "dependencies": []
     },
     {
       "name": "platform",
       "version": "3.1.6",
       "dependencies": []
-    },
-    {
-      "name": "xdg_directories",
-      "version": "1.1.0",
-      "dependencies": [
-        "meta",
-        "path"
-      ]
     },
     {
       "name": "objective_c",
@@ -693,18 +747,12 @@
       "dependencies": []
     },
     {
-      "name": "xml",
-      "version": "6.6.1",
+      "name": "petitparser",
+      "version": "7.0.2",
       "dependencies": [
         "collection",
-        "meta",
-        "petitparser"
+        "meta"
       ]
-    },
-    {
-      "name": "args",
-      "version": "2.7.0",
-      "dependencies": []
     },
     {
       "name": "pub_semver",
@@ -755,14 +803,6 @@
       "version": "2.2.0",
       "dependencies": [
         "path"
-      ]
-    },
-    {
-      "name": "petitparser",
-      "version": "7.0.2",
-      "dependencies": [
-        "collection",
-        "meta"
       ]
     },
     {

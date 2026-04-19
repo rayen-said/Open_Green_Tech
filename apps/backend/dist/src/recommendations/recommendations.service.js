@@ -8,22 +8,21 @@ var __decorate = (this && this.__decorate) || function (decorators, target, key,
 var __metadata = (this && this.__metadata) || function (k, v) {
     if (typeof Reflect === "object" && typeof Reflect.metadata === "function") return Reflect.metadata(k, v);
 };
-var __importDefault = (this && this.__importDefault) || function (mod) {
-    return (mod && mod.__esModule) ? mod : { "default": mod };
-};
 Object.defineProperty(exports, "__esModule", { value: true });
 exports.RecommendationsService = void 0;
-const config_1 = require("@nestjs/config");
 const common_1 = require("@nestjs/common");
 const client_1 = require("@prisma/client");
-const openai_1 = __importDefault(require("openai"));
+const ai_service_1 = require("../ai/ai.service");
 const prisma_service_1 = require("../prisma/prisma.service");
+const user_profile_service_1 = require("../user-portal/user-profile.service");
 let RecommendationsService = class RecommendationsService {
     prisma;
-    configService;
-    constructor(prisma, configService) {
+    aiService;
+    userProfileService;
+    constructor(prisma, aiService, userProfileService) {
         this.prisma = prisma;
-        this.configService = configService;
+        this.aiService = aiService;
+        this.userProfileService = userProfileService;
     }
     buildRules(temperature, humidity, light) {
         return {
@@ -73,40 +72,51 @@ let RecommendationsService = class RecommendationsService {
                 },
         };
     }
-    async generateWithLLM(latest) {
-        const apiKey = this.configService.get('OPENAI_API_KEY');
-        if (!apiKey) {
-            return null;
+    scoreFromSeries(points) {
+        if (points.length === 0) {
+            return { anomalyRate: 0, reliability: 0.65 };
         }
-        const client = new openai_1.default({ apiKey });
-        const completion = await client.chat.completions.create({
-            model: this.configService.get('OPENAI_MODEL') ?? 'gpt-4o-mini',
-            temperature: 0.2,
-            response_format: { type: 'json_object' },
-            messages: [
-                {
-                    role: 'system',
-                    content: 'You are an agronomy assistant for a Tunisian smart farming SaaS. Return strict JSON with four objects: cropHealth, irrigation, fertilizer, bestCrop. Each object must contain title, explanation, confidence. Keep explanations practical and concise.',
-                },
-                {
-                    role: 'user',
-                    content: JSON.stringify({
-                        telemetry: latest,
-                        goal: 'Generate crop health, irrigation, fertilizer, and best crop recommendations.',
-                    }),
-                },
-            ],
-        });
-        const raw = completion.choices[0]?.message?.content;
-        if (!raw) {
-            return null;
+        const anomalyCount = points.filter((p) => p.anomaly).length;
+        const anomalyRate = anomalyCount / points.length;
+        const mean = points.reduce((s, p) => s + p.temperature, 0) / points.length;
+        let varT = 0;
+        for (const p of points) {
+            const d = p.temperature - mean;
+            varT += d * d;
         }
-        try {
-            return JSON.parse(raw);
-        }
-        catch {
-            return null;
-        }
+        varT /= points.length;
+        const spread = Math.min(varT, 25);
+        const reliability = Math.min(0.98, Math.max(0.55, 0.92 - spread / 50));
+        return { anomalyRate, reliability };
+    }
+    mapAiToLegacyPayload(ai) {
+        const warn = ai.warnings.length > 0
+            ? ` Warnings: ${ai.warnings.join(' | ')}`
+            : '';
+        return {
+            cropHealth: {
+                title: 'AI crop health assessment',
+                explanation: `${ai.health}${warn}`,
+                confidence: 82,
+            },
+            irrigation: {
+                title: 'AI irrigation guidance',
+                explanation: ai.irrigation,
+                confidence: 80,
+            },
+            fertilizer: {
+                title: 'AI fertilizer guidance',
+                explanation: ai.fertilizer,
+                confidence: 78,
+            },
+            bestCrop: {
+                title: 'AI seasonal crop ideas',
+                explanation: ai.crops.length > 0
+                    ? `Suggested crops: ${ai.crops.join(', ')}.`
+                    : 'Review local extension guidance for cultivars suited to your microclimate.',
+                confidence: 75,
+            },
+        };
     }
     async generate(deviceId, userId, role) {
         const device = await this.prisma.device.findUnique({
@@ -125,12 +135,54 @@ let RecommendationsService = class RecommendationsService {
         if (!latest) {
             throw new common_1.NotFoundException('No telemetry found for this device');
         }
-        const llmRecommendations = await this.generateWithLLM(latest);
+        const seriesWindow = await this.prisma.telemetry.findMany({
+            where: { deviceId },
+            orderBy: { timestamp: 'desc' },
+            take: 32,
+            select: { anomaly: true, temperature: true },
+        });
+        const { anomalyRate, reliability } = this.scoreFromSeries(seriesWindow);
+        const profileContext = await this.userProfileService.toAiContext(device.ownerId);
+        const seasonMonth = new Date().getUTCMonth();
+        const seasons = [
+            'Winter',
+            'Winter',
+            'Spring',
+            'Spring',
+            'Spring',
+            'Summer',
+            'Summer',
+            'Summer',
+            'Autumn / Fall',
+            'Autumn / Fall',
+            'Autumn / Fall',
+            'Winter',
+        ];
+        const seasonHint = seasons[seasonMonth] ?? 'Current season';
+        const structured = await this.aiService.analyzeStructured({
+            telemetry: {
+                temperature: latest.temperature,
+                humidity: latest.humidity,
+                light: latest.light,
+                anomaly: latest.anomaly,
+            },
+            anomalyScore: anomalyRate,
+            reliabilityScore: reliability,
+            profile: profileContext,
+            seasonHint,
+        });
+        const llmRecommendations = structured
+            ? this.mapAiToLegacyPayload(structured)
+            : null;
         const rules = this.buildRules(latest.temperature, latest.humidity, latest.light);
         const detectedIssues = [
             ...(latest.temperature > 38 ? ['heat_stress'] : []),
             ...(latest.humidity < 30 ? ['low_humidity'] : []),
             ...(latest.light < 200 ? ['low_light'] : []),
+            ...(latest.anomaly ? ['telemetry_anomaly_flag'] : []),
+            ...(structured?.warnings?.length
+                ? structured.warnings.map((w) => `ai_warning:${w}`)
+                : []),
         ];
         await this.prisma.recommendation.deleteMany({ where: { deviceId } });
         return this.prisma.$transaction([
@@ -212,6 +264,7 @@ exports.RecommendationsService = RecommendationsService;
 exports.RecommendationsService = RecommendationsService = __decorate([
     (0, common_1.Injectable)(),
     __metadata("design:paramtypes", [prisma_service_1.PrismaService,
-        config_1.ConfigService])
+        ai_service_1.AiService,
+        user_profile_service_1.UserProfileService])
 ], RecommendationsService);
 //# sourceMappingURL=recommendations.service.js.map

@@ -140,6 +140,24 @@
       "languageVersion": "3.8"
     },
     {
+      "name": "flutter_local_notifications",
+      "rootUri": "file:///C:/Users/sraye/AppData/Local/Pub/Cache/hosted/pub.dev/flutter_local_notifications-18.0.1",
+      "packageUri": "lib/",
+      "languageVersion": "3.1"
+    },
+    {
+      "name": "flutter_local_notifications_linux",
+      "rootUri": "file:///C:/Users/sraye/AppData/Local/Pub/Cache/hosted/pub.dev/flutter_local_notifications_linux-5.0.0",
+      "packageUri": "lib/",
+      "languageVersion": "3.1"
+    },
+    {
+      "name": "flutter_local_notifications_platform_interface",
+      "rootUri": "file:///C:/Users/sraye/AppData/Local/Pub/Cache/hosted/pub.dev/flutter_local_notifications_platform_interface-8.0.0",
+      "packageUri": "lib/",
+      "languageVersion": "3.1"
+    },
+    {
       "name": "flutter_riverpod",
       "rootUri": "file:///C:/Users/sraye/AppData/Local/Pub/Cache/hosted/pub.dev/flutter_riverpod-2.6.1",
       "packageUri": "lib/",
@@ -486,6 +504,12 @@
       "rootUri": "file:///C:/Users/sraye/AppData/Local/Pub/Cache/hosted/pub.dev/test_api-0.7.10",
       "packageUri": "lib/",
       "languageVersion": "3.7"
+    },
+    {
+      "name": "timezone",
+      "rootUri": "file:///C:/Users/sraye/AppData/Local/Pub/Cache/hosted/pub.dev/timezone-0.10.1",
+      "packageUri": "lib/",
+      "languageVersion": "2.19"
     },
     {
       "name": "typed_data",

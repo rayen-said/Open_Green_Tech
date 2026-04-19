@@ -1,3 +1,4 @@
+import { randomBytes } from 'node:crypto';
 import { Injectable, UnauthorizedException } from '@nestjs/common';
 import { ConfigService } from '@nestjs/config';
 import { JwtService } from '@nestjs/jwt';
@@ -8,6 +9,7 @@ import { RefreshTokenDto } from './dto/refresh-token.dto';
 import { LogoutDto } from './dto/logout.dto';
 import { compare, hash } from 'bcryptjs';
 import { Role } from '@prisma/client';
+import * as jwt from 'jsonwebtoken';
 
 type JwtPayload = {
   sub: string;
@@ -76,6 +78,56 @@ export class AuthService {
     const passwordOk = await compare(dto.password, user.passwordHash);
     if (!passwordOk) {
       throw new UnauthorizedException('Invalid credentials.');
+    }
+
+    return this.issueTokens(user.id, user.email, user.fullName, user.role);
+  }
+
+  /**
+   * Verifies a Supabase-issued JWT (HS256) and returns Nest API tokens so
+   * web/mobile can keep using the existing Bearer + refresh flow.
+   */
+  async loginFromSupabaseAccessToken(accessToken: string) {
+    const secret = this.configService.get<string>('SUPABASE_JWT_SECRET');
+    if (!secret?.trim()) {
+      throw new UnauthorizedException(
+        'SUPABASE_JWT_SECRET is not configured on the API. Set it from Supabase Settings -> API -> JWT Secret.',
+      );
+    }
+
+    let payload: jwt.JwtPayload;
+    try {
+      payload = jwt.verify(accessToken, secret, {
+        algorithms: ['HS256'],
+      }) as jwt.JwtPayload;
+    } catch {
+      throw new UnauthorizedException('Invalid Supabase access token.');
+    }
+
+    const emailRaw = payload.email;
+    const email =
+      typeof emailRaw === 'string' ? emailRaw.toLowerCase() : undefined;
+    if (!email) {
+      throw new UnauthorizedException('Supabase token is missing email.');
+    }
+
+    const meta = payload.user_metadata as
+      | { full_name?: string; name?: string }
+      | undefined;
+    const fullNameGuess =
+      meta?.full_name ?? meta?.name ?? email.split('@')[0] ?? 'Farmer';
+
+    let user = await this.prisma.user.findUnique({ where: { email } });
+    if (!user) {
+      const passwordHash = await hash(randomBytes(32).toString('hex'), 10);
+      user = await this.prisma.user.create({
+        data: {
+          email,
+          fullName: fullNameGuess,
+          passwordHash,
+          role: Role.USER,
+        },
+      });
     }
 
     return this.issueTokens(user.id, user.email, user.fullName, user.role);

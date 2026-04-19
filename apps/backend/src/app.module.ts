@@ -17,6 +17,8 @@ import { AlertsModule } from './alerts/alerts.module';
 import { AdminModule } from './admin/admin.module';
 import { DemoModule } from './demo/demo.module';
 import { ChatModule } from './chat/chat.module';
+import { AiModule } from './ai/ai.module';
+import { UserPortalModule } from './user-portal/user-portal.module';
 
 @Module({
   imports: [
@@ -49,6 +51,8 @@ import { ChatModule } from './chat/chat.module';
     AdminModule,
     DemoModule,
     ChatModule,
+    AiModule,
+    UserPortalModule,
   ],
   controllers: [AppController],
   providers: [

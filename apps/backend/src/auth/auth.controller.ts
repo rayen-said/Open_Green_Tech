@@ -4,6 +4,7 @@ import { SignupDto } from './dto/signup.dto';
 import { LoginDto } from './dto/login.dto';
 import { RefreshTokenDto } from './dto/refresh-token.dto';
 import { LogoutDto } from './dto/logout.dto';
+import { SupabaseTokenDto } from './dto/supabase-token.dto';
 import { Public } from '../common/decorators/public.decorator';
 
 @Controller('auth')
@@ -20,6 +21,12 @@ export class AuthController {
   @Post('login')
   login(@Body() dto: LoginDto) {
     return this.authService.login(dto);
+  }
+
+  @Public()
+  @Post('supabase')
+  loginWithSupabase(@Body() dto: SupabaseTokenDto) {
+    return this.authService.loginFromSupabaseAccessToken(dto.accessToken);
   }
 
   @Public()

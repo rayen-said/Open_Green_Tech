@@ -34,6 +34,18 @@ export declare class AuthService {
         expiresIn: string;
         refreshExpiresIn: string;
     }>;
+    loginFromSupabaseAccessToken(accessToken: string): Promise<{
+        accessToken: string;
+        refreshToken: string;
+        user: {
+            id: string;
+            email: string;
+            fullName: string;
+            role: import("@prisma/client").$Enums.Role;
+        };
+        expiresIn: string;
+        refreshExpiresIn: string;
+    }>;
     refresh(dto: RefreshTokenDto): Promise<{
         accessToken: string;
         refreshToken: string;

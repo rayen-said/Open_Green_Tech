@@ -2,6 +2,8 @@ import '../../core/config/env_config.dart';
 import '../models/alert_item.dart';
 import '../models/auth_user.dart';
 import '../models/device.dart';
+import '../models/farmer_profile.dart';
+import '../models/gamification_state.dart';
 import '../models/recommendation_item.dart';
 import '../models/telemetry_point.dart';
 import '../offline/offline_store.dart';
@@ -11,6 +13,7 @@ import '../services/devices_service.dart';
 import '../services/mock_data_service.dart';
 import '../services/recommendation_service.dart';
 import '../services/telemetry_service.dart';
+import '../services/user_portal_service.dart';
 import '../services/user_service.dart';
 
 /// Offline-first coordinator: cache → network refresh when online.
@@ -21,6 +24,7 @@ class CropRepository {
     required AlertsService alertsService,
     required DevicesService devicesService,
     required UserService userService,
+    required UserPortalService userPortalService,
     required ConnectivityService connectivity,
     required MockDataService mockDataService,
     required OfflineStore offline,
@@ -29,6 +33,7 @@ class CropRepository {
         _alerts = alertsService,
         _devices = devicesService,
         _user = userService,
+        _portal = userPortalService,
         _connectivity = connectivity,
         _mock = mockDataService,
         _offline = offline;
@@ -38,6 +43,7 @@ class CropRepository {
   final AlertsService _alerts;
   final DevicesService _devices;
   final UserService _user;
+  final UserPortalService _portal;
   final ConnectivityService _connectivity;
   final MockDataService _mock;
   final OfflineStore _offline;
@@ -241,5 +247,127 @@ class CropRepository {
       await _offline.saveDevices(list);
     }
     return updated;
+  }
+
+  Future<FarmerProfile> loadFarmerProfile() async {
+    if (_mockMode) {
+      final p = _mock.farmerProfile();
+      await _offline.saveFarmerProfile(p);
+      return p;
+    }
+    final cached = _offline.readFarmerProfile();
+    if (!await _online) {
+      return cached ?? FarmerProfile.initial();
+    }
+    try {
+      final j = await _portal.getProfile();
+      final p = FarmerProfile.fromJson(j);
+      await _offline.saveFarmerProfile(p);
+      return p;
+    } catch (_) {
+      return cached ?? FarmerProfile.initial();
+    }
+  }
+
+  Future<FarmerProfile> saveFarmerProfile(FarmerProfile profile) async {
+    if (_mockMode) {
+      await _offline.saveFarmerProfile(profile);
+      return profile;
+    }
+    if (await _online) {
+      try {
+        final j = await _portal.upsertProfile(profile.toUpsertBody());
+        final saved = FarmerProfile.fromJson(j);
+        await _offline.saveFarmerProfile(saved);
+        return saved;
+      } catch (_) {
+        await _offline.saveFarmerProfile(profile);
+        return profile;
+      }
+    }
+    await _offline.saveFarmerProfile(profile);
+    return profile;
+  }
+
+  Future<GamificationState> loadGamification() async {
+    if (_mockMode) {
+      final g = _mock.gamificationState();
+      await _offline.saveGamification(g);
+      return g;
+    }
+    final cached = _offline.readGamification();
+    if (!await _online) {
+      return cached ??
+          GamificationState.fromJson({
+            'xp': 0,
+            'level': 'BEGINNER',
+            'lastDailyCheckIn': null,
+            'tasksState': {},
+          });
+    }
+    try {
+      final j = await _portal.getGamification();
+      final g = GamificationState.fromJson(j);
+      await _offline.saveGamification(g);
+      return g;
+    } catch (_) {
+      return cached ??
+          GamificationState.fromJson({
+            'xp': 0,
+            'level': 'BEGINNER',
+            'lastDailyCheckIn': null,
+            'tasksState': {},
+          });
+    }
+  }
+
+  Future<GamificationState> syncGamification({
+    String? event,
+    int? xpDelta,
+    Map<String, dynamic>? tasksState,
+  }) async {
+    if (_mockMode) {
+      final g = _mock.gamificationState();
+      await _offline.saveGamification(g);
+      return g;
+    }
+    final body = <String, dynamic>{};
+    if (event != null) {
+      body['event'] = event;
+    }
+    if (xpDelta != null) {
+      body['xpDelta'] = xpDelta;
+    }
+    if (tasksState != null) {
+      body['tasksState'] = tasksState;
+    }
+    if (await _online) {
+      try {
+        final j = await _portal.syncGamification(body);
+        final g = GamificationState.fromJson(j);
+        await _offline.saveGamification(g);
+        return g;
+      } catch (_) {
+        // fall through to cache
+      }
+    }
+    return _offline.readGamification() ??
+        GamificationState.fromJson({
+          'xp': 0,
+          'level': 'BEGINNER',
+          'lastDailyCheckIn': null,
+          'tasksState': {},
+        });
+  }
+
+  /// Award server-side daily login XP when the app opens (online).
+  Future<void> tryDailyLoginXp() async {
+    if (_mockMode || !await _online) {
+      return;
+    }
+    try {
+      final j = await _portal.syncGamification({'event': 'daily_login'});
+      await _offline.saveGamification(GamificationState.fromJson(j));
+    } catch (_) {}
   }
 }

@@ -3,6 +3,8 @@ import 'dart:math';
 import '../models/alert_item.dart';
 import '../models/auth_user.dart';
 import '../models/device.dart';
+import '../models/farmer_profile.dart';
+import '../models/gamification_state.dart';
 import '../models/recommendation_item.dart';
 import '../models/telemetry_point.dart';
 
@@ -93,6 +95,47 @@ class MockDataService {
         createdAt: now,
       ),
     ];
+  }
+
+  FarmerProfile farmerProfile() {
+    return FarmerProfile(
+      soilType: 'Loamy',
+      crops: const ['tomato', 'lettuce'],
+      lat: 36.8,
+      lng: 10.1,
+      farmSizeHa: 2.5,
+      habits: const {
+        'wateringFrequency': 'daily',
+        'fertilizerUsage': 'weekly',
+        'careMode': 'mixed',
+      },
+      completedOnboarding: true,
+    );
+  }
+
+  GamificationState gamificationState() {
+    return GamificationState.fromJson({
+      'xp': 140,
+      'level': 'INTERMEDIATE',
+      'lastDailyCheckIn': DateTime.now().toUtc().toIso8601String(),
+      'tasksState': {
+        'version': 1,
+        'tasks': [
+          {
+            'id': 'water_today',
+            'title': 'Water your plants today',
+            'xpReward': 15,
+            'completed': false,
+          },
+          {
+            'id': 'check_system_health',
+            'title': 'Check system health',
+            'xpReward': 10,
+            'completed': true,
+          },
+        ],
+      },
+    });
   }
 
   List<AlertItem> alerts() {

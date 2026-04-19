@@ -3,6 +3,7 @@ import 'package:flutter_riverpod/flutter_riverpod.dart';
 
 import '../../data/models/device.dart';
 import '../providers/app_providers.dart';
+import 'gamification_screen.dart';
 import 'home_screen.dart';
 import 'insights_screen.dart';
 import 'settings_screen.dart';
@@ -21,9 +22,18 @@ class _MainShellScreenState extends ConsumerState<MainShellScreen> {
   static const List<Widget> _pages = [
     HomeScreen(),
     InsightsScreen(),
+    GamificationScreen(),
     SystemScreen(),
     SettingsScreen(),
   ];
+
+  @override
+  void initState() {
+    super.initState();
+    WidgetsBinding.instance.addPostFrameCallback((_) {
+      ref.read(cropRepositoryProvider).tryDailyLoginXp();
+    });
+  }
 
   @override
   Widget build(BuildContext context) {
@@ -58,6 +68,10 @@ class _MainShellScreenState extends ConsumerState<MainShellScreen> {
           NavigationDestination(
             icon: Icon(Icons.insights_outlined),
             label: 'Insights',
+          ),
+          NavigationDestination(
+            icon: Icon(Icons.emoji_events_outlined),
+            label: 'Grow',
           ),
           NavigationDestination(
             icon: Icon(Icons.monitor_heart_outlined),

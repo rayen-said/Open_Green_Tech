@@ -3,7 +3,6 @@ import { Manrope, Noto_Sans_Arabic, JetBrains_Mono } from "next/font/google";
 import "./globals.css";
 import { I18nProvider } from "@/i18n/provider";
 import { ToastStack } from "@/components/toast-stack";
-import { ChatWidget } from "@/components/chat-widget";
 
 const manrope = Manrope({
   variable: "--font-manrope",
@@ -39,7 +38,6 @@ export default function RootLayout({
         <I18nProvider>
           {children}
           <ToastStack />
-          <ChatWidget />
         </I18nProvider>
       </body>
     </html>

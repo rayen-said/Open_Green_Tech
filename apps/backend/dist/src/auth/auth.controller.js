@@ -19,6 +19,7 @@ const signup_dto_1 = require("./dto/signup.dto");
 const login_dto_1 = require("./dto/login.dto");
 const refresh_token_dto_1 = require("./dto/refresh-token.dto");
 const logout_dto_1 = require("./dto/logout.dto");
+const supabase_token_dto_1 = require("./dto/supabase-token.dto");
 const public_decorator_1 = require("../common/decorators/public.decorator");
 let AuthController = class AuthController {
     authService;
@@ -30,6 +31,9 @@ let AuthController = class AuthController {
     }
     login(dto) {
         return this.authService.login(dto);
+    }
+    loginWithSupabase(dto) {
+        return this.authService.loginFromSupabaseAccessToken(dto.accessToken);
     }
     refresh(dto) {
         return this.authService.refresh(dto);
@@ -58,6 +62,14 @@ __decorate([
     __metadata("design:paramtypes", [login_dto_1.LoginDto]),
     __metadata("design:returntype", void 0)
 ], AuthController.prototype, "login", null);
+__decorate([
+    (0, public_decorator_1.Public)(),
+    (0, common_1.Post)('supabase'),
+    __param(0, (0, common_1.Body)()),
+    __metadata("design:type", Function),
+    __metadata("design:paramtypes", [supabase_token_dto_1.SupabaseTokenDto]),
+    __metadata("design:returntype", void 0)
+], AuthController.prototype, "loginWithSupabase", null);
 __decorate([
     (0, public_decorator_1.Public)(),
     (0, common_1.Post)('refresh'),

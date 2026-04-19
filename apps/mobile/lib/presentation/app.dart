@@ -6,6 +6,7 @@ import '../core/theme/app_theme.dart';
 import 'providers/app_providers.dart';
 import 'screens/login_screen.dart';
 import 'screens/main_shell_screen.dart';
+import 'screens/onboarding_screen.dart';
 
 class CropAdvisorApp extends ConsumerWidget {
   const CropAdvisorApp({super.key});
@@ -26,7 +27,20 @@ class CropAdvisorApp extends ConsumerWidget {
           if (!mock && session == null) {
             return const LoginScreen();
           }
-          return const MainShellScreen();
+          if (mock) {
+            return const MainShellScreen();
+          }
+          final farmer = ref.watch(farmerProfileProvider);
+          return farmer.when(
+            data: (profile) {
+              if (!profile.completedOnboarding) {
+                return const OnboardingScreen();
+              }
+              return const MainShellScreen();
+            },
+            loading: () => const _Splash(),
+            error: (e, _) => _ErrorScreen(message: e.toString()),
+          );
         },
         loading: () => const _Splash(),
         error: (e, _) => _ErrorScreen(message: e.toString()),

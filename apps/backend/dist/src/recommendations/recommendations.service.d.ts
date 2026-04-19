@@ -1,12 +1,15 @@
-import { ConfigService } from '@nestjs/config';
 import { Role } from '@prisma/client';
+import { AiService } from '../ai/ai.service';
 import { PrismaService } from '../prisma/prisma.service';
+import { UserProfileService } from '../user-portal/user-profile.service';
 export declare class RecommendationsService {
     private readonly prisma;
-    private readonly configService;
-    constructor(prisma: PrismaService, configService: ConfigService);
+    private readonly aiService;
+    private readonly userProfileService;
+    constructor(prisma: PrismaService, aiService: AiService, userProfileService: UserProfileService);
     private buildRules;
-    private generateWithLLM;
+    private scoreFromSeries;
+    private mapAiToLegacyPayload;
     generate(deviceId: string, userId: string, role: Role): Promise<[{
         id: string;
         createdAt: Date;
@@ -14,9 +17,9 @@ export declare class RecommendationsService {
         title: string;
         type: import("@prisma/client").$Enums.RecommendationType;
         explanation: string;
+        confidence: number;
         reason: string;
         detectedIssues: import("@prisma/client/runtime/client").JsonValue;
-        confidence: number;
     }, {
         id: string;
         createdAt: Date;
@@ -24,9 +27,9 @@ export declare class RecommendationsService {
         title: string;
         type: import("@prisma/client").$Enums.RecommendationType;
         explanation: string;
+        confidence: number;
         reason: string;
         detectedIssues: import("@prisma/client/runtime/client").JsonValue;
-        confidence: number;
     }, {
         id: string;
         createdAt: Date;
@@ -34,9 +37,9 @@ export declare class RecommendationsService {
         title: string;
         type: import("@prisma/client").$Enums.RecommendationType;
         explanation: string;
+        confidence: number;
         reason: string;
         detectedIssues: import("@prisma/client/runtime/client").JsonValue;
-        confidence: number;
     }, {
         id: string;
         createdAt: Date;
@@ -44,9 +47,9 @@ export declare class RecommendationsService {
         title: string;
         type: import("@prisma/client").$Enums.RecommendationType;
         explanation: string;
+        confidence: number;
         reason: string;
         detectedIssues: import("@prisma/client/runtime/client").JsonValue;
-        confidence: number;
     }]>;
     list(deviceId: string, userId: string, role: Role): Promise<{
         id: string;
@@ -55,8 +58,8 @@ export declare class RecommendationsService {
         title: string;
         type: import("@prisma/client").$Enums.RecommendationType;
         explanation: string;
+        confidence: number;
         reason: string;
         detectedIssues: import("@prisma/client/runtime/client").JsonValue;
-        confidence: number;
     }[]>;
 }

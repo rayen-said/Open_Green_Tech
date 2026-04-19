@@ -3,6 +3,7 @@ import { SignupDto } from './dto/signup.dto';
 import { LoginDto } from './dto/login.dto';
 import { RefreshTokenDto } from './dto/refresh-token.dto';
 import { LogoutDto } from './dto/logout.dto';
+import { SupabaseTokenDto } from './dto/supabase-token.dto';
 export declare class AuthController {
     private readonly authService;
     constructor(authService: AuthService);
@@ -19,6 +20,18 @@ export declare class AuthController {
         refreshExpiresIn: string;
     }>;
     login(dto: LoginDto): Promise<{
+        accessToken: string;
+        refreshToken: string;
+        user: {
+            id: string;
+            email: string;
+            fullName: string;
+            role: import("@prisma/client").$Enums.Role;
+        };
+        expiresIn: string;
+        refreshExpiresIn: string;
+    }>;
+    loginWithSupabase(dto: SupabaseTokenDto): Promise<{
         accessToken: string;
         refreshToken: string;
         user: {

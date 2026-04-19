@@ -26,6 +26,8 @@ const alerts_module_1 = require("./alerts/alerts.module");
 const admin_module_1 = require("./admin/admin.module");
 const demo_module_1 = require("./demo/demo.module");
 const chat_module_1 = require("./chat/chat.module");
+const ai_module_1 = require("./ai/ai.module");
+const user_portal_module_1 = require("./user-portal/user-portal.module");
 let AppModule = class AppModule {
 };
 exports.AppModule = AppModule;
@@ -60,6 +62,8 @@ exports.AppModule = AppModule = __decorate([
             admin_module_1.AdminModule,
             demo_module_1.DemoModule,
             chat_module_1.ChatModule,
+            ai_module_1.AiModule,
+            user_portal_module_1.UserPortalModule,
         ],
         controllers: [app_controller_1.AppController],
         providers: [

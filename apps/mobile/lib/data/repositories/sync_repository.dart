@@ -51,6 +51,12 @@ class SyncRepository {
       } catch (_) {
         // Offline or session expired — cache path already handled in repository.
       }
+      try {
+        await _repository.loadFarmerProfile();
+      } catch (_) {}
+      try {
+        await _repository.loadGamification();
+      } catch (_) {}
     }
     _onSynced();
   }

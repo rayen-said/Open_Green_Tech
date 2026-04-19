@@ -6,6 +6,8 @@ import '../../data/models/alert_item.dart';
 import '../../data/models/anomaly_summary.dart';
 import '../../data/models/auth_user.dart';
 import '../../data/models/device.dart';
+import '../../data/models/farmer_profile.dart';
+import '../../data/models/gamification_state.dart';
 import '../../data/models/recommendation_item.dart';
 import '../../data/models/telemetry_point.dart';
 import '../../data/network/authorized_dio.dart';
@@ -22,6 +24,7 @@ import '../../data/services/mock_data_service.dart';
 import '../../data/services/recommendation_service.dart';
 import '../../data/services/telemetry_service.dart';
 import '../../data/services/token_storage.dart';
+import '../../data/services/user_portal_service.dart';
 import '../../data/services/user_service.dart';
 
 final tokenStorageProvider = Provider<TokenStorage>((ref) => TokenStorage());
@@ -50,6 +53,10 @@ final userServiceProvider = Provider<UserService>(
   (ref) => UserService(ref.watch(authorizedDioProvider)),
 );
 
+final userPortalServiceProvider = Provider<UserPortalService>(
+  (ref) => UserPortalService(ref.watch(authorizedDioProvider)),
+);
+
 final mockDataServiceProvider = Provider<MockDataService>(
   (ref) => MockDataService(),
 );
@@ -69,6 +76,7 @@ final cropRepositoryProvider = Provider<CropRepository>((ref) {
     alertsService: ref.watch(alertsServiceProvider),
     devicesService: ref.watch(devicesServiceProvider),
     userService: ref.watch(userServiceProvider),
+    userPortalService: ref.watch(userPortalServiceProvider),
     connectivity: ref.watch(connectivityServiceProvider),
     mockDataService: ref.watch(mockDataServiceProvider),
     offline: OfflineStore.instance,
@@ -152,6 +160,8 @@ class AuthNotifier extends AsyncNotifier<AuthSession?> {
     ref.invalidate(telemetrySeriesProvider);
     ref.invalidate(recommendationsProvider);
     ref.invalidate(alertsProvider);
+    ref.invalidate(farmerProfileProvider);
+    ref.invalidate(gamificationProvider);
   }
 }
 
@@ -201,6 +211,16 @@ final userProfileProvider = FutureProvider.autoDispose<AuthUser>((ref) async {
   return ref.read(cropRepositoryProvider).loadUser();
 });
 
+final farmerProfileProvider =
+    FutureProvider.autoDispose<FarmerProfile>((ref) async {
+  return ref.read(cropRepositoryProvider).loadFarmerProfile();
+});
+
+final gamificationProvider =
+    FutureProvider.autoDispose<GamificationState>((ref) async {
+  return ref.read(cropRepositoryProvider).loadGamification();
+});
+
 final syncRepositoryProvider = Provider<SyncRepository>((ref) {
   return SyncRepository(
     connectivity: ref.watch(connectivityServiceProvider),
@@ -211,6 +231,8 @@ final syncRepositoryProvider = Provider<SyncRepository>((ref) {
       ref.invalidate(recommendationsProvider);
       ref.invalidate(alertsProvider);
       ref.invalidate(userProfileProvider);
+      ref.invalidate(farmerProfileProvider);
+      ref.invalidate(gamificationProvider);
     },
     selectedDeviceId: () => ref.read(selectedDeviceIdProvider),
   );

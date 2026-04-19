@@ -2,13 +2,15 @@
 
 import { useI18n } from "@/i18n/provider";
 import { api } from "@/lib/api";
-import { useState } from "react";
 import { useAuthStore } from "@/store/auth-store";
+import { useRouter } from "next/navigation";
+import { useState } from "react";
 
 type AuthMode = "login" | "signup";
 
 export function AuthCard() {
   const { t } = useI18n();
+  const router = useRouter();
   const setAuth = useAuthStore((state) => state.setAuth);
   const [mode, setMode] = useState<AuthMode>("login");
   const [fullName, setFullName] = useState("");
@@ -31,6 +33,7 @@ export function AuthCard() {
 
       const response = await api.post(endpoint, payload);
       setAuth(response.data.accessToken, response.data.refreshToken, response.data.user);
+      router.push("/dashboard");
     } catch {
       setError("Authentication failed");
     } finally {

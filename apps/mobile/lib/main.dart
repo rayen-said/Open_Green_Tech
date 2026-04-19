@@ -3,6 +3,7 @@ import 'package:flutter_riverpod/flutter_riverpod.dart';
 import 'package:hive_flutter/hive_flutter.dart';
 
 import 'core/config/env_config.dart';
+import 'core/notifications/local_notifications.dart';
 import 'data/offline/offline_store.dart';
 import 'presentation/app.dart';
 
@@ -11,6 +12,7 @@ Future<void> main() async {
   await EnvConfig.load();
   await Hive.initFlutter();
   await OfflineStore.instance.init();
+  await LocalNotifications.setup();
 
   runApp(const ProviderScope(child: CropAdvisorApp()));
 }

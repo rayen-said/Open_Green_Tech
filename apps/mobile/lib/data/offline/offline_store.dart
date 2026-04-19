@@ -5,6 +5,8 @@ import 'package:hive_flutter/hive_flutter.dart';
 import '../models/alert_item.dart';
 import '../models/auth_user.dart';
 import '../models/device.dart';
+import '../models/farmer_profile.dart';
+import '../models/gamification_state.dart';
 import '../models/recommendation_item.dart';
 import '../models/telemetry_point.dart';
 
@@ -36,6 +38,8 @@ class OfflineStore {
   static String keyRecommendations(String deviceId) => 'recommendations_$deviceId';
   static String keyAlerts() => 'alerts';
   static String keyUser() => 'auth_user';
+  static String keyFarmerProfile() => 'farmer_profile';
+  static String keyGamification() => 'gamification';
 
   Future<void> saveDevices(List<Device> devices) async {
     await _b.put(
@@ -144,6 +148,56 @@ class OfflineStore {
     await _b.delete(keySelectedDevice());
     await _b.delete(keyAlerts());
     await _b.delete(keyUser());
+    await _b.delete(keyFarmerProfile());
+    await _b.delete(keyGamification());
     // Keep per-device telemetry/recommendation caches for offline demos.
+  }
+
+  Future<void> saveFarmerProfile(FarmerProfile profile) async {
+    await _b.put(
+      keyFarmerProfile(),
+      jsonEncode({
+        'soilType': profile.soilType,
+        'crops': profile.crops,
+        'lat': profile.lat,
+        'lng': profile.lng,
+        'farmSizeHa': profile.farmSizeHa,
+        'habits': profile.habits,
+        'completedOnboarding': profile.completedOnboarding,
+      }),
+    );
+  }
+
+  FarmerProfile? readFarmerProfile() {
+    final raw = _b.get(keyFarmerProfile());
+    if (raw == null) {
+      return null;
+    }
+    final m = jsonDecode(raw) as Map<String, dynamic>;
+    return FarmerProfile(
+      soilType: m['soilType']?.toString(),
+      crops: (m['crops'] as List?)?.map((e) => e.toString()).toList() ?? [],
+      lat: (m['lat'] as num?)?.toDouble(),
+      lng: (m['lng'] as num?)?.toDouble(),
+      farmSizeHa: (m['farmSizeHa'] as num?)?.toDouble(),
+      habits: m['habits'] is Map
+          ? Map<String, dynamic>.from(m['habits'] as Map)
+          : {},
+      completedOnboarding: m['completedOnboarding'] == true,
+    );
+  }
+
+  Future<void> saveGamification(GamificationState state) async {
+    await _b.put(keyGamification(), jsonEncode(state.toJson()));
+  }
+
+  GamificationState? readGamification() {
+    final raw = _b.get(keyGamification());
+    if (raw == null) {
+      return null;
+    }
+    return GamificationState.fromJson(
+      jsonDecode(raw) as Map<String, dynamic>,
+    );
   }
 }

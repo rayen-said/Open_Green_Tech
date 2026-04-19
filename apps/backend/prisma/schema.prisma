@@ -45,6 +45,35 @@ model User {
   devices      Device[]
   alerts       Alert[]
   chatMessages ChatMessage[]
+  profile      UserProfile?
+  gamification UserGamification?
+}
+
+/// Onboarding + field preferences (synced mobile ↔ backend). Used in AI prompts.
+model UserProfile {
+  userId               String   @id
+  user                 User     @relation(fields: [userId], references: [id], onDelete: Cascade)
+  soilType             String?
+  crops                Json     @default("[]")
+  farmSizeHa           Float?
+  lat                  Float?
+  lng                  Float?
+  habits               Json     @default("{}")
+  completedOnboarding  Boolean  @default(false)
+  createdAt            DateTime @default(now())
+  updatedAt            DateTime @updatedAt
+}
+
+/// XP / levels / task progress (mobile-first; optional web read later).
+model UserGamification {
+  userId            String    @id
+  user              User      @relation(fields: [userId], references: [id], onDelete: Cascade)
+  xp                Int       @default(0)
+  level             String    @default("BEGINNER")
+  lastDailyCheckIn  DateTime?
+  tasksState        Json      @default("{}")
+  createdAt         DateTime  @default(now())
+  updatedAt         DateTime  @updatedAt
 }
 
 model Device {
