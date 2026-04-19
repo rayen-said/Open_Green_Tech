@@ -14,6 +14,7 @@ export declare class ChatService {
     private readonly configService;
     private readonly logger;
     constructor(prisma: PrismaService, configService: ConfigService);
+    private get chatMessages();
     getHistory(userId: string, limit?: number): Promise<ChatMessageView[]>;
     sendMessage(userId: string, role: Role, dto: SendChatMessageDto): Promise<{
         assistant: {

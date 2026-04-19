@@ -7,13 +7,10 @@
   "license": "UNLICENSED",
   "scripts": {
     "build": "nest build",
-<<<<<<< HEAD
-=======
     "prisma:generate": "prisma generate",
     "prisma:push": "prisma db push",
     "prisma:seed": "ts-node prisma/seed.ts",
     "demo:simulate": "ts-node scripts/demo-simulator.ts",
->>>>>>> 860ec09 (Initial commit - Crop Advisor SaaS)
     "format": "prettier --write \"src/**/*.ts\" \"test/**/*.ts\"",
     "start": "nest start",
     "start:dev": "nest start --watch",
@@ -28,16 +25,6 @@
   },
   "dependencies": {
     "@nestjs/common": "^11.0.1",
-<<<<<<< HEAD
-    "@nestjs/core": "^11.0.1",
-    "@nestjs/platform-express": "^11.0.1",
-    "@prisma/client": "^7.7.0",
-    "class-transformer": "^0.5.1",
-    "class-validator": "^0.15.1",
-    "openai": "^6.34.0",
-    "reflect-metadata": "^0.2.2",
-    "rxjs": "^7.8.1"
-=======
     "@nestjs/config": "^4.0.2",
     "@nestjs/core": "^11.0.1",
     "@nestjs/jwt": "^11.0.1",
@@ -60,7 +47,6 @@
     "reflect-metadata": "^0.2.2",
     "rxjs": "^7.8.1",
     "socket.io": "^4.8.1"
->>>>>>> 860ec09 (Initial commit - Crop Advisor SaaS)
   },
   "devDependencies": {
     "@eslint/eslintrc": "^3.2.0",
@@ -71,20 +57,14 @@
     "@types/express": "^5.0.0",
     "@types/jest": "^30.0.0",
     "@types/node": "^24.0.0",
-<<<<<<< HEAD
-=======
     "@types/passport-jwt": "^4.0.1",
->>>>>>> 860ec09 (Initial commit - Crop Advisor SaaS)
     "@types/supertest": "^7.0.0",
     "eslint": "^9.18.0",
     "eslint-config-prettier": "^10.0.1",
     "eslint-plugin-prettier": "^5.2.2",
     "globals": "^17.0.0",
     "jest": "^30.0.0",
-<<<<<<< HEAD
-=======
     "pino-pretty": "^13.1.1",
->>>>>>> 860ec09 (Initial commit - Crop Advisor SaaS)
     "prettier": "^3.4.2",
     "prisma": "^7.7.0",
     "source-map-support": "^0.5.21",

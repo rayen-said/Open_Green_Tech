@@ -56,7 +56,11 @@ function buildPayload(step: number) {
   };
 }
 
-async function sendTelemetry(accessToken: string, deviceId: string, step: number) {
+async function sendTelemetry(
+  accessToken: string,
+  deviceId: string,
+  step: number,
+) {
   const response = await fetch(`${apiUrl}/telemetry/${deviceId}`, {
     method: 'POST',
     headers: {

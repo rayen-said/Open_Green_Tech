@@ -6,6 +6,25 @@ import { AuthController } from './auth.controller';
 import { AuthService } from './auth.service';
 import { JwtStrategy } from './jwt.strategy';
 
+function parseExpiryToSeconds(value: string, fallbackSeconds: number): number {
+  const match = /^(\d+)([smhd])$/.exec(value.trim());
+  if (!match) {
+    return fallbackSeconds;
+  }
+
+  const amount = Number(match[1]);
+  const unit = match[2] as 's' | 'm' | 'h' | 'd';
+
+  const multipliers: Record<'s' | 'm' | 'h' | 'd', number> = {
+    s: 1,
+    m: 60,
+    h: 60 * 60,
+    d: 60 * 60 * 24,
+  };
+
+  return amount * multipliers[unit];
+}
+
 @Module({
   imports: [
     ConfigModule,
@@ -15,7 +34,10 @@ import { JwtStrategy } from './jwt.strategy';
       useFactory: (configService: ConfigService) => ({
         secret: configService.get<string>('JWT_SECRET') ?? 'change-this-secret',
         signOptions: {
-          expiresIn: (configService.get<string>('JWT_EXPIRES_IN') ?? '7d') as any,
+          expiresIn: parseExpiryToSeconds(
+            configService.get<string>('JWT_EXPIRES_IN') ?? '7d',
+            60 * 60 * 24 * 7,
+          ),
         },
       }),
     }),

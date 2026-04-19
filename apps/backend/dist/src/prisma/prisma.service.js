@@ -25,8 +25,8 @@ let PrismaService = class PrismaService extends client_1.PrismaClient {
     async onModuleInit() {
         await this.$connect();
     }
-    async enableShutdownHooks(app) {
-        app.enableShutdownHooks();
+    enableShutdownHooks(app) {
+        void app.enableShutdownHooks();
     }
 };
 exports.PrismaService = PrismaService;

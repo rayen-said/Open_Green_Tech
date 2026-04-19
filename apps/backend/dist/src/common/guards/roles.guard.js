@@ -26,9 +26,7 @@ let RolesGuard = class RolesGuard {
         if (!requiredRoles || requiredRoles.length === 0) {
             return true;
         }
-        const request = context
-            .switchToHttp()
-            .getRequest();
+        const request = context.switchToHttp().getRequest();
         const user = request.user;
         if (!user || !requiredRoles.includes(user.role)) {
             throw new common_1.ForbiddenException('You do not have permission for this action.');

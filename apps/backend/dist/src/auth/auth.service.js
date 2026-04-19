@@ -16,6 +16,21 @@ const jwt_1 = require("@nestjs/jwt");
 const prisma_service_1 = require("../prisma/prisma.service");
 const bcryptjs_1 = require("bcryptjs");
 const client_1 = require("@prisma/client");
+function parseExpiryToSeconds(value, fallbackSeconds) {
+    const match = /^(\d+)([smhd])$/.exec(value.trim());
+    if (!match) {
+        return fallbackSeconds;
+    }
+    const amount = Number(match[1]);
+    const unit = match[2];
+    const multipliers = {
+        s: 1,
+        m: 60,
+        h: 60 * 60,
+        d: 60 * 60 * 24,
+    };
+    return amount * multipliers[unit];
+}
 let AuthService = class AuthService {
     prisma;
     jwtService;
@@ -58,9 +73,12 @@ let AuthService = class AuthService {
     }
     async refresh(dto) {
         const payload = await this.jwtService.verifyAsync(dto.refreshToken, {
-            secret: this.configService.get('JWT_REFRESH_SECRET') ?? 'change-this-refresh-secret',
+            secret: this.configService.get('JWT_REFRESH_SECRET') ??
+                'change-this-refresh-secret',
         });
-        const user = await this.prisma.user.findUnique({ where: { id: payload.sub } });
+        const user = await this.prisma.user.findUnique({
+            where: { id: payload.sub },
+        });
         if (!user || !user.refreshTokenHash) {
             throw new common_1.UnauthorizedException('Refresh token invalid.');
         }
@@ -72,7 +90,8 @@ let AuthService = class AuthService {
     }
     async logout(dto) {
         const payload = await this.jwtService.verifyAsync(dto.refreshToken, {
-            secret: this.configService.get('JWT_REFRESH_SECRET') ?? 'change-this-refresh-secret',
+            secret: this.configService.get('JWT_REFRESH_SECRET') ??
+                'change-this-refresh-secret',
         });
         await this.prisma.user.updateMany({
             where: { id: payload.sub },
@@ -98,14 +117,15 @@ let AuthService = class AuthService {
     }
     async issueTokens(userId, email, fullName, role) {
         const payload = { sub: userId, email, role };
-        const jwtExpiresIn = (this.configService.get('JWT_EXPIRES_IN') ?? '7d');
-        const refreshExpiresIn = (this.configService.get('JWT_REFRESH_EXPIRES_IN') ?? '30d');
+        const jwtExpiresIn = parseExpiryToSeconds(this.configService.get('JWT_EXPIRES_IN') ?? '7d', 60 * 60 * 24 * 7);
+        const refreshExpiresIn = parseExpiryToSeconds(this.configService.get('JWT_REFRESH_EXPIRES_IN') ?? '30d', 60 * 60 * 24 * 30);
         const accessToken = await this.jwtService.signAsync(payload, {
             secret: this.configService.get('JWT_SECRET') ?? 'change-this-secret',
             expiresIn: jwtExpiresIn,
         });
         const refreshToken = await this.jwtService.signAsync(payload, {
-            secret: this.configService.get('JWT_REFRESH_SECRET') ?? 'change-this-refresh-secret',
+            secret: this.configService.get('JWT_REFRESH_SECRET') ??
+                'change-this-refresh-secret',
             expiresIn: refreshExpiresIn,
         });
         const refreshTokenHash = await (0, bcryptjs_1.hash)(refreshToken, 10);

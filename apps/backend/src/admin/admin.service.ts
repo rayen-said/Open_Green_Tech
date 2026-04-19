@@ -6,20 +6,25 @@ export class AdminService {
   constructor(private readonly prisma: PrismaService) {}
 
   async overview() {
-    const [totalUsers, totalDevices, anomaliesDetected, liveTelemetry24h, alertsOpen] =
-      await Promise.all([
-        this.prisma.user.count(),
-        this.prisma.device.count(),
-        this.prisma.telemetry.count({ where: { anomaly: true } }),
-        this.prisma.telemetry.count({
-          where: {
-            timestamp: {
-              gte: new Date(Date.now() - 24 * 60 * 60 * 1000),
-            },
+    const [
+      totalUsers,
+      totalDevices,
+      anomaliesDetected,
+      liveTelemetry24h,
+      alertsOpen,
+    ] = await Promise.all([
+      this.prisma.user.count(),
+      this.prisma.device.count(),
+      this.prisma.telemetry.count({ where: { anomaly: true } }),
+      this.prisma.telemetry.count({
+        where: {
+          timestamp: {
+            gte: new Date(Date.now() - 24 * 60 * 60 * 1000),
           },
-        }),
-        this.prisma.alert.count({ where: { acknowledged: false } }),
-      ]);
+        },
+      }),
+      this.prisma.alert.count({ where: { acknowledged: false } }),
+    ]);
 
     const recentActivity = await this.prisma.telemetry.findMany({
       orderBy: { timestamp: 'desc' },

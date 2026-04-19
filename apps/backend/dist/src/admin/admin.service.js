@@ -18,7 +18,7 @@ let AdminService = class AdminService {
         this.prisma = prisma;
     }
     async overview() {
-        const [totalUsers, totalDevices, anomaliesDetected, liveTelemetry24h, alertsOpen] = await Promise.all([
+        const [totalUsers, totalDevices, anomaliesDetected, liveTelemetry24h, alertsOpen,] = await Promise.all([
             this.prisma.user.count(),
             this.prisma.device.count(),
             this.prisma.telemetry.count({ where: { anomaly: true } }),

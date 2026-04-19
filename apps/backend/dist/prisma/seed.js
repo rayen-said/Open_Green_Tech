@@ -1,6 +1,5 @@
 "use strict";
 Object.defineProperty(exports, "__esModule", { value: true });
-require("dotenv/config");
 const adapter_pg_1 = require("@prisma/adapter-pg");
 const client_1 = require("@prisma/client");
 const bcryptjs_1 = require("bcryptjs");
@@ -93,7 +92,9 @@ async function main() {
         const recommendationTemplates = [
             {
                 type: client_1.RecommendationType.CROP_HEALTH,
-                title: latest.temperature > 38 ? 'Heat stress detected' : 'Crop vitality stable',
+                title: latest.temperature > 38
+                    ? 'Heat stress detected'
+                    : 'Crop vitality stable',
                 explanation: latest.temperature > 38
                     ? 'Use shade and irrigation support to protect the canopy.'
                     : 'Current crop condition is healthy and stable.',
@@ -105,7 +106,9 @@ async function main() {
             },
             {
                 type: client_1.RecommendationType.IRRIGATION,
-                title: latest.humidity < 35 ? 'Increase irrigation' : 'Maintain current watering',
+                title: latest.humidity < 35
+                    ? 'Increase irrigation'
+                    : 'Maintain current watering',
                 explanation: latest.humidity < 35
                     ? 'Moisture is below the desired threshold for active growth.'
                     : 'Watering rhythm is aligned with current humidity.',
@@ -148,7 +151,9 @@ async function main() {
                 data: {
                     deviceId: device.id,
                     userId: device.ownerId,
-                    severity: latest.temperature > 42 ? client_1.AlertSeverity.CRITICAL : client_1.AlertSeverity.HIGH,
+                    severity: latest.temperature > 42
+                        ? client_1.AlertSeverity.CRITICAL
+                        : client_1.AlertSeverity.HIGH,
                     title: 'Seed anomaly detected',
                     message: 'Seeded telemetry indicates abnormal field conditions.',
                 },

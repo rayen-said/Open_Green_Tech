@@ -16,8 +16,11 @@ async function bootstrap() {
     app.setGlobalPrefix('api');
     app.useLogger(app.get(nestjs_pino_1.Logger));
     const prismaService = app.get(prisma_service_1.PrismaService);
-    await prismaService.enableShutdownHooks(app);
+    prismaService.enableShutdownHooks(app);
     await app.listen(process.env.PORT ?? 3000);
 }
-bootstrap();
+void bootstrap().catch((error) => {
+    console.error(error);
+    process.exit(1);
+});
 //# sourceMappingURL=main.js.map

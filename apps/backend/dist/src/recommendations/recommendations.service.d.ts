@@ -15,7 +15,7 @@ export declare class RecommendationsService {
         type: import("@prisma/client").$Enums.RecommendationType;
         explanation: string;
         reason: string;
-        detectedIssues: string[];
+        detectedIssues: import("@prisma/client/runtime/client").JsonValue;
         confidence: number;
     }, {
         id: string;
@@ -25,7 +25,7 @@ export declare class RecommendationsService {
         type: import("@prisma/client").$Enums.RecommendationType;
         explanation: string;
         reason: string;
-        detectedIssues: string[];
+        detectedIssues: import("@prisma/client/runtime/client").JsonValue;
         confidence: number;
     }, {
         id: string;
@@ -35,7 +35,7 @@ export declare class RecommendationsService {
         type: import("@prisma/client").$Enums.RecommendationType;
         explanation: string;
         reason: string;
-        detectedIssues: string[];
+        detectedIssues: import("@prisma/client/runtime/client").JsonValue;
         confidence: number;
     }, {
         id: string;
@@ -45,7 +45,7 @@ export declare class RecommendationsService {
         type: import("@prisma/client").$Enums.RecommendationType;
         explanation: string;
         reason: string;
-        detectedIssues: string[];
+        detectedIssues: import("@prisma/client/runtime/client").JsonValue;
         confidence: number;
     }]>;
     list(deviceId: string, userId: string, role: Role): Promise<{
@@ -56,7 +56,7 @@ export declare class RecommendationsService {
         type: import("@prisma/client").$Enums.RecommendationType;
         explanation: string;
         reason: string;
-        detectedIssues: string[];
+        detectedIssues: import("@prisma/client/runtime/client").JsonValue;
         confidence: number;
     }[]>;
 }

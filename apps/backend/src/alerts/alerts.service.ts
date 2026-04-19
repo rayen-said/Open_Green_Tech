@@ -1,4 +1,8 @@
-import { ForbiddenException, Injectable, NotFoundException } from '@nestjs/common';
+import {
+  ForbiddenException,
+  Injectable,
+  NotFoundException,
+} from '@nestjs/common';
 import { Role } from '@prisma/client';
 import { PrismaService } from '../prisma/prisma.service';
 
@@ -23,7 +27,9 @@ export class AlertsService {
   }
 
   async acknowledge(alertId: string, userId: string, role: Role) {
-    const alert = await this.prisma.alert.findUnique({ where: { id: alertId } });
+    const alert = await this.prisma.alert.findUnique({
+      where: { id: alertId },
+    });
 
     if (!alert) {
       throw new NotFoundException('Alert not found');

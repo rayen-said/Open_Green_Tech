@@ -1,13 +1,9 @@
-<<<<<<< HEAD
-import { Test, TestingModule } from '@nestjs/testing';
-import { INestApplication } from '@nestjs/common';
-import request from 'supertest';
-import { App } from 'supertest/types';
-import { AppModule } from './../src/app.module';
-
-describe('AppController (e2e)', () => {
-=======
-import { CanActivate, ExecutionContext, INestApplication, Injectable } from '@nestjs/common';
+import {
+  CanActivate,
+  ExecutionContext,
+  INestApplication,
+  Injectable,
+} from '@nestjs/common';
 import { Test, TestingModule } from '@nestjs/testing';
 import { APP_GUARD } from '@nestjs/core';
 import request from 'supertest';
@@ -22,7 +18,13 @@ import { TelemetryService } from '../src/telemetry/telemetry.service';
 @Injectable()
 class TestGuard implements CanActivate {
   canActivate(context: ExecutionContext): boolean {
-    const requestObject = context.switchToHttp().getRequest();
+    const requestObject = context.switchToHttp().getRequest<{
+      user: {
+        sub: string;
+        email: string;
+        role: string;
+      };
+    }>();
     requestObject.user = {
       sub: 'user-1',
       email: 'user@agri.com',
@@ -33,25 +35,10 @@ class TestGuard implements CanActivate {
 }
 
 describe('Crop Advisor API e2e', () => {
->>>>>>> 860ec09 (Initial commit - Crop Advisor SaaS)
   let app: INestApplication<App>;
 
   beforeEach(async () => {
     const moduleFixture: TestingModule = await Test.createTestingModule({
-<<<<<<< HEAD
-      imports: [AppModule],
-    }).compile();
-
-    app = moduleFixture.createNestApplication();
-    await app.init();
-  });
-
-  it('/ (GET)', () => {
-    return request(app.getHttpServer())
-      .get('/')
-      .expect(200)
-      .expect('Hello World!');
-=======
       controllers: [AuthController, DevicesController, TelemetryController],
       providers: [
         {
@@ -114,8 +101,13 @@ describe('Crop Advisor API e2e', () => {
       .send({ email: 'user@agri.com', password: 'Farmer@12345' })
       .expect(201)
       .expect((response) => {
-        expect(response.body.accessToken).toBeDefined();
-        expect(response.body.refreshToken).toBeDefined();
+        const body = response.body as {
+          accessToken: string;
+          refreshToken: string;
+        };
+
+        expect(body.accessToken).toBeDefined();
+        expect(body.refreshToken).toBeDefined();
       });
   });
 
@@ -131,7 +123,9 @@ describe('Crop Advisor API e2e', () => {
       })
       .expect(201)
       .expect((response) => {
-        expect(response.body.id).toBe('device-1');
+        const body = response.body as { id: string };
+
+        expect(body.id).toBe('device-1');
       });
   });
 
@@ -146,9 +140,10 @@ describe('Crop Advisor API e2e', () => {
       })
       .expect(201)
       .expect((response) => {
-        expect(response.body.id).toBe('telemetry-1');
+        const body = response.body as { id: string };
+
+        expect(body.id).toBe('telemetry-1');
       });
->>>>>>> 860ec09 (Initial commit - Crop Advisor SaaS)
   });
 
   afterEach(async () => {
