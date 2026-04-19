@@ -1,13 +1,9 @@
-<<<<<<< HEAD
-import { CanActivate, ExecutionContext, INestApplication, Injectable } from '@nestjs/common';
-=======
 import {
   CanActivate,
   ExecutionContext,
   INestApplication,
   Injectable,
 } from '@nestjs/common';
->>>>>>> origin/web
 import { Test, TestingModule } from '@nestjs/testing';
 import { APP_GUARD } from '@nestjs/core';
 import request from 'supertest';
