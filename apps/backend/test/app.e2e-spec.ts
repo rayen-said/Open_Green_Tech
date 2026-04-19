@@ -1,12 +1,3 @@
-<<<<<<< HEAD
-import { Test, TestingModule } from '@nestjs/testing';
-import { INestApplication } from '@nestjs/common';
-import request from 'supertest';
-import { App } from 'supertest/types';
-import { AppModule } from './../src/app.module';
-
-describe('AppController (e2e)', () => {
-=======
 import { CanActivate, ExecutionContext, INestApplication, Injectable } from '@nestjs/common';
 import { Test, TestingModule } from '@nestjs/testing';
 import { APP_GUARD } from '@nestjs/core';
@@ -33,25 +24,10 @@ class TestGuard implements CanActivate {
 }
 
 describe('Crop Advisor API e2e', () => {
->>>>>>> 860ec09 (Initial commit - Crop Advisor SaaS)
   let app: INestApplication<App>;
 
   beforeEach(async () => {
     const moduleFixture: TestingModule = await Test.createTestingModule({
-<<<<<<< HEAD
-      imports: [AppModule],
-    }).compile();
-
-    app = moduleFixture.createNestApplication();
-    await app.init();
-  });
-
-  it('/ (GET)', () => {
-    return request(app.getHttpServer())
-      .get('/')
-      .expect(200)
-      .expect('Hello World!');
-=======
       controllers: [AuthController, DevicesController, TelemetryController],
       providers: [
         {
@@ -148,7 +124,6 @@ describe('Crop Advisor API e2e', () => {
       .expect((response) => {
         expect(response.body.id).toBe('telemetry-1');
       });
->>>>>>> 860ec09 (Initial commit - Crop Advisor SaaS)
   });
 
   afterEach(async () => {
