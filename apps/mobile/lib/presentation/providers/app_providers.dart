@@ -1,18 +1,57 @@
+import 'package:dio/dio.dart';
 import 'package:flutter_riverpod/flutter_riverpod.dart';
 
-import '../../data/repositories/recommendations_repository.dart';
+import '../../core/config/env_config.dart';
+import '../../data/models/alert_item.dart';
+import '../../data/models/anomaly_summary.dart';
+import '../../data/models/auth_user.dart';
+import '../../data/models/device.dart';
+import '../../data/models/recommendation_item.dart';
+import '../../data/models/telemetry_point.dart';
+import '../../data/network/authorized_dio.dart';
+import '../../data/offline/offline_store.dart';
+import '../../data/repositories/crop_repository.dart';
 import '../../data/repositories/sync_repository.dart';
-import '../../data/repositories/telemetry_repository.dart';
-import '../../data/repositories/user_profile_repository.dart';
-import '../../data/services/backend_api_service.dart';
+import '../../data/services/alerts_service.dart';
+import '../../data/services/anomaly_service.dart';
+import '../../data/services/auth_service.dart';
 import '../../data/services/connectivity_service.dart';
-import '../../data/services/edge_api_service.dart';
-import '../../data/services/local_cache_service.dart';
+import '../../data/services/devices_service.dart';
 import '../../data/services/location_service.dart';
 import '../../data/services/mock_data_service.dart';
+import '../../data/services/recommendation_service.dart';
+import '../../data/services/telemetry_service.dart';
+import '../../data/services/token_storage.dart';
+import '../../data/services/user_service.dart';
 
-final localCacheServiceProvider = Provider<LocalCacheService>(
-  (ref) => LocalCacheService(),
+final tokenStorageProvider = Provider<TokenStorage>((ref) => TokenStorage());
+
+final authorizedDioProvider = Provider<Dio>((ref) {
+  return createAuthorizedDio(ref.watch(tokenStorageProvider));
+});
+
+final telemetryServiceProvider = Provider<TelemetryService>(
+  (ref) => TelemetryService(ref.watch(authorizedDioProvider)),
+);
+
+final recommendationServiceProvider = Provider<RecommendationService>(
+  (ref) => RecommendationService(ref.watch(authorizedDioProvider)),
+);
+
+final alertsServiceProvider = Provider<AlertsService>(
+  (ref) => AlertsService(ref.watch(authorizedDioProvider)),
+);
+
+final devicesServiceProvider = Provider<DevicesService>(
+  (ref) => DevicesService(ref.watch(authorizedDioProvider)),
+);
+
+final userServiceProvider = Provider<UserService>(
+  (ref) => UserService(ref.watch(authorizedDioProvider)),
+);
+
+final mockDataServiceProvider = Provider<MockDataService>(
+  (ref) => MockDataService(),
 );
 
 final connectivityServiceProvider = Provider<ConnectivityService>(
@@ -23,56 +62,162 @@ final locationServiceProvider = Provider<LocationService>(
   (ref) => LocationService(),
 );
 
-final edgeApiServiceProvider = Provider<EdgeApiService>(
-  (ref) => EdgeApiService(),
+final cropRepositoryProvider = Provider<CropRepository>((ref) {
+  return CropRepository(
+    telemetryService: ref.watch(telemetryServiceProvider),
+    recommendationService: ref.watch(recommendationServiceProvider),
+    alertsService: ref.watch(alertsServiceProvider),
+    devicesService: ref.watch(devicesServiceProvider),
+    userService: ref.watch(userServiceProvider),
+    connectivity: ref.watch(connectivityServiceProvider),
+    mockDataService: ref.watch(mockDataServiceProvider),
+    offline: OfflineStore.instance,
+  );
+});
+
+final authServiceProvider = Provider<AuthService>((ref) {
+  return AuthService(
+    dio: ref.watch(authorizedDioProvider),
+    tokenStorage: ref.watch(tokenStorageProvider),
+  );
+});
+
+final selectedDeviceIdProvider =
+    NotifierProvider<SelectedDeviceIdNotifier, String?>(
+      SelectedDeviceIdNotifier.new,
+    );
+
+class SelectedDeviceIdNotifier extends Notifier<String?> {
+  @override
+  String? build() => OfflineStore.instance.readSelectedDeviceId();
+
+  Future<void> set(String? id) async {
+    await OfflineStore.instance.saveSelectedDeviceId(id);
+    state = id;
+  }
+}
+
+final authNotifierProvider =
+    AsyncNotifierProvider<AuthNotifier, AuthSession?>(AuthNotifier.new);
+
+class AuthNotifier extends AsyncNotifier<AuthSession?> {
+  @override
+  Future<AuthSession?> build() async {
+    if (EnvConfig.instance.mockMode) {
+      return AuthSession(
+        accessToken: '',
+        refreshToken: '',
+        user: ref.read(mockDataServiceProvider).demoUser(),
+      );
+    }
+    return ref.read(authServiceProvider).restoreSession();
+  }
+
+  Future<void> login(String email, String password) async {
+    state = const AsyncLoading();
+    state = await AsyncValue.guard(() async {
+      final session = await ref.read(authServiceProvider).login(
+            email: email,
+            password: password,
+          );
+      await OfflineStore.instance.saveUser(session.user);
+      _invalidateData();
+      return session;
+    });
+  }
+
+  Future<void> logout() async {
+    if (EnvConfig.instance.mockMode) {
+      await OfflineStore.instance.clearSessionCaches();
+      await ref.read(selectedDeviceIdProvider.notifier).set(null);
+      _invalidateData();
+      state = AsyncData(
+        AuthSession(
+          accessToken: '',
+          refreshToken: '',
+          user: ref.read(mockDataServiceProvider).demoUser(),
+        ),
+      );
+      return;
+    }
+    await ref.read(authServiceProvider).logout();
+    await OfflineStore.instance.clearSessionCaches();
+    await ref.read(selectedDeviceIdProvider.notifier).set(null);
+    _invalidateData();
+    state = const AsyncData(null);
+  }
+
+  void _invalidateData() {
+    ref.invalidate(devicesProvider);
+    ref.invalidate(telemetrySeriesProvider);
+    ref.invalidate(recommendationsProvider);
+    ref.invalidate(alertsProvider);
+  }
+}
+
+final devicesProvider = FutureProvider.autoDispose<List<Device>>((ref) async {
+  return ref.read(cropRepositoryProvider).loadDevices();
+});
+
+final telemetrySeriesProvider =
+    FutureProvider.autoDispose<List<TelemetryPoint>>((ref) async {
+  final id = ref.watch(selectedDeviceIdProvider);
+  if (id == null || id.isEmpty) {
+    return const [];
+  }
+  return ref.read(cropRepositoryProvider).loadTelemetrySeries(id);
+});
+
+final recommendationsProvider =
+    FutureProvider.autoDispose<List<RecommendationItem>>((ref) async {
+  final id = ref.watch(selectedDeviceIdProvider);
+  if (id == null || id.isEmpty) {
+    return const [];
+  }
+  return ref.read(cropRepositoryProvider).loadRecommendations(id);
+});
+
+final alertsProvider = FutureProvider.autoDispose<List<AlertItem>>((ref) async {
+  return ref.read(cropRepositoryProvider).loadAlerts();
+});
+
+final anomalyServiceProvider = Provider<AnomalyService>(
+  (ref) => AnomalyService(),
 );
 
-final backendApiServiceProvider = Provider<BackendApiService>(
-  (ref) => BackendApiService(),
-);
-
-final mockDataServiceProvider = Provider<MockDataService>(
-  (ref) => MockDataService(),
-);
-
-final telemetryRepositoryProvider = Provider<TelemetryRepository>(
-  (ref) => TelemetryRepository(
-    edgeApiService: ref.read(edgeApiServiceProvider),
-    mockDataService: ref.read(mockDataServiceProvider),
-    localCacheService: ref.read(localCacheServiceProvider),
-  ),
-);
-
-final recommendationsRepositoryProvider = Provider<RecommendationsRepository>(
-  (ref) => RecommendationsRepository(
-    backendApiService: ref.read(backendApiServiceProvider),
-    mockDataService: ref.read(mockDataServiceProvider),
-    localCacheService: ref.read(localCacheServiceProvider),
-  ),
-);
-
-final userProfileRepositoryProvider = Provider<UserProfileRepository>(
-  (ref) => UserProfileRepository(
-    localCacheService: ref.read(localCacheServiceProvider),
-    locationService: ref.read(locationServiceProvider),
-  ),
-);
+final anomalySummaryProvider = Provider.autoDispose<AnomalySummary>((ref) {
+  final pts = ref.watch(telemetrySeriesProvider).value ?? const [];
+  return ref.read(anomalyServiceProvider).summarizeSeries(pts);
+});
 
 final connectivityStatusProvider = StreamProvider<bool>(
-  (ref) => ref.read(connectivityServiceProvider).statusStream,
+  (ref) => ref.watch(connectivityServiceProvider).statusStream,
 );
 
-final syncRepositoryProvider = Provider<SyncRepository>(
-  (ref) => SyncRepository(
-    connectivityService: ref.read(connectivityServiceProvider),
-    telemetryRepository: ref.read(telemetryRepositoryProvider),
-    recommendationsRepository: ref.read(recommendationsRepositoryProvider),
-    userProfileRepository: ref.read(userProfileRepositoryProvider),
-  ),
-);
+final userProfileProvider = FutureProvider.autoDispose<AuthUser>((ref) async {
+  if (EnvConfig.instance.mockMode) {
+    return ref.read(mockDataServiceProvider).demoUser();
+  }
+  return ref.read(cropRepositoryProvider).loadUser();
+});
+
+final syncRepositoryProvider = Provider<SyncRepository>((ref) {
+  return SyncRepository(
+    connectivity: ref.watch(connectivityServiceProvider),
+    repository: ref.watch(cropRepositoryProvider),
+    onSynced: () {
+      ref.invalidate(devicesProvider);
+      ref.invalidate(telemetrySeriesProvider);
+      ref.invalidate(recommendationsProvider);
+      ref.invalidate(alertsProvider);
+      ref.invalidate(userProfileProvider);
+    },
+    selectedDeviceId: () => ref.read(selectedDeviceIdProvider),
+  );
+});
 
 final syncBootstrapProvider = Provider<void>((ref) {
-  final syncRepository = ref.read(syncRepositoryProvider);
-  syncRepository.start();
-  ref.onDispose(syncRepository.dispose);
+  final sync = ref.read(syncRepositoryProvider);
+  sync.start();
+  ref.onDispose(sync.dispose);
 });
