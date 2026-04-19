@@ -9,6 +9,11 @@ export default defineConfig({
     path: "prisma/migrations",
   },
   datasource: {
+<<<<<<< HEAD
     url: process.env["DATABASE_URL"],
+=======
+    // Use direct connection for Prisma schema operations; fallback keeps local docker setup simple.
+    url: process.env["DIRECT_URL"] ?? process.env["DATABASE_URL"],
+>>>>>>> 860ec09 (Initial commit - Crop Advisor SaaS)
   },
 });

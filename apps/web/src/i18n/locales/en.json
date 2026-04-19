@@ -1,0 +1,108 @@
+{
+  "appName": "Crop Advisor",
+  "tagline": "AI-powered agriculture intelligence",
+  "auth": {
+    "welcome": "Welcome back",
+    "subtitle": "Manage your farm with real-time intelligence.",
+    "signup": "Create account",
+    "login": "Sign in",
+    "logout": "Logout",
+    "fullName": "Full name",
+    "email": "Email",
+    "password": "Password",
+    "switchToSignup": "No account? Create one",
+    "switchToLogin": "Already have an account? Sign in"
+  },
+  "nav": {
+    "dashboard": "Dashboard",
+    "devices": "Devices",
+    "recommendations": "Recommendations",
+    "alerts": "Alerts",
+    "admin": "Admin",
+    "live": "Live Monitoring"
+  },
+  "dashboard": {
+    "title": "Telemetry overview",
+    "subtitle": "Live farm sensor values and anomaly tracking.",
+    "temperature": "Temperature",
+    "humidity": "Humidity",
+    "light": "Light",
+    "anomaly": "Anomaly",
+    "healthy": "Healthy",
+    "risk": "Risk"
+  },
+  "devices": {
+    "title": "Device management",
+    "add": "Add device",
+    "name": "Name",
+    "location": "Location",
+    "soilType": "Soil type",
+    "cropType": "Crop type",
+    "status": "Status",
+    "save": "Save",
+    "delete": "Delete"
+  },
+  "recommendations": {
+    "title": "AI recommendations",
+    "generate": "Generate insights",
+    "confidence": "AI Confidence Score",
+    "issues": "Detected Issues",
+    "why": "Why this recommendation?"
+  },
+  "alerts": {
+    "title": "Alerts",
+    "ack": "Acknowledge"
+  },
+  "admin": {
+    "title": "Administration",
+    "users": "Users",
+    "role": "Role",
+    "devices": "Global devices",
+    "topProblemDevices": "Top problematic devices",
+    "recentStream": "Recent activity stream"
+  },
+  "demo": {
+    "start": "Start Demo Mode",
+    "resetStart": "Reset + Start Demo",
+    "stop": "Stop Demo",
+    "streaming": "Live data streaming started",
+    "resetStreaming": "Demo data reset and live stream started",
+    "stopped": "Demo stream stopped",
+    "confirmReset": "This action resets live demo data. Continue?",
+    "cancelled": "Action cancelled",
+    "startError": "Unable to start demo mode",
+    "stopError": "Unable to stop demo mode"
+  },
+  "live": {
+    "title": "Live Field Monitoring",
+    "normal": "Normal",
+    "warning": "Warning",
+    "critical": "Critical"
+  },
+  "chat": {
+    "title": "Crop AI Assistant",
+    "subtitle": "Ask about telemetry, irrigation, crops, and platform usage",
+    "fab": "Ask AI",
+    "close": "Close chat",
+    "quickPrompt": "Try a quick question",
+    "placeholder": "Ask a question...",
+    "loading": "Loading conversation...",
+    "empty": "No messages yet. Start with one of the quick prompts.",
+    "errors": {
+      "history": "Unable to load chat history",
+      "send": "Unable to send your message",
+      "rate": "Too many messages. Please wait and try again."
+    },
+    "samples": {
+      "plant": "What should I plant this season?",
+      "humidity": "Why is humidity low on my field?",
+      "navigation": "Where can I view live alerts and recommendations?"
+    }
+  },
+  "common": {
+    "loading": "Loading...",
+    "language": "Language",
+    "noData": "No data available",
+    "owner": "Owner"
+  }
+}

@@ -1,0 +1,108 @@
+{
+  "appName": "Crop Advisor",
+  "tagline": "Intelligence agricole propulsee par l'IA",
+  "auth": {
+    "welcome": "Bon retour",
+    "subtitle": "Pilotez votre ferme avec des donnees en temps reel.",
+    "signup": "Creer un compte",
+    "login": "Se connecter",
+    "logout": "Deconnexion",
+    "fullName": "Nom complet",
+    "email": "Email",
+    "password": "Mot de passe",
+    "switchToSignup": "Pas de compte ? Creez-en un",
+    "switchToLogin": "Deja un compte ? Connectez-vous"
+  },
+  "nav": {
+    "dashboard": "Tableau de bord",
+    "devices": "Equipements",
+    "recommendations": "Recommandations",
+    "alerts": "Alertes",
+    "admin": "Admin",
+    "live": "Monitoring Live"
+  },
+  "dashboard": {
+    "title": "Vue telemetry",
+    "subtitle": "Mesures capteurs en direct et suivi des anomalies.",
+    "temperature": "Temperature",
+    "humidity": "Humidite",
+    "light": "Lumiere",
+    "anomaly": "Anomalie",
+    "healthy": "Sain",
+    "risk": "Risque"
+  },
+  "devices": {
+    "title": "Gestion des equipements",
+    "add": "Ajouter un equipement",
+    "name": "Nom",
+    "location": "Localisation",
+    "soilType": "Type de sol",
+    "cropType": "Type de culture",
+    "status": "Statut",
+    "save": "Enregistrer",
+    "delete": "Supprimer"
+  },
+  "recommendations": {
+    "title": "Recommandations IA",
+    "generate": "Generer les conseils",
+    "confidence": "Score de confiance IA",
+    "issues": "Problemes detectes",
+    "why": "Pourquoi cette recommandation ?"
+  },
+  "alerts": {
+    "title": "Alertes",
+    "ack": "Accuser reception"
+  },
+  "admin": {
+    "title": "Administration",
+    "users": "Utilisateurs",
+    "role": "Role",
+    "devices": "Equipements globaux",
+    "topProblemDevices": "Equipements les plus critiques",
+    "recentStream": "Flux d'activite recent"
+  },
+  "demo": {
+    "start": "Lancer le mode demo",
+    "resetStart": "Reset + Lancer demo",
+    "stop": "Arreter la demo",
+    "streaming": "Flux live demarre",
+    "resetStreaming": "Base reinitialisee, flux demo demarre",
+    "stopped": "Flux demo arrete",
+    "confirmReset": "Cette action reinitialise les donnees live de demo. Continuer ?",
+    "cancelled": "Operation annulee",
+    "startError": "Impossible de lancer la demo",
+    "stopError": "Impossible d'arreter la demo"
+  },
+  "live": {
+    "title": "Monitoring terrain en direct",
+    "normal": "Normal",
+    "warning": "Alerte",
+    "critical": "Critique"
+  },
+  "chat": {
+    "title": "Assistant IA Agricole",
+    "subtitle": "Posez vos questions sur la telemetrie, l'irrigation, les cultures et la plateforme",
+    "fab": "Assistant IA",
+    "close": "Fermer le chat",
+    "quickPrompt": "Questions rapides",
+    "placeholder": "Posez votre question...",
+    "loading": "Chargement de la conversation...",
+    "empty": "Aucun message pour le moment. Commencez par une question rapide.",
+    "errors": {
+      "history": "Impossible de charger l'historique",
+      "send": "Impossible d'envoyer votre message",
+      "rate": "Trop de messages. Veuillez patienter puis reessayer."
+    },
+    "samples": {
+      "plant": "Que dois-je planter cette saison ?",
+      "humidity": "Pourquoi l'humidite est basse sur mon terrain ?",
+      "navigation": "Ou voir les alertes en direct et les recommandations ?"
+    }
+  },
+  "common": {
+    "loading": "Chargement...",
+    "language": "Langue",
+    "noData": "Aucune donnee disponible",
+    "owner": "Proprietaire"
+  }
+}

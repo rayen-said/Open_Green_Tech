@@ -15,8 +15,16 @@ describe('AppController', () => {
   });
 
   describe('root', () => {
+<<<<<<< HEAD
     it('should return "Hello World!"', () => {
       expect(appController.getHello()).toBe('Hello World!');
+=======
+    it('should return service health payload', () => {
+      expect(appController.getHealth()).toMatchObject({
+        service: 'crop-advisor-api',
+        status: 'ok',
+      });
+>>>>>>> 860ec09 (Initial commit - Crop Advisor SaaS)
     });
   });
 });

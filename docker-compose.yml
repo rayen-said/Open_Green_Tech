@@ -1,0 +1,44 @@
+version: "3.9"
+
+services:
+  db:
+    image: postgres:16-alpine
+    container_name: crop-advisor-db
+    restart: unless-stopped
+    environment:
+      POSTGRES_DB: crop_advisor
+      POSTGRES_USER: postgres
+      POSTGRES_PASSWORD: postgres
+    ports:
+      - "5432:5432"
+    volumes:
+      - crop_advisor_db:/var/lib/postgresql/data
+
+  backend:
+    build:
+      context: .
+      dockerfile: apps/backend/Dockerfile
+    container_name: crop-advisor-backend
+    restart: unless-stopped
+    depends_on:
+      - db
+    env_file:
+      - apps/backend/.env
+    ports:
+      - "3000:3000"
+
+  web:
+    build:
+      context: .
+      dockerfile: apps/web/Dockerfile
+    container_name: crop-advisor-web
+    restart: unless-stopped
+    depends_on:
+      - backend
+    env_file:
+      - apps/web/.env
+    ports:
+      - "3001:3000"
+
+volumes:
+  crop_advisor_db:
