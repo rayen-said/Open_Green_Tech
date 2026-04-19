@@ -1,1 +1,25 @@
 node_modules/
+
+# General generated content
+**/build/
+**/dist/
+**/.cache/
+*.log
+
+# Flutter / Dart
+**/.dart_tool/
+**/.flutter-plugins
+**/.flutter-plugins-dependencies
+**/.pub-cache/
+
+# Android / Gradle
+**/.gradle/
+**/local.properties
+
+# IDE
+**/.idea/
+**/.vscode/
+
+# Environment files
+.env
+**/.env
