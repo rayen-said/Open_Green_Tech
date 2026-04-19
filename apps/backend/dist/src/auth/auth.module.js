@@ -14,6 +14,21 @@ const config_1 = require("@nestjs/config");
 const auth_controller_1 = require("./auth.controller");
 const auth_service_1 = require("./auth.service");
 const jwt_strategy_1 = require("./jwt.strategy");
+function parseExpiryToSeconds(value, fallbackSeconds) {
+    const match = /^(\d+)([smhd])$/.exec(value.trim());
+    if (!match) {
+        return fallbackSeconds;
+    }
+    const amount = Number(match[1]);
+    const unit = match[2];
+    const multipliers = {
+        s: 1,
+        m: 60,
+        h: 60 * 60,
+        d: 60 * 60 * 24,
+    };
+    return amount * multipliers[unit];
+}
 let AuthModule = class AuthModule {
 };
 exports.AuthModule = AuthModule;
@@ -27,7 +42,7 @@ exports.AuthModule = AuthModule = __decorate([
                 useFactory: (configService) => ({
                     secret: configService.get('JWT_SECRET') ?? 'change-this-secret',
                     signOptions: {
-                        expiresIn: (configService.get('JWT_EXPIRES_IN') ?? '7d'),
+                        expiresIn: parseExpiryToSeconds(configService.get('JWT_EXPIRES_IN') ?? '7d', 60 * 60 * 24 * 7),
                     },
                 }),
             }),

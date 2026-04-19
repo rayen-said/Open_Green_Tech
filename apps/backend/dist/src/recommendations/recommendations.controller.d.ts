@@ -14,7 +14,7 @@ export declare class RecommendationsController {
         type: import("@prisma/client").$Enums.RecommendationType;
         explanation: string;
         reason: string;
-        detectedIssues: string[];
+        detectedIssues: import("@prisma/client/runtime/client").JsonValue;
         confidence: number;
     }, {
         id: string;
@@ -24,7 +24,7 @@ export declare class RecommendationsController {
         type: import("@prisma/client").$Enums.RecommendationType;
         explanation: string;
         reason: string;
-        detectedIssues: string[];
+        detectedIssues: import("@prisma/client/runtime/client").JsonValue;
         confidence: number;
     }, {
         id: string;
@@ -34,7 +34,7 @@ export declare class RecommendationsController {
         type: import("@prisma/client").$Enums.RecommendationType;
         explanation: string;
         reason: string;
-        detectedIssues: string[];
+        detectedIssues: import("@prisma/client/runtime/client").JsonValue;
         confidence: number;
     }, {
         id: string;
@@ -44,7 +44,7 @@ export declare class RecommendationsController {
         type: import("@prisma/client").$Enums.RecommendationType;
         explanation: string;
         reason: string;
-        detectedIssues: string[];
+        detectedIssues: import("@prisma/client/runtime/client").JsonValue;
         confidence: number;
     }]>;
     list(req: {
@@ -57,7 +57,7 @@ export declare class RecommendationsController {
         type: import("@prisma/client").$Enums.RecommendationType;
         explanation: string;
         reason: string;
-        detectedIssues: string[];
+        detectedIssues: import("@prisma/client/runtime/client").JsonValue;
         confidence: number;
     }[]>;
 }

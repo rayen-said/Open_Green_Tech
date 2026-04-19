@@ -9,6 +9,31 @@ import { LogoutDto } from './dto/logout.dto';
 import { compare, hash } from 'bcryptjs';
 import { Role } from '@prisma/client';
 
+type JwtPayload = {
+  sub: string;
+  email: string;
+  role: Role;
+};
+
+function parseExpiryToSeconds(value: string, fallbackSeconds: number): number {
+  const match = /^(\d+)([smhd])$/.exec(value.trim());
+  if (!match) {
+    return fallbackSeconds;
+  }
+
+  const amount = Number(match[1]);
+  const unit = match[2] as 's' | 'm' | 'h' | 'd';
+
+  const multipliers: Record<'s' | 'm' | 'h' | 'd', number> = {
+    s: 1,
+    m: 60,
+    h: 60 * 60,
+    d: 60 * 60 * 24,
+  };
+
+  return amount * multipliers[unit];
+}
+
 @Injectable()
 export class AuthService {
   constructor(
@@ -57,14 +82,18 @@ export class AuthService {
   }
 
   async refresh(dto: RefreshTokenDto) {
-    const payload = await this.jwtService.verifyAsync<{ sub: string; email: string; role: Role }>(
+    const payload = await this.jwtService.verifyAsync<JwtPayload>(
       dto.refreshToken,
       {
-        secret: this.configService.get<string>('JWT_REFRESH_SECRET') ?? 'change-this-refresh-secret',
+        secret:
+          this.configService.get<string>('JWT_REFRESH_SECRET') ??
+          'change-this-refresh-secret',
       },
     );
 
-    const user = await this.prisma.user.findUnique({ where: { id: payload.sub } });
+    const user = await this.prisma.user.findUnique({
+      where: { id: payload.sub },
+    });
     if (!user || !user.refreshTokenHash) {
       throw new UnauthorizedException('Refresh token invalid.');
     }
@@ -78,9 +107,14 @@ export class AuthService {
   }
 
   async logout(dto: LogoutDto) {
-    const payload = await this.jwtService.verifyAsync<{ sub: string }>(dto.refreshToken, {
-      secret: this.configService.get<string>('JWT_REFRESH_SECRET') ?? 'change-this-refresh-secret',
-    });
+    const payload = await this.jwtService.verifyAsync<{ sub: string }>(
+      dto.refreshToken,
+      {
+        secret:
+          this.configService.get<string>('JWT_REFRESH_SECRET') ??
+          'change-this-refresh-secret',
+      },
+    );
 
     await this.prisma.user.updateMany({
       where: { id: payload.sub },
@@ -115,17 +149,26 @@ export class AuthService {
     fullName: string,
     role: Role,
   ) {
-    const payload = { sub: userId, email, role };
-    const jwtExpiresIn = (this.configService.get<string>('JWT_EXPIRES_IN') ?? '7d') as any;
-    const refreshExpiresIn = (this.configService.get<string>('JWT_REFRESH_EXPIRES_IN') ?? '30d') as any;
+    const payload: JwtPayload = { sub: userId, email, role };
+    const jwtExpiresIn = parseExpiryToSeconds(
+      this.configService.get<string>('JWT_EXPIRES_IN') ?? '7d',
+      60 * 60 * 24 * 7,
+    );
+    const refreshExpiresIn = parseExpiryToSeconds(
+      this.configService.get<string>('JWT_REFRESH_EXPIRES_IN') ?? '30d',
+      60 * 60 * 24 * 30,
+    );
 
     const accessToken = await this.jwtService.signAsync(payload, {
-      secret: this.configService.get<string>('JWT_SECRET') ?? 'change-this-secret',
+      secret:
+        this.configService.get<string>('JWT_SECRET') ?? 'change-this-secret',
       expiresIn: jwtExpiresIn,
     });
 
     const refreshToken = await this.jwtService.signAsync(payload, {
-      secret: this.configService.get<string>('JWT_REFRESH_SECRET') ?? 'change-this-refresh-secret',
+      secret:
+        this.configService.get<string>('JWT_REFRESH_SECRET') ??
+        'change-this-refresh-secret',
       expiresIn: refreshExpiresIn,
     });
 

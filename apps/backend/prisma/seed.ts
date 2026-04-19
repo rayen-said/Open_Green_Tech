@@ -1,12 +1,19 @@
-import 'dotenv/config';
 import { PrismaPg } from '@prisma/adapter-pg';
-import { PrismaClient, Role, DeviceStatus, AlertSeverity, RecommendationType } from '@prisma/client';
+import {
+  AlertSeverity,
+  DeviceStatus,
+  PrismaClient,
+  RecommendationType,
+  Role,
+} from '@prisma/client';
 import { hash } from 'bcryptjs';
 
 const connectionString = process.env.DIRECT_URL ?? process.env.DATABASE_URL;
 
 if (!connectionString) {
-  throw new Error('DIRECT_URL or DATABASE_URL must be set before running prisma:seed');
+  throw new Error(
+    'DIRECT_URL or DATABASE_URL must be set before running prisma:seed',
+  );
 }
 
 const adapter = new PrismaPg({ connectionString });
@@ -111,7 +118,10 @@ async function main() {
     const recommendationTemplates = [
       {
         type: RecommendationType.CROP_HEALTH,
-        title: latest.temperature > 38 ? 'Heat stress detected' : 'Crop vitality stable',
+        title:
+          latest.temperature > 38
+            ? 'Heat stress detected'
+            : 'Crop vitality stable',
         explanation:
           latest.temperature > 38
             ? 'Use shade and irrigation support to protect the canopy.'
@@ -125,7 +135,10 @@ async function main() {
       },
       {
         type: RecommendationType.IRRIGATION,
-        title: latest.humidity < 35 ? 'Increase irrigation' : 'Maintain current watering',
+        title:
+          latest.humidity < 35
+            ? 'Increase irrigation'
+            : 'Maintain current watering',
         explanation:
           latest.humidity < 35
             ? 'Moisture is below the desired threshold for active growth.'
@@ -140,16 +153,20 @@ async function main() {
       {
         type: RecommendationType.FERTILIZER,
         title: 'Use balanced nutrient plan',
-        explanation: 'Split fertilizer applications around irrigation cycles to improve absorption.',
-        reason: 'Nutrient uptake improves with split doses and stable irrigation.',
+        explanation:
+          'Split fertilizer applications around irrigation cycles to improve absorption.',
+        reason:
+          'Nutrient uptake improves with split doses and stable irrigation.',
         detectedIssues: [],
         confidence: 74,
       },
       {
         type: RecommendationType.BEST_CROP,
         title: 'Consider drought tolerant crops',
-        explanation: 'Olive, sorghum and chickpea match the current climate profile well.',
-        reason: 'Current heat and moisture conditions favor resilient varieties.',
+        explanation:
+          'Olive, sorghum and chickpea match the current climate profile well.',
+        reason:
+          'Current heat and moisture conditions favor resilient varieties.',
         detectedIssues: latest.anomaly ? ['climate_volatility'] : [],
         confidence: 81,
       },
@@ -172,7 +189,10 @@ async function main() {
         data: {
           deviceId: device.id,
           userId: device.ownerId,
-          severity: latest.temperature > 42 ? AlertSeverity.CRITICAL : AlertSeverity.HIGH,
+          severity:
+            latest.temperature > 42
+              ? AlertSeverity.CRITICAL
+              : AlertSeverity.HIGH,
           title: 'Seed anomaly detected',
           message: 'Seeded telemetry indicates abnormal field conditions.',
         },

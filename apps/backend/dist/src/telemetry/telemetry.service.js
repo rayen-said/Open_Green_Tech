@@ -22,7 +22,9 @@ let TelemetryService = class TelemetryService {
         this.gateway = gateway;
     }
     async create(deviceId, userId, role, dto) {
-        const device = await this.prisma.device.findUnique({ where: { id: deviceId } });
+        const device = await this.prisma.device.findUnique({
+            where: { id: deviceId },
+        });
         if (!device) {
             throw new common_1.NotFoundException('Device not found');
         }
@@ -36,8 +38,12 @@ let TelemetryService = class TelemetryService {
             },
         });
         this.gateway.emitTelemetry(telemetry);
-        if (telemetry.anomaly || telemetry.humidity < 25 || telemetry.temperature > 38) {
-            const severity = telemetry.temperature > 42 ? client_1.AlertSeverity.CRITICAL : client_1.AlertSeverity.HIGH;
+        if (telemetry.anomaly ||
+            telemetry.humidity < 25 ||
+            telemetry.temperature > 38) {
+            const severity = telemetry.temperature > 42
+                ? client_1.AlertSeverity.CRITICAL
+                : client_1.AlertSeverity.HIGH;
             const alert = await this.prisma.alert.create({
                 data: {
                     deviceId,
@@ -54,7 +60,9 @@ let TelemetryService = class TelemetryService {
         return telemetry;
     }
     async list(deviceId, userId, role) {
-        const device = await this.prisma.device.findUnique({ where: { id: deviceId } });
+        const device = await this.prisma.device.findUnique({
+            where: { id: deviceId },
+        });
         if (!device) {
             throw new common_1.NotFoundException('Device not found');
         }

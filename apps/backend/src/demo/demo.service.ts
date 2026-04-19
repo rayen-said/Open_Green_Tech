@@ -43,12 +43,21 @@ export class DemoService {
       void Promise.all(
         devices.map((device, index) => {
           const anomaly = this.tick % (6 + index) === 0;
-          return this.telemetryService.create(device.id, 'demo-system', Role.ADMIN, {
-            temperature: anomaly ? 43 + (this.tick % 3) : 22 + index * 3 + (this.tick % 4),
-            humidity: anomaly ? 20 + (this.tick % 4) : 46 + ((this.tick + index) % 19),
-            light: 260 + this.tick * 8 + index * 30,
-            anomaly,
-          });
+          return this.telemetryService.create(
+            device.id,
+            'demo-system',
+            Role.ADMIN,
+            {
+              temperature: anomaly
+                ? 43 + (this.tick % 3)
+                : 22 + index * 3 + (this.tick % 4),
+              humidity: anomaly
+                ? 20 + (this.tick % 4)
+                : 46 + ((this.tick + index) % 19),
+              light: 260 + this.tick * 8 + index * 30,
+              anomaly,
+            },
+          );
         }),
       )
         .catch(() => {

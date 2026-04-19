@@ -34,7 +34,9 @@ let AlertsService = class AlertsService {
         });
     }
     async acknowledge(alertId, userId, role) {
-        const alert = await this.prisma.alert.findUnique({ where: { id: alertId } });
+        const alert = await this.prisma.alert.findUnique({
+            where: { id: alertId },
+        });
         if (!alert) {
             throw new common_1.NotFoundException('Alert not found');
         }

@@ -1,4 +1,13 @@
+<<<<<<< HEAD
 import { CanActivate, ExecutionContext, INestApplication, Injectable } from '@nestjs/common';
+=======
+import {
+  CanActivate,
+  ExecutionContext,
+  INestApplication,
+  Injectable,
+} from '@nestjs/common';
+>>>>>>> origin/web
 import { Test, TestingModule } from '@nestjs/testing';
 import { APP_GUARD } from '@nestjs/core';
 import request from 'supertest';
@@ -13,7 +22,13 @@ import { TelemetryService } from '../src/telemetry/telemetry.service';
 @Injectable()
 class TestGuard implements CanActivate {
   canActivate(context: ExecutionContext): boolean {
-    const requestObject = context.switchToHttp().getRequest();
+    const requestObject = context.switchToHttp().getRequest<{
+      user: {
+        sub: string;
+        email: string;
+        role: string;
+      };
+    }>();
     requestObject.user = {
       sub: 'user-1',
       email: 'user@agri.com',
@@ -90,8 +105,13 @@ describe('Crop Advisor API e2e', () => {
       .send({ email: 'user@agri.com', password: 'Farmer@12345' })
       .expect(201)
       .expect((response) => {
-        expect(response.body.accessToken).toBeDefined();
-        expect(response.body.refreshToken).toBeDefined();
+        const body = response.body as {
+          accessToken: string;
+          refreshToken: string;
+        };
+
+        expect(body.accessToken).toBeDefined();
+        expect(body.refreshToken).toBeDefined();
       });
   });
 
@@ -107,7 +127,9 @@ describe('Crop Advisor API e2e', () => {
       })
       .expect(201)
       .expect((response) => {
-        expect(response.body.id).toBe('device-1');
+        const body = response.body as { id: string };
+
+        expect(body.id).toBe('device-1');
       });
   });
 
@@ -122,7 +144,9 @@ describe('Crop Advisor API e2e', () => {
       })
       .expect(201)
       .expect((response) => {
-        expect(response.body.id).toBe('telemetry-1');
+        const body = response.body as { id: string };
+
+        expect(body.id).toBe('telemetry-1');
       });
   });
 

@@ -1,9 +1,5 @@
 node_modules
 # Keep environment variables out of version control
-<<<<<<< HEAD
-
-=======
 .env
->>>>>>> 860ec09 (Initial commit - Crop Advisor SaaS)
-
+.env.example
 /generated/prisma

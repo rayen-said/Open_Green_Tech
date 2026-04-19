@@ -109,7 +109,9 @@ let RecommendationsService = class RecommendationsService {
         }
     }
     async generate(deviceId, userId, role) {
-        const device = await this.prisma.device.findUnique({ where: { id: deviceId } });
+        const device = await this.prisma.device.findUnique({
+            where: { id: deviceId },
+        });
         if (!device) {
             throw new common_1.NotFoundException('Device not found');
         }
@@ -137,10 +139,13 @@ let RecommendationsService = class RecommendationsService {
                     deviceId,
                     type: client_1.RecommendationType.CROP_HEALTH,
                     title: llmRecommendations?.cropHealth?.title ?? rules.cropHealth.title,
-                    explanation: llmRecommendations?.cropHealth?.explanation ?? rules.cropHealth.explanation,
-                    reason: llmRecommendations?.cropHealth?.explanation ?? rules.cropHealth.explanation,
+                    explanation: llmRecommendations?.cropHealth?.explanation ??
+                        rules.cropHealth.explanation,
+                    reason: llmRecommendations?.cropHealth?.explanation ??
+                        rules.cropHealth.explanation,
                     detectedIssues,
-                    confidence: llmRecommendations?.cropHealth?.confidence ?? rules.cropHealth.confidence,
+                    confidence: llmRecommendations?.cropHealth?.confidence ??
+                        rules.cropHealth.confidence,
                 },
             }),
             this.prisma.recommendation.create({
@@ -148,10 +153,13 @@ let RecommendationsService = class RecommendationsService {
                     deviceId,
                     type: client_1.RecommendationType.IRRIGATION,
                     title: llmRecommendations?.irrigation?.title ?? rules.irrigation.title,
-                    explanation: llmRecommendations?.irrigation?.explanation ?? rules.irrigation.explanation,
-                    reason: llmRecommendations?.irrigation?.explanation ?? rules.irrigation.explanation,
+                    explanation: llmRecommendations?.irrigation?.explanation ??
+                        rules.irrigation.explanation,
+                    reason: llmRecommendations?.irrigation?.explanation ??
+                        rules.irrigation.explanation,
                     detectedIssues,
-                    confidence: llmRecommendations?.irrigation?.confidence ?? rules.irrigation.confidence,
+                    confidence: llmRecommendations?.irrigation?.confidence ??
+                        rules.irrigation.confidence,
                 },
             }),
             this.prisma.recommendation.create({
@@ -159,10 +167,13 @@ let RecommendationsService = class RecommendationsService {
                     deviceId,
                     type: client_1.RecommendationType.FERTILIZER,
                     title: llmRecommendations?.fertilizer?.title ?? rules.fertilizer.title,
-                    explanation: llmRecommendations?.fertilizer?.explanation ?? rules.fertilizer.explanation,
-                    reason: llmRecommendations?.fertilizer?.explanation ?? rules.fertilizer.explanation,
+                    explanation: llmRecommendations?.fertilizer?.explanation ??
+                        rules.fertilizer.explanation,
+                    reason: llmRecommendations?.fertilizer?.explanation ??
+                        rules.fertilizer.explanation,
                     detectedIssues,
-                    confidence: llmRecommendations?.fertilizer?.confidence ?? rules.fertilizer.confidence,
+                    confidence: llmRecommendations?.fertilizer?.confidence ??
+                        rules.fertilizer.confidence,
                 },
             }),
             this.prisma.recommendation.create({
@@ -170,16 +181,21 @@ let RecommendationsService = class RecommendationsService {
                     deviceId,
                     type: client_1.RecommendationType.BEST_CROP,
                     title: llmRecommendations?.bestCrop?.title ?? rules.bestCrop.title,
-                    explanation: llmRecommendations?.bestCrop?.explanation ?? rules.bestCrop.explanation,
-                    reason: llmRecommendations?.bestCrop?.explanation ?? rules.bestCrop.explanation,
+                    explanation: llmRecommendations?.bestCrop?.explanation ??
+                        rules.bestCrop.explanation,
+                    reason: llmRecommendations?.bestCrop?.explanation ??
+                        rules.bestCrop.explanation,
                     detectedIssues,
-                    confidence: llmRecommendations?.bestCrop?.confidence ?? rules.bestCrop.confidence,
+                    confidence: llmRecommendations?.bestCrop?.confidence ??
+                        rules.bestCrop.confidence,
                 },
             }),
         ]);
     }
     async list(deviceId, userId, role) {
-        const device = await this.prisma.device.findUnique({ where: { id: deviceId } });
+        const device = await this.prisma.device.findUnique({
+            where: { id: deviceId },
+        });
         if (!device) {
             throw new common_1.NotFoundException('Device not found');
         }

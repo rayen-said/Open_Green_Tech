@@ -1,10 +1,5 @@
 import { NestFactory } from '@nestjs/core';
 import { AppModule } from './app.module';
-<<<<<<< HEAD
-
-async function bootstrap() {
-  const app = await NestFactory.create(AppModule);
-=======
 import { ValidationPipe } from '@nestjs/common';
 import { PrismaService } from './prisma/prisma.service';
 import { Logger } from 'nestjs-pino';
@@ -23,9 +18,10 @@ async function bootstrap() {
   app.useLogger(app.get(Logger));
 
   const prismaService = app.get(PrismaService);
-  await prismaService.enableShutdownHooks(app);
-
->>>>>>> 860ec09 (Initial commit - Crop Advisor SaaS)
+  prismaService.enableShutdownHooks(app);
   await app.listen(process.env.PORT ?? 3000);
 }
-bootstrap();
+void bootstrap().catch((error) => {
+  console.error(error);
+  process.exit(1);
+});

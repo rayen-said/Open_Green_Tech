@@ -24,6 +24,27 @@ type ChatMessageView = {
   createdAt: string;
 };
 
+type ChatMessageRecord = {
+  id: string;
+  role: string;
+  content: string;
+  createdAt: Date;
+};
+
+type ChatMessageModel = {
+  findMany(args: {
+    where: { userId: string };
+    orderBy: { createdAt: 'desc' };
+    take: number;
+  }): Promise<ChatMessageRecord[]>;
+  create(args: {
+    data: { userId: string; role: ChatRole; content: string };
+  }): Promise<ChatMessageRecord>;
+  count(args: {
+    where: { userId: string; role: 'user'; createdAt: { gte: Date } };
+  }): Promise<number>;
+};
+
 @Injectable()
 export class ChatService {
   private readonly logger = new Logger(ChatService.name);
@@ -33,14 +54,21 @@ export class ChatService {
     private readonly configService: ConfigService,
   ) {}
 
-  async getHistory(userId: string, limit = 40): Promise<ChatMessageView[]> {
-    const safeLimit = Number.isFinite(limit) ? Math.max(1, Math.min(limit, 100)) : 40;
+  private get chatMessages() {
+    return this.prisma as PrismaService & { chatMessage: ChatMessageModel };
+  }
 
-    const messages = await this.prisma.chatMessage.findMany({
-      where: { userId },
-      orderBy: { createdAt: 'desc' },
-      take: safeLimit,
-    });
+  async getHistory(userId: string, limit = 40): Promise<ChatMessageView[]> {
+    const safeLimit = Number.isFinite(limit)
+      ? Math.max(1, Math.min(limit, 100))
+      : 40;
+
+    const messages: ChatMessageRecord[] =
+      await this.chatMessages.chatMessage.findMany({
+        where: { userId },
+        orderBy: { createdAt: 'desc' },
+        take: safeLimit,
+      });
 
     return messages.reverse().map((message) => ({
       id: message.id,
@@ -60,16 +88,20 @@ export class ChatService {
     await this.enforceRateLimit(userId);
 
     if (dto.deviceId) {
-      const device = await this.prisma.device.findUnique({ where: { id: dto.deviceId } });
+      const device = await this.prisma.device.findUnique({
+        where: { id: dto.deviceId },
+      });
       if (!device) {
         throw new NotFoundException('Device not found');
       }
       if (role !== Role.ADMIN && device.ownerId !== userId) {
-        throw new ForbiddenException('You cannot use this device as chat context');
+        throw new ForbiddenException(
+          'You cannot use this device as chat context',
+        );
       }
     }
 
-    await this.prisma.chatMessage.create({
+    await this.chatMessages.chatMessage.create({
       data: {
         userId,
         role: 'user',
@@ -79,23 +111,28 @@ export class ChatService {
 
     const language = this.resolveLanguage(prompt, dto.language);
     const contextBlock = await this.buildContext(userId, role, dto.deviceId);
-    const recentMessages = await this.prisma.chatMessage.findMany({
-      where: { userId },
-      orderBy: { createdAt: 'desc' },
-      take: 10,
-    });
+    const recentMessages: ChatMessageRecord[] =
+      await this.chatMessages.chatMessage.findMany({
+        where: { userId },
+        orderBy: { createdAt: 'desc' },
+        take: 10,
+      });
 
     const assistantAnswer =
-      (await this.generateWithLlm(recentMessages.reverse(), contextBlock, language)) ??
-      this.generateFallbackAnswer(prompt, contextBlock, language);
+      (await this.generateWithLlm(
+        recentMessages.reverse(),
+        contextBlock,
+        language,
+      )) ?? this.generateFallbackAnswer(prompt, contextBlock, language);
 
-    const assistantMessage = await this.prisma.chatMessage.create({
-      data: {
-        userId,
-        role: 'assistant',
-        content: assistantAnswer,
-      },
-    });
+    const assistantMessage: ChatMessageRecord =
+      await this.chatMessages.chatMessage.create({
+        data: {
+          userId,
+          role: 'assistant',
+          content: assistantAnswer,
+        },
+      });
 
     const history = await this.getHistory(userId, 40);
 
@@ -112,7 +149,7 @@ export class ChatService {
 
   private async enforceRateLimit(userId: string) {
     const threshold = new Date(Date.now() - 60 * 1000);
-    const count = await this.prisma.chatMessage.count({
+    const count = await this.chatMessages.chatMessage.count({
       where: {
         userId,
         role: 'user',
@@ -128,7 +165,10 @@ export class ChatService {
     }
   }
 
-  private resolveLanguage(prompt: string, preferred?: SupportedLanguage): SupportedLanguage {
+  private resolveLanguage(
+    prompt: string,
+    preferred?: SupportedLanguage,
+  ): SupportedLanguage {
     if (preferred) {
       return preferred;
     }
@@ -138,8 +178,22 @@ export class ChatService {
     }
 
     const lower = prompt.toLowerCase();
-    const frenchHints = ['bonjour', 'pourquoi', 'humidite', 'temperature', 'culture', 'irrigation'];
-    const englishHints = ['hello', 'why', 'humidity', 'temperature', 'crop', 'irrigation'];
+    const frenchHints = [
+      'bonjour',
+      'pourquoi',
+      'humidite',
+      'temperature',
+      'culture',
+      'irrigation',
+    ];
+    const englishHints = [
+      'hello',
+      'why',
+      'humidity',
+      'temperature',
+      'crop',
+      'irrigation',
+    ];
 
     if (frenchHints.some((token) => lower.includes(token))) {
       return 'fr';
@@ -190,7 +244,10 @@ export class ChatService {
         })
       : [];
 
-    const latestTelemetryByDevice = new Map<string, (typeof telemetries)[number]>();
+    const latestTelemetryByDevice = new Map<
+      string,
+      (typeof telemetries)[number]
+    >();
     for (const telemetry of telemetries) {
       if (!latestTelemetryByDevice.has(telemetry.deviceId)) {
         latestTelemetryByDevice.set(telemetry.deviceId, telemetry);
@@ -258,7 +315,9 @@ export class ChatService {
               humidity: latestTelemetryByDevice.get(device.id)?.humidity,
               light: latestTelemetryByDevice.get(device.id)?.light,
               anomaly: latestTelemetryByDevice.get(device.id)?.anomaly,
-              timestamp: latestTelemetryByDevice.get(device.id)?.timestamp.toISOString(),
+              timestamp: latestTelemetryByDevice
+                .get(device.id)
+                ?.timestamp.toISOString(),
             }
           : null,
       })),
@@ -344,7 +403,9 @@ export class ChatService {
   ) {
     const firstDevice = contextBlock.devices[0];
     const firstTelemetry = firstDevice?.latestTelemetry;
-    const openAlerts = contextBlock.alerts.filter((alert) => !alert.acknowledged).length;
+    const openAlerts = contextBlock.alerts.filter(
+      (alert) => !alert.acknowledged,
+    ).length;
 
     if (language === 'ar') {
       return [
@@ -355,7 +416,9 @@ export class ChatService {
         firstTelemetry
           ? `آخر قراءة: حرارة ${firstTelemetry.temperature ?? '--'}°، رطوبة ${firstTelemetry.humidity ?? '--'}%${firstTelemetry.anomaly ? ' مع شذوذ' : ''}.`
           : 'ما فماش قراءة حديثة للتيليمترية.',
-        openAlerts > 0 ? `عندك ${openAlerts} تنبيهات مفتوحة، ننصحك تراجعها أولا.` : 'ما عندك حتى تنبيه مفتوح حاليا.',
+        openAlerts > 0
+          ? `عندك ${openAlerts} تنبيهات مفتوحة، ننصحك تراجعها أولا.`
+          : 'ما عندك حتى تنبيه مفتوح حاليا.',
         contextBlock.recommendations[0]
           ? `آخر توصية: ${contextBlock.recommendations[0].title} (ثقة ${contextBlock.recommendations[0].confidence}%).`
           : 'انجم تولد توصيات من قسم Recommendations وقت تختار جهاز.',
@@ -395,7 +458,7 @@ export class ChatService {
         : "Vous n'avez pas d'alerte ouverte actuellement.",
       contextBlock.recommendations[0]
         ? `Derniere recommandation: ${contextBlock.recommendations[0].title} (confiance ${contextBlock.recommendations[0].confidence}%).`
-        : 'Generez des recommandations dans la section correspondante apres selection d\'un equipement.',
+        : "Generez des recommandations dans la section correspondante apres selection d'un equipement.",
       `Concernant votre question "${prompt}", je peux vous guider pas a pas sur irrigation, fertilisation et choix de culture.`,
     ].join(' ');
   }

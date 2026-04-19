@@ -1,15 +1,4 @@
 import { Module } from '@nestjs/common';
-<<<<<<< HEAD
-import { AppController } from './app.controller';
-import { AppService } from './app.service';
-import { TelemetryModule } from './telemetry/telemetry.module';
-import { RecommendationsModule } from './recommendations/recommendations.module';
-
-@Module({
-  imports: [TelemetryModule, RecommendationsModule],
-  controllers: [AppController],
-  providers: [AppService],
-=======
 import { APP_GUARD } from '@nestjs/core';
 import { ConfigModule } from '@nestjs/config';
 import { ThrottlerGuard, ThrottlerModule } from '@nestjs/throttler';
@@ -77,6 +66,5 @@ import { ChatModule } from './chat/chat.module';
       useClass: ThrottlerGuard,
     },
   ],
->>>>>>> 860ec09 (Initial commit - Crop Advisor SaaS)
 })
 export class AppModule {}

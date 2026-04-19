@@ -1,20 +1,12 @@
-<<<<<<< HEAD
-/generator client {
-=======
 generator client {
->>>>>>> 860ec09 (Initial commit - Crop Advisor SaaS)
   provider = "prisma-client-js"
 }
 
 datasource db {
-<<<<<<< HEAD
-  provider  = "postgresql"
-  url       = env("DATABASE_URL")
-  directUrl = env("DIRECT_URL")
-}
-=======
   provider = "postgresql"
 }
+
+
 
 enum Role {
   USER
@@ -94,7 +86,7 @@ model Recommendation {
   title       String
   explanation String
   reason      String
-  detectedIssues String[]
+  detectedIssues Json
   confidence  Int
   createdAt   DateTime           @default(now())
 
@@ -128,4 +120,3 @@ model ChatMessage {
 
   @@index([userId, createdAt])
 }
->>>>>>> 860ec09 (Initial commit - Crop Advisor SaaS)
