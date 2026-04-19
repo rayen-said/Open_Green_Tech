@@ -1,0 +1,10 @@
+^C:\USERS\MOHAMED SAID\DESKTOP\OPEN_GREEN_TECH\EI-RANDOM-TEST\BUILD\CMAKEFILES\16BB9F4105BA8A5CE12EB473AAD0D952\GENERATE.STAMP.RULE
+setlocal
+"C:\Program Files (x86)\Microsoft Visual Studio\18\BuildTools\Common7\IDE\CommonExtensions\Microsoft\CMake\CMake\bin\cmake.exe" "-SC:/Users/Mohamed Said/Desktop/Open_Green_tech/ei-random-test" "-BC:/Users/Mohamed Said/Desktop/Open_Green_tech/ei-random-test/build" --check-stamp-list CMakeFiles/generate.stamp.list --vs-solution-file "C:/Users/Mohamed Said/Desktop/Open_Green_tech/ei-random-test/build/ei_random_test.slnx"
+if %errorlevel% neq 0 goto :cmEnd
+:cmEnd
+endlocal & call :cmErrorLevel %errorlevel% & goto :cmDone
+:cmErrorLevel
+exit /b %1
+:cmDone
+if %errorlevel% neq 0 goto :VCEnd

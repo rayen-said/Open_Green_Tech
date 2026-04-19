@@ -33,6 +33,27 @@ export class TelemetryService {
       throw new ForbiddenException('You cannot push telemetry for this device');
     }
 
+    return this.persistTelemetry(deviceId, device.ownerId, dto);
+  }
+
+  async ingestFromTrustedSource(deviceId: string, dto: CreateTelemetryDto) {
+    const device = await this.prisma.device.findUnique({
+      where: { id: deviceId },
+      select: { id: true, ownerId: true },
+    });
+
+    if (!device) {
+      throw new NotFoundException('Device not found');
+    }
+
+    return this.persistTelemetry(device.id, device.ownerId, dto);
+  }
+
+  private async persistTelemetry(
+    deviceId: string,
+    ownerId: string,
+    dto: CreateTelemetryDto,
+  ) {
     const telemetry = await this.prisma.telemetry.create({
       data: {
         deviceId,
@@ -54,7 +75,7 @@ export class TelemetryService {
       const alert = await this.prisma.alert.create({
         data: {
           deviceId,
-          userId: device.ownerId,
+          userId: ownerId,
           severity,
           title: 'Anomaly detected',
           message:

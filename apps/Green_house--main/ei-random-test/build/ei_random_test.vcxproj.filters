@@ -1,0 +1,37 @@
+﻿<?xml version="1.0" encoding="utf-8"?>
+<Project ToolsVersion="18.0" xmlns="http://schemas.microsoft.com/developer/msbuild/2003">
+  <ItemGroup>
+    <ClCompile Include="C:\Users\Mohamed Said\Desktop\Open_Green_tech\ei-random-test\main.cpp">
+      <Filter>Source Files</Filter>
+    </ClCompile>
+    <ClCompile Include="C:\Users\Mohamed Said\Desktop\Open_Green_tech\mohamed_said-project-1-cpp-mcu-v12-impulse-#5\edge-impulse-sdk\dsp\dct\fast-dct-fft.cpp">
+      <Filter>Source Files</Filter>
+    </ClCompile>
+    <ClCompile Include="C:\Users\Mohamed Said\Desktop\Open_Green_tech\mohamed_said-project-1-cpp-mcu-v12-impulse-#5\edge-impulse-sdk\dsp\image\processing.cpp">
+      <Filter>Source Files</Filter>
+    </ClCompile>
+    <ClCompile Include="C:\Users\Mohamed Said\Desktop\Open_Green_tech\mohamed_said-project-1-cpp-mcu-v12-impulse-#5\edge-impulse-sdk\dsp\kissfft\kiss_fft.cpp">
+      <Filter>Source Files</Filter>
+    </ClCompile>
+    <ClCompile Include="C:\Users\Mohamed Said\Desktop\Open_Green_tech\mohamed_said-project-1-cpp-mcu-v12-impulse-#5\edge-impulse-sdk\dsp\kissfft\kiss_fftr.cpp">
+      <Filter>Source Files</Filter>
+    </ClCompile>
+    <ClCompile Include="C:\Users\Mohamed Said\Desktop\Open_Green_tech\mohamed_said-project-1-cpp-mcu-v12-impulse-#5\edge-impulse-sdk\dsp\memory.cpp">
+      <Filter>Source Files</Filter>
+    </ClCompile>
+    <ClCompile Include="C:\Users\Mohamed Said\Desktop\Open_Green_tech\mohamed_said-project-1-cpp-mcu-v12-impulse-#5\edge-impulse-sdk\tensorflow\lite\c\common.c">
+      <Filter>Source Files</Filter>
+    </ClCompile>
+    <ClCompile Include="C:\Users\Mohamed Said\Desktop\Open_Green_tech\mohamed_said-project-1-cpp-mcu-v12-impulse-#5\tflite-model\model.cpp">
+      <Filter>Source Files</Filter>
+    </ClCompile>
+  </ItemGroup>
+  <ItemGroup>
+    <CustomBuild Include="C:\Users\Mohamed Said\Desktop\Open_Green_tech\ei-random-test\CMakeLists.txt" />
+  </ItemGroup>
+  <ItemGroup>
+    <Filter Include="Source Files">
+      <UniqueIdentifier>{1DF256F3-D064-3013-8460-A16B0A9D64FC}</UniqueIdentifier>
+    </Filter>
+  </ItemGroup>
+</Project>

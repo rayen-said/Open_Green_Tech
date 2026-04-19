@@ -28,6 +28,7 @@ const demo_module_1 = require("./demo/demo.module");
 const chat_module_1 = require("./chat/chat.module");
 const ai_module_1 = require("./ai/ai.module");
 const user_portal_module_1 = require("./user-portal/user-portal.module");
+const mqtt_module_1 = require("./mqtt/mqtt.module");
 let AppModule = class AppModule {
 };
 exports.AppModule = AppModule;
@@ -64,6 +65,7 @@ exports.AppModule = AppModule = __decorate([
             chat_module_1.ChatModule,
             ai_module_1.AiModule,
             user_portal_module_1.UserPortalModule,
+            mqtt_module_1.MqttModule,
         ],
         controllers: [app_controller_1.AppController],
         providers: [

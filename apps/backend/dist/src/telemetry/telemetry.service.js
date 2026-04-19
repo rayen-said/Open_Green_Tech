@@ -31,6 +31,19 @@ let TelemetryService = class TelemetryService {
         if (role !== client_1.Role.ADMIN && device.ownerId !== userId) {
             throw new common_1.ForbiddenException('You cannot push telemetry for this device');
         }
+        return this.persistTelemetry(deviceId, device.ownerId, dto);
+    }
+    async ingestFromTrustedSource(deviceId, dto) {
+        const device = await this.prisma.device.findUnique({
+            where: { id: deviceId },
+            select: { id: true, ownerId: true },
+        });
+        if (!device) {
+            throw new common_1.NotFoundException('Device not found');
+        }
+        return this.persistTelemetry(device.id, device.ownerId, dto);
+    }
+    async persistTelemetry(deviceId, ownerId, dto) {
         const telemetry = await this.prisma.telemetry.create({
             data: {
                 deviceId,
@@ -47,7 +60,7 @@ let TelemetryService = class TelemetryService {
             const alert = await this.prisma.alert.create({
                 data: {
                     deviceId,
-                    userId: device.ownerId,
+                    userId: ownerId,
                     severity,
                     title: 'Anomaly detected',
                     message: telemetry.temperature > 38

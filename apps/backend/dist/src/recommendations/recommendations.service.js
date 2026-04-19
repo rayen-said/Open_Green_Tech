@@ -90,9 +90,7 @@ let RecommendationsService = class RecommendationsService {
         return { anomalyRate, reliability };
     }
     mapAiToLegacyPayload(ai) {
-        const warn = ai.warnings.length > 0
-            ? ` Warnings: ${ai.warnings.join(' | ')}`
-            : '';
+        const warn = ai.warnings.length > 0 ? ` Warnings: ${ai.warnings.join(' | ')}` : '';
         return {
             cropHealth: {
                 title: 'AI crop health assessment',

@@ -17,6 +17,41 @@ type JwtPayload = {
   role: Role;
 };
 
+type SupabaseUserMetadata = {
+  full_name?: string;
+  name?: string;
+};
+
+type SupabaseJwtData = {
+  email?: string;
+  user_metadata?: unknown;
+};
+
+function extractSupabaseUserMetadata(value: unknown): SupabaseUserMetadata {
+  if (typeof value !== 'object' || value === null) {
+    return {};
+  }
+
+  const record = value as Record<string, unknown>;
+  return {
+    full_name:
+      typeof record.full_name === 'string' ? record.full_name : undefined,
+    name: typeof record.name === 'string' ? record.name : undefined,
+  };
+}
+
+function extractSupabaseJwtData(value: unknown): SupabaseJwtData {
+  if (typeof value !== 'object' || value === null) {
+    return {};
+  }
+
+  const record = value as Record<string, unknown>;
+  return {
+    email: typeof record.email === 'string' ? record.email : undefined,
+    user_metadata: record.user_metadata,
+  };
+}
+
 function parseExpiryToSeconds(value: string, fallbackSeconds: number): number {
   const match = /^(\d+)([smhd])$/.exec(value.trim());
   if (!match) {
@@ -95,11 +130,12 @@ export class AuthService {
       );
     }
 
-    let payload: jwt.JwtPayload;
+    let payload: SupabaseJwtData;
     try {
-      payload = jwt.verify(accessToken, secret, {
+      const verified = jwt.verify(accessToken, secret, {
         algorithms: ['HS256'],
-      }) as jwt.JwtPayload;
+      });
+      payload = extractSupabaseJwtData(verified);
     } catch {
       throw new UnauthorizedException('Invalid Supabase access token.');
     }
@@ -111,9 +147,7 @@ export class AuthService {
       throw new UnauthorizedException('Supabase token is missing email.');
     }
 
-    const meta = payload.user_metadata as
-      | { full_name?: string; name?: string }
-      | undefined;
+    const meta = extractSupabaseUserMetadata(payload.user_metadata);
     const fullNameGuess =
       meta?.full_name ?? meta?.name ?? email.split('@')[0] ?? 'Farmer';
 

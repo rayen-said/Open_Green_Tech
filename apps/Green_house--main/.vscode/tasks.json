@@ -1,0 +1,29 @@
+{
+  "version": "2.0.0",
+  "tasks": [
+    {
+      "label": "CSV to MQTT flow",
+      "type": "process",
+      "command": "c:/Users/Mohamed Said/Desktop/Open_Green_tech/.venv/Scripts/python.exe",
+      "args": [
+        "${workspaceFolder}/ei-random-test/run_csv_to_mqtt_flow.py",
+        "${workspaceFolder}/gabes_year_dataset.csv",
+        "--output-json",
+        "${workspaceFolder}/ei-random-test/file.json"
+      ],
+      "options": {
+        "cwd": "${workspaceFolder}/ei-random-test"
+      },
+      "problemMatcher": [],
+      "group": {
+        "kind": "build",
+        "isDefault": true
+      },
+      "presentation": {
+        "reveal": "always",
+        "panel": "dedicated",
+        "clear": true
+      }
+    }
+  ]
+}

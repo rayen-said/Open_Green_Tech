@@ -15,6 +15,16 @@ export declare class TelemetryService {
         anomaly: boolean;
         timestamp: Date;
     }>;
+    ingestFromTrustedSource(deviceId: string, dto: CreateTelemetryDto): Promise<{
+        id: string;
+        deviceId: string;
+        temperature: number;
+        humidity: number;
+        light: number;
+        anomaly: boolean;
+        timestamp: Date;
+    }>;
+    private persistTelemetry;
     list(deviceId: string, userId: string, role: Role): Promise<{
         id: string;
         deviceId: string;

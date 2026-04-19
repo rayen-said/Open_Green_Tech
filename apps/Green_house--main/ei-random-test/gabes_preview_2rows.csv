@@ -1,0 +1,3 @@
+timestamp,tempC,humPct,moistPct,lux,heater_fan_on,fan_on,water_pump_on,humidifiers_on,grow_lights_on
+2025-01-01T00:00:00,10.6,77.0,60.0,0.0,1,0,0,0,1
+2025-01-01T01:00:00,10.7,79.0,60.0,0.0,1,0,0,0,1

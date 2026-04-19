@@ -7,7 +7,7 @@ import type { AdminOverview, Alert, Device, Recommendation, TelemetryPoint, User
 import { useAuthStore } from "@/store/auth-store";
 import { useToastStore } from "@/store/toast-store";
 import { Activity, BellRing, Brain, Cpu, Leaf, LogOut, ShieldCheck } from "lucide-react";
-import { useEffect, useMemo, useState } from "react";
+import { useCallback, useEffect, useMemo, useState } from "react";
 import {
   Bar,
   BarChart,
@@ -64,7 +64,7 @@ export function WorkspaceDashboard() {
     setApiToken(token);
   }, [token]);
 
-  const loadAppData = async () => {
+  const loadAppData = useCallback(async () => {
     if (!token) {
       return;
     }
@@ -105,7 +105,7 @@ export function WorkspaceDashboard() {
     } finally {
       setLoading(false);
     }
-  };
+  }, [selectedDeviceId, token, user?.role]);
 
   useEffect(() => {
     if (!token || !hydrated) {
@@ -114,7 +114,7 @@ export function WorkspaceDashboard() {
     (async () => {
       await loadAppData();
     })();
-  }, [token, hydrated]);
+  }, [token, hydrated, loadAppData]);
 
   useEffect(() => {
     if (!token) {

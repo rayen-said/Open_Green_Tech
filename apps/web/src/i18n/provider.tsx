@@ -12,6 +12,27 @@ type Dictionary = Record<string, DictionaryValue>;
 
 const dictionaries: Record<Lang, Dictionary> = { en, fr, ar };
 
+function resolveInitialLang(): Lang {
+  if (typeof window === "undefined") {
+    return "fr";
+  }
+
+  const stored = window.localStorage.getItem("crop-advisor-lang") as Lang | null;
+  if (stored && ["en", "fr", "ar"].includes(stored)) {
+    return stored;
+  }
+
+  const browserLanguage = (window.navigator.language || "fr").toLowerCase();
+  if (browserLanguage.startsWith("ar")) {
+    return "ar";
+  }
+  if (browserLanguage.startsWith("en")) {
+    return "en";
+  }
+
+  return "fr";
+}
+
 function getNestedValue(dictionary: Dictionary, path: string): string {
   return path.split(".").reduce<string | Dictionary>((acc, key) => {
     if (typeof acc === "string") {
@@ -31,26 +52,7 @@ type I18nContextType = {
 const I18nContext = createContext<I18nContextType | null>(null);
 
 export function I18nProvider({ children }: { children: React.ReactNode }) {
-  const [lang, setLang] = useState<Lang>("fr");
-
-  useEffect(() => {
-    const stored = window.localStorage.getItem("crop-advisor-lang") as Lang | null;
-    if (stored && ["en", "fr", "ar"].includes(stored)) {
-      setLang(stored);
-      return;
-    }
-
-    const browserLanguage = (window.navigator.language || "fr").toLowerCase();
-    if (browserLanguage.startsWith("ar")) {
-      setLang("ar");
-      return;
-    }
-    if (browserLanguage.startsWith("en")) {
-      setLang("en");
-      return;
-    }
-    setLang("fr");
-  }, []);
+  const [lang, setLang] = useState<Lang>(resolveInitialLang);
 
   useEffect(() => {
     window.localStorage.setItem("crop-advisor-lang", lang);

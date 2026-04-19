@@ -59,7 +59,9 @@ let UserProfileService = class UserProfileService {
                 ...(dto.habits.fertilizerUsage != null
                     ? { fertilizerUsage: dto.habits.fertilizerUsage }
                     : {}),
-                ...(dto.habits.careMode != null ? { careMode: dto.habits.careMode } : {}),
+                ...(dto.habits.careMode != null
+                    ? { careMode: dto.habits.careMode }
+                    : {}),
             }
             : undefined;
         await this.prisma.userProfile.upsert({

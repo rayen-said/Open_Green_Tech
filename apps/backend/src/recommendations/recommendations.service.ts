@@ -92,8 +92,7 @@ export class RecommendationsService {
     }
     const anomalyCount = points.filter((p) => p.anomaly).length;
     const anomalyRate = anomalyCount / points.length;
-    const mean =
-      points.reduce((s, p) => s + p.temperature, 0) / points.length;
+    const mean = points.reduce((s, p) => s + p.temperature, 0) / points.length;
     let varT = 0;
     for (const p of points) {
       const d = p.temperature - mean;
@@ -113,9 +112,7 @@ export class RecommendationsService {
     warnings: string[];
   }): LlmRecommendationPayload {
     const warn =
-      ai.warnings.length > 0
-        ? ` Warnings: ${ai.warnings.join(' | ')}`
-        : '';
+      ai.warnings.length > 0 ? ` Warnings: ${ai.warnings.join(' | ')}` : '';
     return {
       cropHealth: {
         title: 'AI crop health assessment',

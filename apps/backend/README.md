@@ -57,6 +57,37 @@ $ pnpm run test:e2e
 $ pnpm run test:cov
 ```
 
+## MQTT / HiveMQ integration
+
+The API now supports the IoT flow:
+
+Device -> MQTT -> Backend -> Database -> WebSocket -> Frontend
+
+### Environment variables
+
+```bash
+MQTT_ENABLED=true
+MQTT_URL=mqtts://your-cluster.s1.eu.hivemq.cloud:8883
+MQTT_USERNAME=your-username
+MQTT_PASSWORD=your-password
+MQTT_TLS_REJECT_UNAUTHORIZED=true
+
+# Optional overrides
+MQTT_TELEMETRY_TOPIC=greenhouse/+/telemetry
+MQTT_ALERTS_TOPIC=greenhouse/+/alerts
+MQTT_COMMAND_TOPIC_TEMPLATE=greenhouse/{deviceId}/commands
+```
+
+### Publish commands to a device
+
+Authenticated endpoint:
+
+`POST /api/mqtt/devices/:deviceId/commands`
+
+Body accepts mode/setpoints/actuator toggles and publishes to:
+
+`greenhouse/{deviceId}/commands`
+
 ## Deployment
 
 When you're ready to deploy your NestJS application to production, there are some key steps you can take to ensure it runs as efficiently as possible. Check out the [deployment documentation](https://docs.nestjs.com/deployment) for more information.

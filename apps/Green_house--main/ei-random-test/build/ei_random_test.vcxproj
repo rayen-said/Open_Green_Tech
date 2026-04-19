@@ -1,0 +1,400 @@
+﻿<?xml version="1.0" encoding="utf-8"?>
+<Project DefaultTargets="Build" ToolsVersion="18.0" xmlns="http://schemas.microsoft.com/developer/msbuild/2003">
+  <PropertyGroup>
+    <PreferredToolArchitecture>x64</PreferredToolArchitecture>
+  </PropertyGroup>
+  <ItemGroup Label="ProjectConfigurations">
+    <ProjectConfiguration Include="Debug|x64">
+      <Configuration>Debug</Configuration>
+      <Platform>x64</Platform>
+    </ProjectConfiguration>
+    <ProjectConfiguration Include="Release|x64">
+      <Configuration>Release</Configuration>
+      <Platform>x64</Platform>
+    </ProjectConfiguration>
+    <ProjectConfiguration Include="MinSizeRel|x64">
+      <Configuration>MinSizeRel</Configuration>
+      <Platform>x64</Platform>
+    </ProjectConfiguration>
+    <ProjectConfiguration Include="RelWithDebInfo|x64">
+      <Configuration>RelWithDebInfo</Configuration>
+      <Platform>x64</Platform>
+    </ProjectConfiguration>
+  </ItemGroup>
+  <PropertyGroup Label="Globals">
+    <ProjectGuid>{3705B4D9-D266-3D5D-B3B5-B70C30F0CC60}</ProjectGuid>
+    <Keyword>Win32Proj</Keyword>
+    <WindowsTargetPlatformVersion>10.0.26100.0</WindowsTargetPlatformVersion>
+    <Platform>x64</Platform>
+    <ProjectName>ei_random_test</ProjectName>
+    <VCProjectUpgraderObjectName>NoUpgrade</VCProjectUpgraderObjectName>
+  </PropertyGroup>
+  <Import Project="$(VCTargetsPath)\Microsoft.Cpp.Default.props" />
+  <PropertyGroup Condition="'$(Configuration)|$(Platform)'=='Debug|x64'" Label="Configuration">
+    <ConfigurationType>Application</ConfigurationType>
+    <CharacterSet>MultiByte</CharacterSet>
+    <PlatformToolset>v145</PlatformToolset>
+  </PropertyGroup>
+  <PropertyGroup Condition="'$(Configuration)|$(Platform)'=='Release|x64'" Label="Configuration">
+    <ConfigurationType>Application</ConfigurationType>
+    <CharacterSet>MultiByte</CharacterSet>
+    <PlatformToolset>v145</PlatformToolset>
+  </PropertyGroup>
+  <PropertyGroup Condition="'$(Configuration)|$(Platform)'=='MinSizeRel|x64'" Label="Configuration">
+    <ConfigurationType>Application</ConfigurationType>
+    <CharacterSet>MultiByte</CharacterSet>
+    <PlatformToolset>v145</PlatformToolset>
+  </PropertyGroup>
+  <PropertyGroup Condition="'$(Configuration)|$(Platform)'=='RelWithDebInfo|x64'" Label="Configuration">
+    <ConfigurationType>Application</ConfigurationType>
+    <CharacterSet>MultiByte</CharacterSet>
+    <PlatformToolset>v145</PlatformToolset>
+  </PropertyGroup>
+  <Import Project="$(VCTargetsPath)\Microsoft.Cpp.props" />
+  <ImportGroup Label="ExtensionSettings">
+  </ImportGroup>
+  <ImportGroup Label="PropertySheets">
+    <Import Project="$(UserRootDir)\Microsoft.Cpp.$(Platform).user.props" Condition="exists('$(UserRootDir)\Microsoft.Cpp.$(Platform).user.props')" Label="LocalAppDataPlatform" />
+  </ImportGroup>
+  <PropertyGroup Label="UserMacros" />
+  <PropertyGroup>
+    <_ProjectFileVersion>10.0.20506.1</_ProjectFileVersion>
+    <OutDir Condition="'$(Configuration)|$(Platform)'=='Debug|x64'">C:\Users\Mohamed Said\Desktop\Open_Green_tech\ei-random-test\build\Debug\</OutDir>
+    <IntDir Condition="'$(Configuration)|$(Platform)'=='Debug|x64'">ei_random_test.dir\Debug\</IntDir>
+    <TargetName Condition="'$(Configuration)|$(Platform)'=='Debug|x64'">ei_random_test</TargetName>
+    <TargetExt Condition="'$(Configuration)|$(Platform)'=='Debug|x64'">.exe</TargetExt>
+    <LinkIncremental Condition="'$(Configuration)|$(Platform)'=='Debug|x64'">true</LinkIncremental>
+    <GenerateManifest Condition="'$(Configuration)|$(Platform)'=='Debug|x64'">true</GenerateManifest>
+    <OutDir Condition="'$(Configuration)|$(Platform)'=='Release|x64'">C:\Users\Mohamed Said\Desktop\Open_Green_tech\ei-random-test\build\Release\</OutDir>
+    <IntDir Condition="'$(Configuration)|$(Platform)'=='Release|x64'">ei_random_test.dir\Release\</IntDir>
+    <TargetName Condition="'$(Configuration)|$(Platform)'=='Release|x64'">ei_random_test</TargetName>
+    <TargetExt Condition="'$(Configuration)|$(Platform)'=='Release|x64'">.exe</TargetExt>
+    <LinkIncremental Condition="'$(Configuration)|$(Platform)'=='Release|x64'">false</LinkIncremental>
+    <GenerateManifest Condition="'$(Configuration)|$(Platform)'=='Release|x64'">true</GenerateManifest>
+    <OutDir Condition="'$(Configuration)|$(Platform)'=='MinSizeRel|x64'">C:\Users\Mohamed Said\Desktop\Open_Green_tech\ei-random-test\build\MinSizeRel\</OutDir>
+    <IntDir Condition="'$(Configuration)|$(Platform)'=='MinSizeRel|x64'">ei_random_test.dir\MinSizeRel\</IntDir>
+    <TargetName Condition="'$(Configuration)|$(Platform)'=='MinSizeRel|x64'">ei_random_test</TargetName>
+    <TargetExt Condition="'$(Configuration)|$(Platform)'=='MinSizeRel|x64'">.exe</TargetExt>
+    <LinkIncremental Condition="'$(Configuration)|$(Platform)'=='MinSizeRel|x64'">false</LinkIncremental>
+    <GenerateManifest Condition="'$(Configuration)|$(Platform)'=='MinSizeRel|x64'">true</GenerateManifest>
+    <OutDir Condition="'$(Configuration)|$(Platform)'=='RelWithDebInfo|x64'">C:\Users\Mohamed Said\Desktop\Open_Green_tech\ei-random-test\build\RelWithDebInfo\</OutDir>
+    <IntDir Condition="'$(Configuration)|$(Platform)'=='RelWithDebInfo|x64'">ei_random_test.dir\RelWithDebInfo\</IntDir>
+    <TargetName Condition="'$(Configuration)|$(Platform)'=='RelWithDebInfo|x64'">ei_random_test</TargetName>
+    <TargetExt Condition="'$(Configuration)|$(Platform)'=='RelWithDebInfo|x64'">.exe</TargetExt>
+    <LinkIncremental Condition="'$(Configuration)|$(Platform)'=='RelWithDebInfo|x64'">true</LinkIncremental>
+    <GenerateManifest Condition="'$(Configuration)|$(Platform)'=='RelWithDebInfo|x64'">true</GenerateManifest>
+  </PropertyGroup>
+  <ItemDefinitionGroup Condition="'$(Configuration)|$(Platform)'=='Debug|x64'">
+    <ClCompile>
+      <AdditionalIncludeDirectories>C:\Users\Mohamed Said\Desktop\Open_Green_tech\ei-random-test\..\mohamed_said-project-1-cpp-mcu-v12-impulse-#5;C:\Users\Mohamed Said\Desktop\Open_Green_tech\ei-random-test\..\mohamed_said-project-1-cpp-mcu-v12-impulse-#5\edge-impulse-sdk;C:\Users\Mohamed Said\Desktop\Open_Green_tech\ei-random-test\..\mohamed_said-project-1-cpp-mcu-v12-impulse-#5\edge-impulse-sdk\classifier;C:\Users\Mohamed Said\Desktop\Open_Green_tech\ei-random-test\..\mohamed_said-project-1-cpp-mcu-v12-impulse-#5\edge-impulse-sdk\dsp;C:\Users\Mohamed Said\Desktop\Open_Green_tech\ei-random-test\..\mohamed_said-project-1-cpp-mcu-v12-impulse-#5\edge-impulse-sdk\CMSIS\Core\Include;C:\Users\Mohamed Said\Desktop\Open_Green_tech\ei-random-test\..\mohamed_said-project-1-cpp-mcu-v12-impulse-#5\edge-impulse-sdk\CMSIS\DSP\Include;C:\Users\Mohamed Said\Desktop\Open_Green_tech\ei-random-test\..\mohamed_said-project-1-cpp-mcu-v12-impulse-#5\edge-impulse-sdk\third_party\flatbuffers\include;C:\Users\Mohamed Said\Desktop\Open_Green_tech\ei-random-test\..\mohamed_said-project-1-cpp-mcu-v12-impulse-#5\edge-impulse-sdk\third_party\gemmlowp;C:\Users\Mohamed Said\Desktop\Open_Green_tech\ei-random-test\..\mohamed_said-project-1-cpp-mcu-v12-impulse-#5\edge-impulse-sdk\third_party\ruy;C:\Users\Mohamed Said\Desktop\Open_Green_tech\ei-random-test\..\mohamed_said-project-1-cpp-mcu-v12-impulse-#5\edge-impulse-sdk\third_party\incbin;C:\Users\Mohamed Said\Desktop\Open_Green_tech\ei-random-test\..\mohamed_said-project-1-cpp-mcu-v12-impulse-#5\edge-impulse-sdk\tensorflow\lite;C:\Users\Mohamed Said\Desktop\Open_Green_tech\ei-random-test\..\mohamed_said-project-1-cpp-mcu-v12-impulse-#5\edge-impulse-sdk\tensorflow\lite\c;C:\Users\Mohamed Said\Desktop\Open_Green_tech\ei-random-test\..\mohamed_said-project-1-cpp-mcu-v12-impulse-#5\edge-impulse-sdk\tensorflow\lite\micro;%(AdditionalIncludeDirectories)</AdditionalIncludeDirectories>
+      <AdditionalOptions>%(AdditionalOptions) /bigobj</AdditionalOptions>
+      <AssemblerListingLocation>$(IntDir)</AssemblerListingLocation>
+      <BasicRuntimeChecks>EnableFastChecks</BasicRuntimeChecks>
+      <BufferSecurityCheck></BufferSecurityCheck>
+      <CallingConvention></CallingConvention>
+      <DebugInformationFormat>ProgramDatabase</DebugInformationFormat>
+      <ExceptionHandling>Sync</ExceptionHandling>
+      <FloatingPointModel></FloatingPointModel>
+      <ForceConformanceInForLoopScope></ForceConformanceInForLoopScope>
+      <ForcedIncludeFiles>"C:/Users/Mohamed Said/Desktop/Open_Green_tech/ei-random-test/msvc_compat.h"</ForcedIncludeFiles>
+      <InlineFunctionExpansion>Disabled</InlineFunctionExpansion>
+      <LanguageStandard>stdcpp20</LanguageStandard>
+      <MinimalRebuild></MinimalRebuild>
+      <Optimization>Disabled</Optimization>
+      <PrecompiledHeader>NotUsing</PrecompiledHeader>
+      <RemoveUnreferencedCodeData></RemoveUnreferencedCodeData>
+      <RuntimeLibrary>MultiThreadedDebugDLL</RuntimeLibrary>
+      <RuntimeTypeInfo>true</RuntimeTypeInfo>
+      <SupportJustMyCode></SupportJustMyCode>
+      <TreatWChar_tAsBuiltInType></TreatWChar_tAsBuiltInType>
+      <UseFullPaths>false</UseFullPaths>
+      <PreprocessorDefinitions>%(PreprocessorDefinitions);WIN32;_WINDOWS;EI_C_LINKAGE=1;EI_PORTING_CLIB=1;EIDSP_USE_CMSIS_DSP=0;EIDSP_USE_ESP_DSP=0;EIDSP_USE_NEON=0;WIN32_LEAN_AND_MEAN;NOMINMAX;_CRT_SECURE_NO_WARNINGS;CMAKE_INTDIR="Debug"</PreprocessorDefinitions>
+      <ObjectFileName>$(IntDir)</ObjectFileName>
+      <ScanSourceForModuleDependencies>false</ScanSourceForModuleDependencies>
+    </ClCompile>
+    <ResourceCompile>
+      <PreprocessorDefinitions>%(PreprocessorDefinitions);WIN32;_DEBUG;_WINDOWS;EI_C_LINKAGE=1;EI_PORTING_CLIB=1;EIDSP_USE_CMSIS_DSP=0;EIDSP_USE_ESP_DSP=0;EIDSP_USE_NEON=0;WIN32_LEAN_AND_MEAN;NOMINMAX;_CRT_SECURE_NO_WARNINGS;CMAKE_INTDIR=\"Debug\"</PreprocessorDefinitions>
+      <AdditionalIncludeDirectories>C:\Users\Mohamed Said\Desktop\Open_Green_tech\ei-random-test\..\mohamed_said-project-1-cpp-mcu-v12-impulse-#5;C:\Users\Mohamed Said\Desktop\Open_Green_tech\ei-random-test\..\mohamed_said-project-1-cpp-mcu-v12-impulse-#5\edge-impulse-sdk;C:\Users\Mohamed Said\Desktop\Open_Green_tech\ei-random-test\..\mohamed_said-project-1-cpp-mcu-v12-impulse-#5\edge-impulse-sdk\classifier;C:\Users\Mohamed Said\Desktop\Open_Green_tech\ei-random-test\..\mohamed_said-project-1-cpp-mcu-v12-impulse-#5\edge-impulse-sdk\dsp;C:\Users\Mohamed Said\Desktop\Open_Green_tech\ei-random-test\..\mohamed_said-project-1-cpp-mcu-v12-impulse-#5\edge-impulse-sdk\CMSIS\Core\Include;C:\Users\Mohamed Said\Desktop\Open_Green_tech\ei-random-test\..\mohamed_said-project-1-cpp-mcu-v12-impulse-#5\edge-impulse-sdk\CMSIS\DSP\Include;C:\Users\Mohamed Said\Desktop\Open_Green_tech\ei-random-test\..\mohamed_said-project-1-cpp-mcu-v12-impulse-#5\edge-impulse-sdk\third_party\flatbuffers\include;C:\Users\Mohamed Said\Desktop\Open_Green_tech\ei-random-test\..\mohamed_said-project-1-cpp-mcu-v12-impulse-#5\edge-impulse-sdk\third_party\gemmlowp;C:\Users\Mohamed Said\Desktop\Open_Green_tech\ei-random-test\..\mohamed_said-project-1-cpp-mcu-v12-impulse-#5\edge-impulse-sdk\third_party\ruy;C:\Users\Mohamed Said\Desktop\Open_Green_tech\ei-random-test\..\mohamed_said-project-1-cpp-mcu-v12-impulse-#5\edge-impulse-sdk\third_party\incbin;C:\Users\Mohamed Said\Desktop\Open_Green_tech\ei-random-test\..\mohamed_said-project-1-cpp-mcu-v12-impulse-#5\edge-impulse-sdk\tensorflow\lite;C:\Users\Mohamed Said\Desktop\Open_Green_tech\ei-random-test\..\mohamed_said-project-1-cpp-mcu-v12-impulse-#5\edge-impulse-sdk\tensorflow\lite\c;C:\Users\Mohamed Said\Desktop\Open_Green_tech\ei-random-test\..\mohamed_said-project-1-cpp-mcu-v12-impulse-#5\edge-impulse-sdk\tensorflow\lite\micro;%(AdditionalIncludeDirectories)</AdditionalIncludeDirectories>
+    </ResourceCompile>
+    <Midl>
+      <AdditionalIncludeDirectories>C:\Users\Mohamed Said\Desktop\Open_Green_tech\ei-random-test\..\mohamed_said-project-1-cpp-mcu-v12-impulse-#5;C:\Users\Mohamed Said\Desktop\Open_Green_tech\ei-random-test\..\mohamed_said-project-1-cpp-mcu-v12-impulse-#5\edge-impulse-sdk;C:\Users\Mohamed Said\Desktop\Open_Green_tech\ei-random-test\..\mohamed_said-project-1-cpp-mcu-v12-impulse-#5\edge-impulse-sdk\classifier;C:\Users\Mohamed Said\Desktop\Open_Green_tech\ei-random-test\..\mohamed_said-project-1-cpp-mcu-v12-impulse-#5\edge-impulse-sdk\dsp;C:\Users\Mohamed Said\Desktop\Open_Green_tech\ei-random-test\..\mohamed_said-project-1-cpp-mcu-v12-impulse-#5\edge-impulse-sdk\CMSIS\Core\Include;C:\Users\Mohamed Said\Desktop\Open_Green_tech\ei-random-test\..\mohamed_said-project-1-cpp-mcu-v12-impulse-#5\edge-impulse-sdk\CMSIS\DSP\Include;C:\Users\Mohamed Said\Desktop\Open_Green_tech\ei-random-test\..\mohamed_said-project-1-cpp-mcu-v12-impulse-#5\edge-impulse-sdk\third_party\flatbuffers\include;C:\Users\Mohamed Said\Desktop\Open_Green_tech\ei-random-test\..\mohamed_said-project-1-cpp-mcu-v12-impulse-#5\edge-impulse-sdk\third_party\gemmlowp;C:\Users\Mohamed Said\Desktop\Open_Green_tech\ei-random-test\..\mohamed_said-project-1-cpp-mcu-v12-impulse-#5\edge-impulse-sdk\third_party\ruy;C:\Users\Mohamed Said\Desktop\Open_Green_tech\ei-random-test\..\mohamed_said-project-1-cpp-mcu-v12-impulse-#5\edge-impulse-sdk\third_party\incbin;C:\Users\Mohamed Said\Desktop\Open_Green_tech\ei-random-test\..\mohamed_said-project-1-cpp-mcu-v12-impulse-#5\edge-impulse-sdk\tensorflow\lite;C:\Users\Mohamed Said\Desktop\Open_Green_tech\ei-random-test\..\mohamed_said-project-1-cpp-mcu-v12-impulse-#5\edge-impulse-sdk\tensorflow\lite\c;C:\Users\Mohamed Said\Desktop\Open_Green_tech\ei-random-test\..\mohamed_said-project-1-cpp-mcu-v12-impulse-#5\edge-impulse-sdk\tensorflow\lite\micro;%(AdditionalIncludeDirectories)</AdditionalIncludeDirectories>
+      <OutputDirectory>$(ProjectDir)/$(IntDir)</OutputDirectory>
+      <HeaderFileName>%(Filename).h</HeaderFileName>
+      <TypeLibraryName>%(Filename).tlb</TypeLibraryName>
+      <InterfaceIdentifierFileName>%(Filename)_i.c</InterfaceIdentifierFileName>
+      <ProxyFileName>%(Filename)_p.c</ProxyFileName>
+    </Midl>
+    <Link>
+      <AdditionalDependencies>kernel32.lib;user32.lib;gdi32.lib;winspool.lib;shell32.lib;ole32.lib;oleaut32.lib;uuid.lib;comdlg32.lib;advapi32.lib</AdditionalDependencies>
+      <AdditionalLibraryDirectories>%(AdditionalLibraryDirectories)</AdditionalLibraryDirectories>
+      <AdditionalOptions>%(AdditionalOptions) /machine:x64</AdditionalOptions>
+      <DataExecutionPrevention></DataExecutionPrevention>
+      <GenerateDebugInformation>true</GenerateDebugInformation>
+      <IgnoreSpecificDefaultLibraries>%(IgnoreSpecificDefaultLibraries)</IgnoreSpecificDefaultLibraries>
+      <ImageHasSafeExceptionHandlers></ImageHasSafeExceptionHandlers>
+      <ImportLibrary>C:/Users/Mohamed Said/Desktop/Open_Green_tech/ei-random-test/build/Debug/ei_random_test.lib</ImportLibrary>
+      <LinkErrorReporting></LinkErrorReporting>
+      <ProgramDataBaseFile>C:/Users/Mohamed Said/Desktop/Open_Green_tech/ei-random-test/build/Debug/ei_random_test.pdb</ProgramDataBaseFile>
+      <RandomizedBaseAddress></RandomizedBaseAddress>
+      <SubSystem>Console</SubSystem>
+    </Link>
+    <ProjectReference>
+      <LinkLibraryDependencies>false</LinkLibraryDependencies>
+    </ProjectReference>
+  </ItemDefinitionGroup>
+  <ItemDefinitionGroup Condition="'$(Configuration)|$(Platform)'=='Release|x64'">
+    <ClCompile>
+      <AdditionalIncludeDirectories>C:\Users\Mohamed Said\Desktop\Open_Green_tech\ei-random-test\..\mohamed_said-project-1-cpp-mcu-v12-impulse-#5;C:\Users\Mohamed Said\Desktop\Open_Green_tech\ei-random-test\..\mohamed_said-project-1-cpp-mcu-v12-impulse-#5\edge-impulse-sdk;C:\Users\Mohamed Said\Desktop\Open_Green_tech\ei-random-test\..\mohamed_said-project-1-cpp-mcu-v12-impulse-#5\edge-impulse-sdk\classifier;C:\Users\Mohamed Said\Desktop\Open_Green_tech\ei-random-test\..\mohamed_said-project-1-cpp-mcu-v12-impulse-#5\edge-impulse-sdk\dsp;C:\Users\Mohamed Said\Desktop\Open_Green_tech\ei-random-test\..\mohamed_said-project-1-cpp-mcu-v12-impulse-#5\edge-impulse-sdk\CMSIS\Core\Include;C:\Users\Mohamed Said\Desktop\Open_Green_tech\ei-random-test\..\mohamed_said-project-1-cpp-mcu-v12-impulse-#5\edge-impulse-sdk\CMSIS\DSP\Include;C:\Users\Mohamed Said\Desktop\Open_Green_tech\ei-random-test\..\mohamed_said-project-1-cpp-mcu-v12-impulse-#5\edge-impulse-sdk\third_party\flatbuffers\include;C:\Users\Mohamed Said\Desktop\Open_Green_tech\ei-random-test\..\mohamed_said-project-1-cpp-mcu-v12-impulse-#5\edge-impulse-sdk\third_party\gemmlowp;C:\Users\Mohamed Said\Desktop\Open_Green_tech\ei-random-test\..\mohamed_said-project-1-cpp-mcu-v12-impulse-#5\edge-impulse-sdk\third_party\ruy;C:\Users\Mohamed Said\Desktop\Open_Green_tech\ei-random-test\..\mohamed_said-project-1-cpp-mcu-v12-impulse-#5\edge-impulse-sdk\third_party\incbin;C:\Users\Mohamed Said\Desktop\Open_Green_tech\ei-random-test\..\mohamed_said-project-1-cpp-mcu-v12-impulse-#5\edge-impulse-sdk\tensorflow\lite;C:\Users\Mohamed Said\Desktop\Open_Green_tech\ei-random-test\..\mohamed_said-project-1-cpp-mcu-v12-impulse-#5\edge-impulse-sdk\tensorflow\lite\c;C:\Users\Mohamed Said\Desktop\Open_Green_tech\ei-random-test\..\mohamed_said-project-1-cpp-mcu-v12-impulse-#5\edge-impulse-sdk\tensorflow\lite\micro;%(AdditionalIncludeDirectories)</AdditionalIncludeDirectories>
+      <AdditionalOptions>%(AdditionalOptions) /bigobj</AdditionalOptions>
+      <AssemblerListingLocation>$(IntDir)</AssemblerListingLocation>
+      <BasicRuntimeChecks>Default</BasicRuntimeChecks>
+      <BufferSecurityCheck></BufferSecurityCheck>
+      <CallingConvention></CallingConvention>
+      <ExceptionHandling>Sync</ExceptionHandling>
+      <FloatingPointModel></FloatingPointModel>
+      <ForceConformanceInForLoopScope></ForceConformanceInForLoopScope>
+      <ForcedIncludeFiles>"C:/Users/Mohamed Said/Desktop/Open_Green_tech/ei-random-test/msvc_compat.h"</ForcedIncludeFiles>
+      <InlineFunctionExpansion>AnySuitable</InlineFunctionExpansion>
+      <LanguageStandard>stdcpp20</LanguageStandard>
+      <MinimalRebuild></MinimalRebuild>
+      <Optimization>MaxSpeed</Optimization>
+      <PrecompiledHeader>NotUsing</PrecompiledHeader>
+      <RemoveUnreferencedCodeData></RemoveUnreferencedCodeData>
+      <RuntimeLibrary>MultiThreadedDLL</RuntimeLibrary>
+      <RuntimeTypeInfo>true</RuntimeTypeInfo>
+      <SupportJustMyCode></SupportJustMyCode>
+      <TreatWChar_tAsBuiltInType></TreatWChar_tAsBuiltInType>
+      <UseFullPaths>false</UseFullPaths>
+      <PreprocessorDefinitions>%(PreprocessorDefinitions);WIN32;_WINDOWS;NDEBUG;EI_C_LINKAGE=1;EI_PORTING_CLIB=1;EIDSP_USE_CMSIS_DSP=0;EIDSP_USE_ESP_DSP=0;EIDSP_USE_NEON=0;WIN32_LEAN_AND_MEAN;NOMINMAX;_CRT_SECURE_NO_WARNINGS;CMAKE_INTDIR="Release"</PreprocessorDefinitions>
+      <ObjectFileName>$(IntDir)</ObjectFileName>
+      <DebugInformationFormat>
+      </DebugInformationFormat>
+      <ScanSourceForModuleDependencies>false</ScanSourceForModuleDependencies>
+    </ClCompile>
+    <ResourceCompile>
+      <PreprocessorDefinitions>%(PreprocessorDefinitions);WIN32;_WINDOWS;NDEBUG;EI_C_LINKAGE=1;EI_PORTING_CLIB=1;EIDSP_USE_CMSIS_DSP=0;EIDSP_USE_ESP_DSP=0;EIDSP_USE_NEON=0;WIN32_LEAN_AND_MEAN;NOMINMAX;_CRT_SECURE_NO_WARNINGS;CMAKE_INTDIR=\"Release\"</PreprocessorDefinitions>
+      <AdditionalIncludeDirectories>C:\Users\Mohamed Said\Desktop\Open_Green_tech\ei-random-test\..\mohamed_said-project-1-cpp-mcu-v12-impulse-#5;C:\Users\Mohamed Said\Desktop\Open_Green_tech\ei-random-test\..\mohamed_said-project-1-cpp-mcu-v12-impulse-#5\edge-impulse-sdk;C:\Users\Mohamed Said\Desktop\Open_Green_tech\ei-random-test\..\mohamed_said-project-1-cpp-mcu-v12-impulse-#5\edge-impulse-sdk\classifier;C:\Users\Mohamed Said\Desktop\Open_Green_tech\ei-random-test\..\mohamed_said-project-1-cpp-mcu-v12-impulse-#5\edge-impulse-sdk\dsp;C:\Users\Mohamed Said\Desktop\Open_Green_tech\ei-random-test\..\mohamed_said-project-1-cpp-mcu-v12-impulse-#5\edge-impulse-sdk\CMSIS\Core\Include;C:\Users\Mohamed Said\Desktop\Open_Green_tech\ei-random-test\..\mohamed_said-project-1-cpp-mcu-v12-impulse-#5\edge-impulse-sdk\CMSIS\DSP\Include;C:\Users\Mohamed Said\Desktop\Open_Green_tech\ei-random-test\..\mohamed_said-project-1-cpp-mcu-v12-impulse-#5\edge-impulse-sdk\third_party\flatbuffers\include;C:\Users\Mohamed Said\Desktop\Open_Green_tech\ei-random-test\..\mohamed_said-project-1-cpp-mcu-v12-impulse-#5\edge-impulse-sdk\third_party\gemmlowp;C:\Users\Mohamed Said\Desktop\Open_Green_tech\ei-random-test\..\mohamed_said-project-1-cpp-mcu-v12-impulse-#5\edge-impulse-sdk\third_party\ruy;C:\Users\Mohamed Said\Desktop\Open_Green_tech\ei-random-test\..\mohamed_said-project-1-cpp-mcu-v12-impulse-#5\edge-impulse-sdk\third_party\incbin;C:\Users\Mohamed Said\Desktop\Open_Green_tech\ei-random-test\..\mohamed_said-project-1-cpp-mcu-v12-impulse-#5\edge-impulse-sdk\tensorflow\lite;C:\Users\Mohamed Said\Desktop\Open_Green_tech\ei-random-test\..\mohamed_said-project-1-cpp-mcu-v12-impulse-#5\edge-impulse-sdk\tensorflow\lite\c;C:\Users\Mohamed Said\Desktop\Open_Green_tech\ei-random-test\..\mohamed_said-project-1-cpp-mcu-v12-impulse-#5\edge-impulse-sdk\tensorflow\lite\micro;%(AdditionalIncludeDirectories)</AdditionalIncludeDirectories>
+    </ResourceCompile>
+    <Midl>
+      <AdditionalIncludeDirectories>C:\Users\Mohamed Said\Desktop\Open_Green_tech\ei-random-test\..\mohamed_said-project-1-cpp-mcu-v12-impulse-#5;C:\Users\Mohamed Said\Desktop\Open_Green_tech\ei-random-test\..\mohamed_said-project-1-cpp-mcu-v12-impulse-#5\edge-impulse-sdk;C:\Users\Mohamed Said\Desktop\Open_Green_tech\ei-random-test\..\mohamed_said-project-1-cpp-mcu-v12-impulse-#5\edge-impulse-sdk\classifier;C:\Users\Mohamed Said\Desktop\Open_Green_tech\ei-random-test\..\mohamed_said-project-1-cpp-mcu-v12-impulse-#5\edge-impulse-sdk\dsp;C:\Users\Mohamed Said\Desktop\Open_Green_tech\ei-random-test\..\mohamed_said-project-1-cpp-mcu-v12-impulse-#5\edge-impulse-sdk\CMSIS\Core\Include;C:\Users\Mohamed Said\Desktop\Open_Green_tech\ei-random-test\..\mohamed_said-project-1-cpp-mcu-v12-impulse-#5\edge-impulse-sdk\CMSIS\DSP\Include;C:\Users\Mohamed Said\Desktop\Open_Green_tech\ei-random-test\..\mohamed_said-project-1-cpp-mcu-v12-impulse-#5\edge-impulse-sdk\third_party\flatbuffers\include;C:\Users\Mohamed Said\Desktop\Open_Green_tech\ei-random-test\..\mohamed_said-project-1-cpp-mcu-v12-impulse-#5\edge-impulse-sdk\third_party\gemmlowp;C:\Users\Mohamed Said\Desktop\Open_Green_tech\ei-random-test\..\mohamed_said-project-1-cpp-mcu-v12-impulse-#5\edge-impulse-sdk\third_party\ruy;C:\Users\Mohamed Said\Desktop\Open_Green_tech\ei-random-test\..\mohamed_said-project-1-cpp-mcu-v12-impulse-#5\edge-impulse-sdk\third_party\incbin;C:\Users\Mohamed Said\Desktop\Open_Green_tech\ei-random-test\..\mohamed_said-project-1-cpp-mcu-v12-impulse-#5\edge-impulse-sdk\tensorflow\lite;C:\Users\Mohamed Said\Desktop\Open_Green_tech\ei-random-test\..\mohamed_said-project-1-cpp-mcu-v12-impulse-#5\edge-impulse-sdk\tensorflow\lite\c;C:\Users\Mohamed Said\Desktop\Open_Green_tech\ei-random-test\..\mohamed_said-project-1-cpp-mcu-v12-impulse-#5\edge-impulse-sdk\tensorflow\lite\micro;%(AdditionalIncludeDirectories)</AdditionalIncludeDirectories>
+      <OutputDirectory>$(ProjectDir)/$(IntDir)</OutputDirectory>
+      <HeaderFileName>%(Filename).h</HeaderFileName>
+      <TypeLibraryName>%(Filename).tlb</TypeLibraryName>
+      <InterfaceIdentifierFileName>%(Filename)_i.c</InterfaceIdentifierFileName>
+      <ProxyFileName>%(Filename)_p.c</ProxyFileName>
+    </Midl>
+    <Link>
+      <AdditionalDependencies>kernel32.lib;user32.lib;gdi32.lib;winspool.lib;shell32.lib;ole32.lib;oleaut32.lib;uuid.lib;comdlg32.lib;advapi32.lib</AdditionalDependencies>
+      <AdditionalLibraryDirectories>%(AdditionalLibraryDirectories)</AdditionalLibraryDirectories>
+      <AdditionalOptions>%(AdditionalOptions) /machine:x64</AdditionalOptions>
+      <DataExecutionPrevention></DataExecutionPrevention>
+      <GenerateDebugInformation>false</GenerateDebugInformation>
+      <IgnoreSpecificDefaultLibraries>%(IgnoreSpecificDefaultLibraries)</IgnoreSpecificDefaultLibraries>
+      <ImageHasSafeExceptionHandlers></ImageHasSafeExceptionHandlers>
+      <ImportLibrary>C:/Users/Mohamed Said/Desktop/Open_Green_tech/ei-random-test/build/Release/ei_random_test.lib</ImportLibrary>
+      <LinkErrorReporting></LinkErrorReporting>
+      <ProgramDataBaseFile>C:/Users/Mohamed Said/Desktop/Open_Green_tech/ei-random-test/build/Release/ei_random_test.pdb</ProgramDataBaseFile>
+      <RandomizedBaseAddress></RandomizedBaseAddress>
+      <SubSystem>Console</SubSystem>
+    </Link>
+    <ProjectReference>
+      <LinkLibraryDependencies>false</LinkLibraryDependencies>
+    </ProjectReference>
+  </ItemDefinitionGroup>
+  <ItemDefinitionGroup Condition="'$(Configuration)|$(Platform)'=='MinSizeRel|x64'">
+    <ClCompile>
+      <AdditionalIncludeDirectories>C:\Users\Mohamed Said\Desktop\Open_Green_tech\ei-random-test\..\mohamed_said-project-1-cpp-mcu-v12-impulse-#5;C:\Users\Mohamed Said\Desktop\Open_Green_tech\ei-random-test\..\mohamed_said-project-1-cpp-mcu-v12-impulse-#5\edge-impulse-sdk;C:\Users\Mohamed Said\Desktop\Open_Green_tech\ei-random-test\..\mohamed_said-project-1-cpp-mcu-v12-impulse-#5\edge-impulse-sdk\classifier;C:\Users\Mohamed Said\Desktop\Open_Green_tech\ei-random-test\..\mohamed_said-project-1-cpp-mcu-v12-impulse-#5\edge-impulse-sdk\dsp;C:\Users\Mohamed Said\Desktop\Open_Green_tech\ei-random-test\..\mohamed_said-project-1-cpp-mcu-v12-impulse-#5\edge-impulse-sdk\CMSIS\Core\Include;C:\Users\Mohamed Said\Desktop\Open_Green_tech\ei-random-test\..\mohamed_said-project-1-cpp-mcu-v12-impulse-#5\edge-impulse-sdk\CMSIS\DSP\Include;C:\Users\Mohamed Said\Desktop\Open_Green_tech\ei-random-test\..\mohamed_said-project-1-cpp-mcu-v12-impulse-#5\edge-impulse-sdk\third_party\flatbuffers\include;C:\Users\Mohamed Said\Desktop\Open_Green_tech\ei-random-test\..\mohamed_said-project-1-cpp-mcu-v12-impulse-#5\edge-impulse-sdk\third_party\gemmlowp;C:\Users\Mohamed Said\Desktop\Open_Green_tech\ei-random-test\..\mohamed_said-project-1-cpp-mcu-v12-impulse-#5\edge-impulse-sdk\third_party\ruy;C:\Users\Mohamed Said\Desktop\Open_Green_tech\ei-random-test\..\mohamed_said-project-1-cpp-mcu-v12-impulse-#5\edge-impulse-sdk\third_party\incbin;C:\Users\Mohamed Said\Desktop\Open_Green_tech\ei-random-test\..\mohamed_said-project-1-cpp-mcu-v12-impulse-#5\edge-impulse-sdk\tensorflow\lite;C:\Users\Mohamed Said\Desktop\Open_Green_tech\ei-random-test\..\mohamed_said-project-1-cpp-mcu-v12-impulse-#5\edge-impulse-sdk\tensorflow\lite\c;C:\Users\Mohamed Said\Desktop\Open_Green_tech\ei-random-test\..\mohamed_said-project-1-cpp-mcu-v12-impulse-#5\edge-impulse-sdk\tensorflow\lite\micro;%(AdditionalIncludeDirectories)</AdditionalIncludeDirectories>
+      <AdditionalOptions>%(AdditionalOptions) /bigobj</AdditionalOptions>
+      <AssemblerListingLocation>$(IntDir)</AssemblerListingLocation>
+      <BasicRuntimeChecks>Default</BasicRuntimeChecks>
+      <BufferSecurityCheck></BufferSecurityCheck>
+      <CallingConvention></CallingConvention>
+      <ExceptionHandling>Sync</ExceptionHandling>
+      <FloatingPointModel></FloatingPointModel>
+      <ForceConformanceInForLoopScope></ForceConformanceInForLoopScope>
+      <ForcedIncludeFiles>"C:/Users/Mohamed Said/Desktop/Open_Green_tech/ei-random-test/msvc_compat.h"</ForcedIncludeFiles>
+      <InlineFunctionExpansion>OnlyExplicitInline</InlineFunctionExpansion>
+      <LanguageStandard>stdcpp20</LanguageStandard>
+      <MinimalRebuild></MinimalRebuild>
+      <Optimization>MinSpace</Optimization>
+      <PrecompiledHeader>NotUsing</PrecompiledHeader>
+      <RemoveUnreferencedCodeData></RemoveUnreferencedCodeData>
+      <RuntimeLibrary>MultiThreadedDLL</RuntimeLibrary>
+      <RuntimeTypeInfo>true</RuntimeTypeInfo>
+      <SupportJustMyCode></SupportJustMyCode>
+      <TreatWChar_tAsBuiltInType></TreatWChar_tAsBuiltInType>
+      <UseFullPaths>false</UseFullPaths>
+      <PreprocessorDefinitions>%(PreprocessorDefinitions);WIN32;_WINDOWS;NDEBUG;EI_C_LINKAGE=1;EI_PORTING_CLIB=1;EIDSP_USE_CMSIS_DSP=0;EIDSP_USE_ESP_DSP=0;EIDSP_USE_NEON=0;WIN32_LEAN_AND_MEAN;NOMINMAX;_CRT_SECURE_NO_WARNINGS;CMAKE_INTDIR="MinSizeRel"</PreprocessorDefinitions>
+      <ObjectFileName>$(IntDir)</ObjectFileName>
+      <DebugInformationFormat>
+      </DebugInformationFormat>
+      <ScanSourceForModuleDependencies>false</ScanSourceForModuleDependencies>
+    </ClCompile>
+    <ResourceCompile>
+      <PreprocessorDefinitions>%(PreprocessorDefinitions);WIN32;_WINDOWS;NDEBUG;EI_C_LINKAGE=1;EI_PORTING_CLIB=1;EIDSP_USE_CMSIS_DSP=0;EIDSP_USE_ESP_DSP=0;EIDSP_USE_NEON=0;WIN32_LEAN_AND_MEAN;NOMINMAX;_CRT_SECURE_NO_WARNINGS;CMAKE_INTDIR=\"MinSizeRel\"</PreprocessorDefinitions>
+      <AdditionalIncludeDirectories>C:\Users\Mohamed Said\Desktop\Open_Green_tech\ei-random-test\..\mohamed_said-project-1-cpp-mcu-v12-impulse-#5;C:\Users\Mohamed Said\Desktop\Open_Green_tech\ei-random-test\..\mohamed_said-project-1-cpp-mcu-v12-impulse-#5\edge-impulse-sdk;C:\Users\Mohamed Said\Desktop\Open_Green_tech\ei-random-test\..\mohamed_said-project-1-cpp-mcu-v12-impulse-#5\edge-impulse-sdk\classifier;C:\Users\Mohamed Said\Desktop\Open_Green_tech\ei-random-test\..\mohamed_said-project-1-cpp-mcu-v12-impulse-#5\edge-impulse-sdk\dsp;C:\Users\Mohamed Said\Desktop\Open_Green_tech\ei-random-test\..\mohamed_said-project-1-cpp-mcu-v12-impulse-#5\edge-impulse-sdk\CMSIS\Core\Include;C:\Users\Mohamed Said\Desktop\Open_Green_tech\ei-random-test\..\mohamed_said-project-1-cpp-mcu-v12-impulse-#5\edge-impulse-sdk\CMSIS\DSP\Include;C:\Users\Mohamed Said\Desktop\Open_Green_tech\ei-random-test\..\mohamed_said-project-1-cpp-mcu-v12-impulse-#5\edge-impulse-sdk\third_party\flatbuffers\include;C:\Users\Mohamed Said\Desktop\Open_Green_tech\ei-random-test\..\mohamed_said-project-1-cpp-mcu-v12-impulse-#5\edge-impulse-sdk\third_party\gemmlowp;C:\Users\Mohamed Said\Desktop\Open_Green_tech\ei-random-test\..\mohamed_said-project-1-cpp-mcu-v12-impulse-#5\edge-impulse-sdk\third_party\ruy;C:\Users\Mohamed Said\Desktop\Open_Green_tech\ei-random-test\..\mohamed_said-project-1-cpp-mcu-v12-impulse-#5\edge-impulse-sdk\third_party\incbin;C:\Users\Mohamed Said\Desktop\Open_Green_tech\ei-random-test\..\mohamed_said-project-1-cpp-mcu-v12-impulse-#5\edge-impulse-sdk\tensorflow\lite;C:\Users\Mohamed Said\Desktop\Open_Green_tech\ei-random-test\..\mohamed_said-project-1-cpp-mcu-v12-impulse-#5\edge-impulse-sdk\tensorflow\lite\c;C:\Users\Mohamed Said\Desktop\Open_Green_tech\ei-random-test\..\mohamed_said-project-1-cpp-mcu-v12-impulse-#5\edge-impulse-sdk\tensorflow\lite\micro;%(AdditionalIncludeDirectories)</AdditionalIncludeDirectories>
+    </ResourceCompile>
+    <Midl>
+      <AdditionalIncludeDirectories>C:\Users\Mohamed Said\Desktop\Open_Green_tech\ei-random-test\..\mohamed_said-project-1-cpp-mcu-v12-impulse-#5;C:\Users\Mohamed Said\Desktop\Open_Green_tech\ei-random-test\..\mohamed_said-project-1-cpp-mcu-v12-impulse-#5\edge-impulse-sdk;C:\Users\Mohamed Said\Desktop\Open_Green_tech\ei-random-test\..\mohamed_said-project-1-cpp-mcu-v12-impulse-#5\edge-impulse-sdk\classifier;C:\Users\Mohamed Said\Desktop\Open_Green_tech\ei-random-test\..\mohamed_said-project-1-cpp-mcu-v12-impulse-#5\edge-impulse-sdk\dsp;C:\Users\Mohamed Said\Desktop\Open_Green_tech\ei-random-test\..\mohamed_said-project-1-cpp-mcu-v12-impulse-#5\edge-impulse-sdk\CMSIS\Core\Include;C:\Users\Mohamed Said\Desktop\Open_Green_tech\ei-random-test\..\mohamed_said-project-1-cpp-mcu-v12-impulse-#5\edge-impulse-sdk\CMSIS\DSP\Include;C:\Users\Mohamed Said\Desktop\Open_Green_tech\ei-random-test\..\mohamed_said-project-1-cpp-mcu-v12-impulse-#5\edge-impulse-sdk\third_party\flatbuffers\include;C:\Users\Mohamed Said\Desktop\Open_Green_tech\ei-random-test\..\mohamed_said-project-1-cpp-mcu-v12-impulse-#5\edge-impulse-sdk\third_party\gemmlowp;C:\Users\Mohamed Said\Desktop\Open_Green_tech\ei-random-test\..\mohamed_said-project-1-cpp-mcu-v12-impulse-#5\edge-impulse-sdk\third_party\ruy;C:\Users\Mohamed Said\Desktop\Open_Green_tech\ei-random-test\..\mohamed_said-project-1-cpp-mcu-v12-impulse-#5\edge-impulse-sdk\third_party\incbin;C:\Users\Mohamed Said\Desktop\Open_Green_tech\ei-random-test\..\mohamed_said-project-1-cpp-mcu-v12-impulse-#5\edge-impulse-sdk\tensorflow\lite;C:\Users\Mohamed Said\Desktop\Open_Green_tech\ei-random-test\..\mohamed_said-project-1-cpp-mcu-v12-impulse-#5\edge-impulse-sdk\tensorflow\lite\c;C:\Users\Mohamed Said\Desktop\Open_Green_tech\ei-random-test\..\mohamed_said-project-1-cpp-mcu-v12-impulse-#5\edge-impulse-sdk\tensorflow\lite\micro;%(AdditionalIncludeDirectories)</AdditionalIncludeDirectories>
+      <OutputDirectory>$(ProjectDir)/$(IntDir)</OutputDirectory>
+      <HeaderFileName>%(Filename).h</HeaderFileName>
+      <TypeLibraryName>%(Filename).tlb</TypeLibraryName>
+      <InterfaceIdentifierFileName>%(Filename)_i.c</InterfaceIdentifierFileName>
+      <ProxyFileName>%(Filename)_p.c</ProxyFileName>
+    </Midl>
+    <Link>
+      <AdditionalDependencies>kernel32.lib;user32.lib;gdi32.lib;winspool.lib;shell32.lib;ole32.lib;oleaut32.lib;uuid.lib;comdlg32.lib;advapi32.lib</AdditionalDependencies>
+      <AdditionalLibraryDirectories>%(AdditionalLibraryDirectories)</AdditionalLibraryDirectories>
+      <AdditionalOptions>%(AdditionalOptions) /machine:x64</AdditionalOptions>
+      <DataExecutionPrevention></DataExecutionPrevention>
+      <GenerateDebugInformation>false</GenerateDebugInformation>
+      <IgnoreSpecificDefaultLibraries>%(IgnoreSpecificDefaultLibraries)</IgnoreSpecificDefaultLibraries>
+      <ImageHasSafeExceptionHandlers></ImageHasSafeExceptionHandlers>
+      <ImportLibrary>C:/Users/Mohamed Said/Desktop/Open_Green_tech/ei-random-test/build/MinSizeRel/ei_random_test.lib</ImportLibrary>
+      <LinkErrorReporting></LinkErrorReporting>
+      <ProgramDataBaseFile>C:/Users/Mohamed Said/Desktop/Open_Green_tech/ei-random-test/build/MinSizeRel/ei_random_test.pdb</ProgramDataBaseFile>
+      <RandomizedBaseAddress></RandomizedBaseAddress>
+      <SubSystem>Console</SubSystem>
+    </Link>
+    <ProjectReference>
+      <LinkLibraryDependencies>false</LinkLibraryDependencies>
+    </ProjectReference>
+  </ItemDefinitionGroup>
+  <ItemDefinitionGroup Condition="'$(Configuration)|$(Platform)'=='RelWithDebInfo|x64'">
+    <ClCompile>
+      <AdditionalIncludeDirectories>C:\Users\Mohamed Said\Desktop\Open_Green_tech\ei-random-test\..\mohamed_said-project-1-cpp-mcu-v12-impulse-#5;C:\Users\Mohamed Said\Desktop\Open_Green_tech\ei-random-test\..\mohamed_said-project-1-cpp-mcu-v12-impulse-#5\edge-impulse-sdk;C:\Users\Mohamed Said\Desktop\Open_Green_tech\ei-random-test\..\mohamed_said-project-1-cpp-mcu-v12-impulse-#5\edge-impulse-sdk\classifier;C:\Users\Mohamed Said\Desktop\Open_Green_tech\ei-random-test\..\mohamed_said-project-1-cpp-mcu-v12-impulse-#5\edge-impulse-sdk\dsp;C:\Users\Mohamed Said\Desktop\Open_Green_tech\ei-random-test\..\mohamed_said-project-1-cpp-mcu-v12-impulse-#5\edge-impulse-sdk\CMSIS\Core\Include;C:\Users\Mohamed Said\Desktop\Open_Green_tech\ei-random-test\..\mohamed_said-project-1-cpp-mcu-v12-impulse-#5\edge-impulse-sdk\CMSIS\DSP\Include;C:\Users\Mohamed Said\Desktop\Open_Green_tech\ei-random-test\..\mohamed_said-project-1-cpp-mcu-v12-impulse-#5\edge-impulse-sdk\third_party\flatbuffers\include;C:\Users\Mohamed Said\Desktop\Open_Green_tech\ei-random-test\..\mohamed_said-project-1-cpp-mcu-v12-impulse-#5\edge-impulse-sdk\third_party\gemmlowp;C:\Users\Mohamed Said\Desktop\Open_Green_tech\ei-random-test\..\mohamed_said-project-1-cpp-mcu-v12-impulse-#5\edge-impulse-sdk\third_party\ruy;C:\Users\Mohamed Said\Desktop\Open_Green_tech\ei-random-test\..\mohamed_said-project-1-cpp-mcu-v12-impulse-#5\edge-impulse-sdk\third_party\incbin;C:\Users\Mohamed Said\Desktop\Open_Green_tech\ei-random-test\..\mohamed_said-project-1-cpp-mcu-v12-impulse-#5\edge-impulse-sdk\tensorflow\lite;C:\Users\Mohamed Said\Desktop\Open_Green_tech\ei-random-test\..\mohamed_said-project-1-cpp-mcu-v12-impulse-#5\edge-impulse-sdk\tensorflow\lite\c;C:\Users\Mohamed Said\Desktop\Open_Green_tech\ei-random-test\..\mohamed_said-project-1-cpp-mcu-v12-impulse-#5\edge-impulse-sdk\tensorflow\lite\micro;%(AdditionalIncludeDirectories)</AdditionalIncludeDirectories>
+      <AdditionalOptions>%(AdditionalOptions) /bigobj</AdditionalOptions>
+      <AssemblerListingLocation>$(IntDir)</AssemblerListingLocation>
+      <BasicRuntimeChecks>Default</BasicRuntimeChecks>
+      <BufferSecurityCheck></BufferSecurityCheck>
+      <CallingConvention></CallingConvention>
+      <DebugInformationFormat>ProgramDatabase</DebugInformationFormat>
+      <ExceptionHandling>Sync</ExceptionHandling>
+      <FloatingPointModel></FloatingPointModel>
+      <ForceConformanceInForLoopScope></ForceConformanceInForLoopScope>
+      <ForcedIncludeFiles>"C:/Users/Mohamed Said/Desktop/Open_Green_tech/ei-random-test/msvc_compat.h"</ForcedIncludeFiles>
+      <InlineFunctionExpansion>OnlyExplicitInline</InlineFunctionExpansion>
+      <LanguageStandard>stdcpp20</LanguageStandard>
+      <MinimalRebuild></MinimalRebuild>
+      <Optimization>MaxSpeed</Optimization>
+      <PrecompiledHeader>NotUsing</PrecompiledHeader>
+      <RemoveUnreferencedCodeData></RemoveUnreferencedCodeData>
+      <RuntimeLibrary>MultiThreadedDLL</RuntimeLibrary>
+      <RuntimeTypeInfo>true</RuntimeTypeInfo>
+      <SupportJustMyCode></SupportJustMyCode>
+      <TreatWChar_tAsBuiltInType></TreatWChar_tAsBuiltInType>
+      <UseFullPaths>false</UseFullPaths>
+      <PreprocessorDefinitions>%(PreprocessorDefinitions);WIN32;_WINDOWS;NDEBUG;EI_C_LINKAGE=1;EI_PORTING_CLIB=1;EIDSP_USE_CMSIS_DSP=0;EIDSP_USE_ESP_DSP=0;EIDSP_USE_NEON=0;WIN32_LEAN_AND_MEAN;NOMINMAX;_CRT_SECURE_NO_WARNINGS;CMAKE_INTDIR="RelWithDebInfo"</PreprocessorDefinitions>
+      <ObjectFileName>$(IntDir)</ObjectFileName>
+      <ScanSourceForModuleDependencies>false</ScanSourceForModuleDependencies>
+    </ClCompile>
+    <ResourceCompile>
+      <PreprocessorDefinitions>%(PreprocessorDefinitions);WIN32;_WINDOWS;NDEBUG;EI_C_LINKAGE=1;EI_PORTING_CLIB=1;EIDSP_USE_CMSIS_DSP=0;EIDSP_USE_ESP_DSP=0;EIDSP_USE_NEON=0;WIN32_LEAN_AND_MEAN;NOMINMAX;_CRT_SECURE_NO_WARNINGS;CMAKE_INTDIR=\"RelWithDebInfo\"</PreprocessorDefinitions>
+      <AdditionalIncludeDirectories>C:\Users\Mohamed Said\Desktop\Open_Green_tech\ei-random-test\..\mohamed_said-project-1-cpp-mcu-v12-impulse-#5;C:\Users\Mohamed Said\Desktop\Open_Green_tech\ei-random-test\..\mohamed_said-project-1-cpp-mcu-v12-impulse-#5\edge-impulse-sdk;C:\Users\Mohamed Said\Desktop\Open_Green_tech\ei-random-test\..\mohamed_said-project-1-cpp-mcu-v12-impulse-#5\edge-impulse-sdk\classifier;C:\Users\Mohamed Said\Desktop\Open_Green_tech\ei-random-test\..\mohamed_said-project-1-cpp-mcu-v12-impulse-#5\edge-impulse-sdk\dsp;C:\Users\Mohamed Said\Desktop\Open_Green_tech\ei-random-test\..\mohamed_said-project-1-cpp-mcu-v12-impulse-#5\edge-impulse-sdk\CMSIS\Core\Include;C:\Users\Mohamed Said\Desktop\Open_Green_tech\ei-random-test\..\mohamed_said-project-1-cpp-mcu-v12-impulse-#5\edge-impulse-sdk\CMSIS\DSP\Include;C:\Users\Mohamed Said\Desktop\Open_Green_tech\ei-random-test\..\mohamed_said-project-1-cpp-mcu-v12-impulse-#5\edge-impulse-sdk\third_party\flatbuffers\include;C:\Users\Mohamed Said\Desktop\Open_Green_tech\ei-random-test\..\mohamed_said-project-1-cpp-mcu-v12-impulse-#5\edge-impulse-sdk\third_party\gemmlowp;C:\Users\Mohamed Said\Desktop\Open_Green_tech\ei-random-test\..\mohamed_said-project-1-cpp-mcu-v12-impulse-#5\edge-impulse-sdk\third_party\ruy;C:\Users\Mohamed Said\Desktop\Open_Green_tech\ei-random-test\..\mohamed_said-project-1-cpp-mcu-v12-impulse-#5\edge-impulse-sdk\third_party\incbin;C:\Users\Mohamed Said\Desktop\Open_Green_tech\ei-random-test\..\mohamed_said-project-1-cpp-mcu-v12-impulse-#5\edge-impulse-sdk\tensorflow\lite;C:\Users\Mohamed Said\Desktop\Open_Green_tech\ei-random-test\..\mohamed_said-project-1-cpp-mcu-v12-impulse-#5\edge-impulse-sdk\tensorflow\lite\c;C:\Users\Mohamed Said\Desktop\Open_Green_tech\ei-random-test\..\mohamed_said-project-1-cpp-mcu-v12-impulse-#5\edge-impulse-sdk\tensorflow\lite\micro;%(AdditionalIncludeDirectories)</AdditionalIncludeDirectories>
+    </ResourceCompile>
+    <Midl>
+      <AdditionalIncludeDirectories>C:\Users\Mohamed Said\Desktop\Open_Green_tech\ei-random-test\..\mohamed_said-project-1-cpp-mcu-v12-impulse-#5;C:\Users\Mohamed Said\Desktop\Open_Green_tech\ei-random-test\..\mohamed_said-project-1-cpp-mcu-v12-impulse-#5\edge-impulse-sdk;C:\Users\Mohamed Said\Desktop\Open_Green_tech\ei-random-test\..\mohamed_said-project-1-cpp-mcu-v12-impulse-#5\edge-impulse-sdk\classifier;C:\Users\Mohamed Said\Desktop\Open_Green_tech\ei-random-test\..\mohamed_said-project-1-cpp-mcu-v12-impulse-#5\edge-impulse-sdk\dsp;C:\Users\Mohamed Said\Desktop\Open_Green_tech\ei-random-test\..\mohamed_said-project-1-cpp-mcu-v12-impulse-#5\edge-impulse-sdk\CMSIS\Core\Include;C:\Users\Mohamed Said\Desktop\Open_Green_tech\ei-random-test\..\mohamed_said-project-1-cpp-mcu-v12-impulse-#5\edge-impulse-sdk\CMSIS\DSP\Include;C:\Users\Mohamed Said\Desktop\Open_Green_tech\ei-random-test\..\mohamed_said-project-1-cpp-mcu-v12-impulse-#5\edge-impulse-sdk\third_party\flatbuffers\include;C:\Users\Mohamed Said\Desktop\Open_Green_tech\ei-random-test\..\mohamed_said-project-1-cpp-mcu-v12-impulse-#5\edge-impulse-sdk\third_party\gemmlowp;C:\Users\Mohamed Said\Desktop\Open_Green_tech\ei-random-test\..\mohamed_said-project-1-cpp-mcu-v12-impulse-#5\edge-impulse-sdk\third_party\ruy;C:\Users\Mohamed Said\Desktop\Open_Green_tech\ei-random-test\..\mohamed_said-project-1-cpp-mcu-v12-impulse-#5\edge-impulse-sdk\third_party\incbin;C:\Users\Mohamed Said\Desktop\Open_Green_tech\ei-random-test\..\mohamed_said-project-1-cpp-mcu-v12-impulse-#5\edge-impulse-sdk\tensorflow\lite;C:\Users\Mohamed Said\Desktop\Open_Green_tech\ei-random-test\..\mohamed_said-project-1-cpp-mcu-v12-impulse-#5\edge-impulse-sdk\tensorflow\lite\c;C:\Users\Mohamed Said\Desktop\Open_Green_tech\ei-random-test\..\mohamed_said-project-1-cpp-mcu-v12-impulse-#5\edge-impulse-sdk\tensorflow\lite\micro;%(AdditionalIncludeDirectories)</AdditionalIncludeDirectories>
+      <OutputDirectory>$(ProjectDir)/$(IntDir)</OutputDirectory>
+      <HeaderFileName>%(Filename).h</HeaderFileName>
+      <TypeLibraryName>%(Filename).tlb</TypeLibraryName>
+      <InterfaceIdentifierFileName>%(Filename)_i.c</InterfaceIdentifierFileName>
+      <ProxyFileName>%(Filename)_p.c</ProxyFileName>
+    </Midl>
+    <Link>
+      <AdditionalDependencies>kernel32.lib;user32.lib;gdi32.lib;winspool.lib;shell32.lib;ole32.lib;oleaut32.lib;uuid.lib;comdlg32.lib;advapi32.lib</AdditionalDependencies>
+      <AdditionalLibraryDirectories>%(AdditionalLibraryDirectories)</AdditionalLibraryDirectories>
+      <AdditionalOptions>%(AdditionalOptions) /machine:x64</AdditionalOptions>
+      <DataExecutionPrevention></DataExecutionPrevention>
+      <GenerateDebugInformation>true</GenerateDebugInformation>
+      <IgnoreSpecificDefaultLibraries>%(IgnoreSpecificDefaultLibraries)</IgnoreSpecificDefaultLibraries>
+      <ImageHasSafeExceptionHandlers></ImageHasSafeExceptionHandlers>
+      <ImportLibrary>C:/Users/Mohamed Said/Desktop/Open_Green_tech/ei-random-test/build/RelWithDebInfo/ei_random_test.lib</ImportLibrary>
+      <LinkErrorReporting></LinkErrorReporting>
+      <ProgramDataBaseFile>C:/Users/Mohamed Said/Desktop/Open_Green_tech/ei-random-test/build/RelWithDebInfo/ei_random_test.pdb</ProgramDataBaseFile>
+      <RandomizedBaseAddress></RandomizedBaseAddress>
+      <SubSystem>Console</SubSystem>
+    </Link>
+    <ProjectReference>
+      <LinkLibraryDependencies>false</LinkLibraryDependencies>
+    </ProjectReference>
+  </ItemDefinitionGroup>
+  <ItemGroup>
+    <CustomBuild Include="C:\Users\Mohamed Said\Desktop\Open_Green_tech\ei-random-test\CMakeLists.txt">
+      <UseUtf8Encoding>Always</UseUtf8Encoding>
+      <Message Condition="'$(Configuration)|$(Platform)'=='Debug|x64'">Building Custom Rule C:/Users/Mohamed Said/Desktop/Open_Green_tech/ei-random-test/CMakeLists.txt</Message>
+      <Command Condition="'$(Configuration)|$(Platform)'=='Debug|x64'">setlocal
+"C:\Program Files (x86)\Microsoft Visual Studio\18\BuildTools\Common7\IDE\CommonExtensions\Microsoft\CMake\CMake\bin\cmake.exe" "-SC:/Users/Mohamed Said/Desktop/Open_Green_tech/ei-random-test" "-BC:/Users/Mohamed Said/Desktop/Open_Green_tech/ei-random-test/build" --check-stamp-file "C:/Users/Mohamed Said/Desktop/Open_Green_tech/ei-random-test/build/CMakeFiles/generate.stamp"
+if %errorlevel% neq 0 goto :cmEnd
+:cmEnd
+endlocal &amp; call :cmErrorLevel %errorlevel% &amp; goto :cmDone
+:cmErrorLevel
+exit /b %1
+:cmDone
+if %errorlevel% neq 0 goto :VCEnd</Command>
+      <AdditionalInputs Condition="'$(Configuration)|$(Platform)'=='Debug|x64'">C:\Program Files (x86)\Microsoft Visual Studio\18\BuildTools\Common7\IDE\CommonExtensions\Microsoft\CMake\CMake\share\cmake-4.2\Modules\CMakeCInformation.cmake;C:\Program Files (x86)\Microsoft Visual Studio\18\BuildTools\Common7\IDE\CommonExtensions\Microsoft\CMake\CMake\share\cmake-4.2\Modules\CMakeCXXInformation.cmake;C:\Program Files (x86)\Microsoft Visual Studio\18\BuildTools\Common7\IDE\CommonExtensions\Microsoft\CMake\CMake\share\cmake-4.2\Modules\CMakeCommonLanguageInclude.cmake;C:\Program Files (x86)\Microsoft Visual Studio\18\BuildTools\Common7\IDE\CommonExtensions\Microsoft\CMake\CMake\share\cmake-4.2\Modules\CMakeGenericSystem.cmake;C:\Program Files (x86)\Microsoft Visual Studio\18\BuildTools\Common7\IDE\CommonExtensions\Microsoft\CMake\CMake\share\cmake-4.2\Modules\CMakeInitializeConfigs.cmake;C:\Program Files (x86)\Microsoft Visual Studio\18\BuildTools\Common7\IDE\CommonExtensions\Microsoft\CMake\CMake\share\cmake-4.2\Modules\CMakeLanguageInformation.cmake;C:\Program Files (x86)\Microsoft Visual Studio\18\BuildTools\Common7\IDE\CommonExtensions\Microsoft\CMake\CMake\share\cmake-4.2\Modules\CMakeRCInformation.cmake;C:\Program Files (x86)\Microsoft Visual Studio\18\BuildTools\Common7\IDE\CommonExtensions\Microsoft\CMake\CMake\share\cmake-4.2\Modules\CMakeSystemSpecificInformation.cmake;C:\Program Files (x86)\Microsoft Visual Studio\18\BuildTools\Common7\IDE\CommonExtensions\Microsoft\CMake\CMake\share\cmake-4.2\Modules\CMakeSystemSpecificInitialize.cmake;C:\Program Files (x86)\Microsoft Visual Studio\18\BuildTools\Common7\IDE\CommonExtensions\Microsoft\CMake\CMake\share\cmake-4.2\Modules\Compiler\CMakeCommonCompilerMacros.cmake;C:\Program Files (x86)\Microsoft Visual Studio\18\BuildTools\Common7\IDE\CommonExtensions\Microsoft\CMake\CMake\share\cmake-4.2\Modules\Compiler\MSVC-C.cmake;C:\Program Files (x86)\Microsoft Visual Studio\18\BuildTools\Common7\IDE\CommonExtensions\Microsoft\CMake\CMake\share\cmake-4.2\Modules\Compiler\MSVC-CXX.cmake;C:\Program Files (x86)\Microsoft Visual Studio\18\BuildTools\Common7\IDE\CommonExtensions\Microsoft\CMake\CMake\share\cmake-4.2\Modules\Compiler\MSVC.cmake;C:\Program Files (x86)\Microsoft Visual Studio\18\BuildTools\Common7\IDE\CommonExtensions\Microsoft\CMake\CMake\share\cmake-4.2\Modules\Internal\CMakeCLinkerInformation.cmake;C:\Program Files (x86)\Microsoft Visual Studio\18\BuildTools\Common7\IDE\CommonExtensions\Microsoft\CMake\CMake\share\cmake-4.2\Modules\Internal\CMakeCXXLinkerInformation.cmake;C:\Program Files (x86)\Microsoft Visual Studio\18\BuildTools\Common7\IDE\CommonExtensions\Microsoft\CMake\CMake\share\cmake-4.2\Modules\Internal\CMakeCommonLinkerInformation.cmake;C:\Program Files (x86)\Microsoft Visual Studio\18\BuildTools\Common7\IDE\CommonExtensions\Microsoft\CMake\CMake\share\cmake-4.2\Modules\Linker\MSVC-C.cmake;C:\Program Files (x86)\Microsoft Visual Studio\18\BuildTools\Common7\IDE\CommonExtensions\Microsoft\CMake\CMake\share\cmake-4.2\Modules\Linker\MSVC-CXX.cmake;C:\Program Files (x86)\Microsoft Visual Studio\18\BuildTools\Common7\IDE\CommonExtensions\Microsoft\CMake\CMake\share\cmake-4.2\Modules\Linker\MSVC.cmake;C:\Program Files (x86)\Microsoft Visual Studio\18\BuildTools\Common7\IDE\CommonExtensions\Microsoft\CMake\CMake\share\cmake-4.2\Modules\Platform\Linker\Windows-MSVC-C.cmake;C:\Program Files (x86)\Microsoft Visual Studio\18\BuildTools\Common7\IDE\CommonExtensions\Microsoft\CMake\CMake\share\cmake-4.2\Modules\Platform\Linker\Windows-MSVC-CXX.cmake;C:\Program Files (x86)\Microsoft Visual Studio\18\BuildTools\Common7\IDE\CommonExtensions\Microsoft\CMake\CMake\share\cmake-4.2\Modules\Platform\Linker\Windows-MSVC.cmake;C:\Program Files (x86)\Microsoft Visual Studio\18\BuildTools\Common7\IDE\CommonExtensions\Microsoft\CMake\CMake\share\cmake-4.2\Modules\Platform\Windows-Initialize.cmake;C:\Program Files (x86)\Microsoft Visual Studio\18\BuildTools\Common7\IDE\CommonExtensions\Microsoft\CMake\CMake\share\cmake-4.2\Modules\Platform\Windows-MSVC-C.cmake;C:\Program Files (x86)\Microsoft Visual Studio\18\BuildTools\Common7\IDE\CommonExtensions\Microsoft\CMake\CMake\share\cmake-4.2\Modules\Platform\Windows-MSVC-CXX.cmake;C:\Program Files (x86)\Microsoft Visual Studio\18\BuildTools\Common7\IDE\CommonExtensions\Microsoft\CMake\CMake\share\cmake-4.2\Modules\Platform\Windows-MSVC.cmake;C:\Program Files (x86)\Microsoft Visual Studio\18\BuildTools\Common7\IDE\CommonExtensions\Microsoft\CMake\CMake\share\cmake-4.2\Modules\Platform\Windows.cmake;C:\Program Files (x86)\Microsoft Visual Studio\18\BuildTools\Common7\IDE\CommonExtensions\Microsoft\CMake\CMake\share\cmake-4.2\Modules\Platform\WindowsPaths.cmake;C:\Users\Mohamed Said\Desktop\Open_Green_tech\ei-random-test\build\CMakeFiles\4.2.3-msvc3\CMakeCCompiler.cmake;C:\Users\Mohamed Said\Desktop\Open_Green_tech\ei-random-test\build\CMakeFiles\4.2.3-msvc3\CMakeCXXCompiler.cmake;C:\Users\Mohamed Said\Desktop\Open_Green_tech\ei-random-test\build\CMakeFiles\4.2.3-msvc3\CMakeRCCompiler.cmake;C:\Users\Mohamed Said\Desktop\Open_Green_tech\ei-random-test\build\CMakeFiles\4.2.3-msvc3\CMakeSystem.cmake;C:\Users\Mohamed Said\Desktop\Open_Green_tech\ei-random-test\build\CMakeFiles\cmake.verify_globs;%(AdditionalInputs)</AdditionalInputs>
+      <Outputs Condition="'$(Configuration)|$(Platform)'=='Debug|x64'">C:\Users\Mohamed Said\Desktop\Open_Green_tech\ei-random-test\build\CMakeFiles\generate.stamp</Outputs>
+      <LinkObjects Condition="'$(Configuration)|$(Platform)'=='Debug|x64'">false</LinkObjects>
+      <Message Condition="'$(Configuration)|$(Platform)'=='Release|x64'">Building Custom Rule C:/Users/Mohamed Said/Desktop/Open_Green_tech/ei-random-test/CMakeLists.txt</Message>
+      <Command Condition="'$(Configuration)|$(Platform)'=='Release|x64'">setlocal
+"C:\Program Files (x86)\Microsoft Visual Studio\18\BuildTools\Common7\IDE\CommonExtensions\Microsoft\CMake\CMake\bin\cmake.exe" "-SC:/Users/Mohamed Said/Desktop/Open_Green_tech/ei-random-test" "-BC:/Users/Mohamed Said/Desktop/Open_Green_tech/ei-random-test/build" --check-stamp-file "C:/Users/Mohamed Said/Desktop/Open_Green_tech/ei-random-test/build/CMakeFiles/generate.stamp"
+if %errorlevel% neq 0 goto :cmEnd
+:cmEnd
+endlocal &amp; call :cmErrorLevel %errorlevel% &amp; goto :cmDone
+:cmErrorLevel
+exit /b %1
+:cmDone
+if %errorlevel% neq 0 goto :VCEnd</Command>
+      <AdditionalInputs Condition="'$(Configuration)|$(Platform)'=='Release|x64'">C:\Program Files (x86)\Microsoft Visual Studio\18\BuildTools\Common7\IDE\CommonExtensions\Microsoft\CMake\CMake\share\cmake-4.2\Modules\CMakeCInformation.cmake;C:\Program Files (x86)\Microsoft Visual Studio\18\BuildTools\Common7\IDE\CommonExtensions\Microsoft\CMake\CMake\share\cmake-4.2\Modules\CMakeCXXInformation.cmake;C:\Program Files (x86)\Microsoft Visual Studio\18\BuildTools\Common7\IDE\CommonExtensions\Microsoft\CMake\CMake\share\cmake-4.2\Modules\CMakeCommonLanguageInclude.cmake;C:\Program Files (x86)\Microsoft Visual Studio\18\BuildTools\Common7\IDE\CommonExtensions\Microsoft\CMake\CMake\share\cmake-4.2\Modules\CMakeGenericSystem.cmake;C:\Program Files (x86)\Microsoft Visual Studio\18\BuildTools\Common7\IDE\CommonExtensions\Microsoft\CMake\CMake\share\cmake-4.2\Modules\CMakeInitializeConfigs.cmake;C:\Program Files (x86)\Microsoft Visual Studio\18\BuildTools\Common7\IDE\CommonExtensions\Microsoft\CMake\CMake\share\cmake-4.2\Modules\CMakeLanguageInformation.cmake;C:\Program Files (x86)\Microsoft Visual Studio\18\BuildTools\Common7\IDE\CommonExtensions\Microsoft\CMake\CMake\share\cmake-4.2\Modules\CMakeRCInformation.cmake;C:\Program Files (x86)\Microsoft Visual Studio\18\BuildTools\Common7\IDE\CommonExtensions\Microsoft\CMake\CMake\share\cmake-4.2\Modules\CMakeSystemSpecificInformation.cmake;C:\Program Files (x86)\Microsoft Visual Studio\18\BuildTools\Common7\IDE\CommonExtensions\Microsoft\CMake\CMake\share\cmake-4.2\Modules\CMakeSystemSpecificInitialize.cmake;C:\Program Files (x86)\Microsoft Visual Studio\18\BuildTools\Common7\IDE\CommonExtensions\Microsoft\CMake\CMake\share\cmake-4.2\Modules\Compiler\CMakeCommonCompilerMacros.cmake;C:\Program Files (x86)\Microsoft Visual Studio\18\BuildTools\Common7\IDE\CommonExtensions\Microsoft\CMake\CMake\share\cmake-4.2\Modules\Compiler\MSVC-C.cmake;C:\Program Files (x86)\Microsoft Visual Studio\18\BuildTools\Common7\IDE\CommonExtensions\Microsoft\CMake\CMake\share\cmake-4.2\Modules\Compiler\MSVC-CXX.cmake;C:\Program Files (x86)\Microsoft Visual Studio\18\BuildTools\Common7\IDE\CommonExtensions\Microsoft\CMake\CMake\share\cmake-4.2\Modules\Compiler\MSVC.cmake;C:\Program Files (x86)\Microsoft Visual Studio\18\BuildTools\Common7\IDE\CommonExtensions\Microsoft\CMake\CMake\share\cmake-4.2\Modules\Internal\CMakeCLinkerInformation.cmake;C:\Program Files (x86)\Microsoft Visual Studio\18\BuildTools\Common7\IDE\CommonExtensions\Microsoft\CMake\CMake\share\cmake-4.2\Modules\Internal\CMakeCXXLinkerInformation.cmake;C:\Program Files (x86)\Microsoft Visual Studio\18\BuildTools\Common7\IDE\CommonExtensions\Microsoft\CMake\CMake\share\cmake-4.2\Modules\Internal\CMakeCommonLinkerInformation.cmake;C:\Program Files (x86)\Microsoft Visual Studio\18\BuildTools\Common7\IDE\CommonExtensions\Microsoft\CMake\CMake\share\cmake-4.2\Modules\Linker\MSVC-C.cmake;C:\Program Files (x86)\Microsoft Visual Studio\18\BuildTools\Common7\IDE\CommonExtensions\Microsoft\CMake\CMake\share\cmake-4.2\Modules\Linker\MSVC-CXX.cmake;C:\Program Files (x86)\Microsoft Visual Studio\18\BuildTools\Common7\IDE\CommonExtensions\Microsoft\CMake\CMake\share\cmake-4.2\Modules\Linker\MSVC.cmake;C:\Program Files (x86)\Microsoft Visual Studio\18\BuildTools\Common7\IDE\CommonExtensions\Microsoft\CMake\CMake\share\cmake-4.2\Modules\Platform\Linker\Windows-MSVC-C.cmake;C:\Program Files (x86)\Microsoft Visual Studio\18\BuildTools\Common7\IDE\CommonExtensions\Microsoft\CMake\CMake\share\cmake-4.2\Modules\Platform\Linker\Windows-MSVC-CXX.cmake;C:\Program Files (x86)\Microsoft Visual Studio\18\BuildTools\Common7\IDE\CommonExtensions\Microsoft\CMake\CMake\share\cmake-4.2\Modules\Platform\Linker\Windows-MSVC.cmake;C:\Program Files (x86)\Microsoft Visual Studio\18\BuildTools\Common7\IDE\CommonExtensions\Microsoft\CMake\CMake\share\cmake-4.2\Modules\Platform\Windows-Initialize.cmake;C:\Program Files (x86)\Microsoft Visual Studio\18\BuildTools\Common7\IDE\CommonExtensions\Microsoft\CMake\CMake\share\cmake-4.2\Modules\Platform\Windows-MSVC-C.cmake;C:\Program Files (x86)\Microsoft Visual Studio\18\BuildTools\Common7\IDE\CommonExtensions\Microsoft\CMake\CMake\share\cmake-4.2\Modules\Platform\Windows-MSVC-CXX.cmake;C:\Program Files (x86)\Microsoft Visual Studio\18\BuildTools\Common7\IDE\CommonExtensions\Microsoft\CMake\CMake\share\cmake-4.2\Modules\Platform\Windows-MSVC.cmake;C:\Program Files (x86)\Microsoft Visual Studio\18\BuildTools\Common7\IDE\CommonExtensions\Microsoft\CMake\CMake\share\cmake-4.2\Modules\Platform\Windows.cmake;C:\Program Files (x86)\Microsoft Visual Studio\18\BuildTools\Common7\IDE\CommonExtensions\Microsoft\CMake\CMake\share\cmake-4.2\Modules\Platform\WindowsPaths.cmake;C:\Users\Mohamed Said\Desktop\Open_Green_tech\ei-random-test\build\CMakeFiles\4.2.3-msvc3\CMakeCCompiler.cmake;C:\Users\Mohamed Said\Desktop\Open_Green_tech\ei-random-test\build\CMakeFiles\4.2.3-msvc3\CMakeCXXCompiler.cmake;C:\Users\Mohamed Said\Desktop\Open_Green_tech\ei-random-test\build\CMakeFiles\4.2.3-msvc3\CMakeRCCompiler.cmake;C:\Users\Mohamed Said\Desktop\Open_Green_tech\ei-random-test\build\CMakeFiles\4.2.3-msvc3\CMakeSystem.cmake;C:\Users\Mohamed Said\Desktop\Open_Green_tech\ei-random-test\build\CMakeFiles\cmake.verify_globs;%(AdditionalInputs)</AdditionalInputs>
+      <Outputs Condition="'$(Configuration)|$(Platform)'=='Release|x64'">C:\Users\Mohamed Said\Desktop\Open_Green_tech\ei-random-test\build\CMakeFiles\generate.stamp</Outputs>
+      <LinkObjects Condition="'$(Configuration)|$(Platform)'=='Release|x64'">false</LinkObjects>
+      <Message Condition="'$(Configuration)|$(Platform)'=='MinSizeRel|x64'">Building Custom Rule C:/Users/Mohamed Said/Desktop/Open_Green_tech/ei-random-test/CMakeLists.txt</Message>
+      <Command Condition="'$(Configuration)|$(Platform)'=='MinSizeRel|x64'">setlocal
+"C:\Program Files (x86)\Microsoft Visual Studio\18\BuildTools\Common7\IDE\CommonExtensions\Microsoft\CMake\CMake\bin\cmake.exe" "-SC:/Users/Mohamed Said/Desktop/Open_Green_tech/ei-random-test" "-BC:/Users/Mohamed Said/Desktop/Open_Green_tech/ei-random-test/build" --check-stamp-file "C:/Users/Mohamed Said/Desktop/Open_Green_tech/ei-random-test/build/CMakeFiles/generate.stamp"
+if %errorlevel% neq 0 goto :cmEnd
+:cmEnd
+endlocal &amp; call :cmErrorLevel %errorlevel% &amp; goto :cmDone
+:cmErrorLevel
+exit /b %1
+:cmDone
+if %errorlevel% neq 0 goto :VCEnd</Command>
+      <AdditionalInputs Condition="'$(Configuration)|$(Platform)'=='MinSizeRel|x64'">C:\Program Files (x86)\Microsoft Visual Studio\18\BuildTools\Common7\IDE\CommonExtensions\Microsoft\CMake\CMake\share\cmake-4.2\Modules\CMakeCInformation.cmake;C:\Program Files (x86)\Microsoft Visual Studio\18\BuildTools\Common7\IDE\CommonExtensions\Microsoft\CMake\CMake\share\cmake-4.2\Modules\CMakeCXXInformation.cmake;C:\Program Files (x86)\Microsoft Visual Studio\18\BuildTools\Common7\IDE\CommonExtensions\Microsoft\CMake\CMake\share\cmake-4.2\Modules\CMakeCommonLanguageInclude.cmake;C:\Program Files (x86)\Microsoft Visual Studio\18\BuildTools\Common7\IDE\CommonExtensions\Microsoft\CMake\CMake\share\cmake-4.2\Modules\CMakeGenericSystem.cmake;C:\Program Files (x86)\Microsoft Visual Studio\18\BuildTools\Common7\IDE\CommonExtensions\Microsoft\CMake\CMake\share\cmake-4.2\Modules\CMakeInitializeConfigs.cmake;C:\Program Files (x86)\Microsoft Visual Studio\18\BuildTools\Common7\IDE\CommonExtensions\Microsoft\CMake\CMake\share\cmake-4.2\Modules\CMakeLanguageInformation.cmake;C:\Program Files (x86)\Microsoft Visual Studio\18\BuildTools\Common7\IDE\CommonExtensions\Microsoft\CMake\CMake\share\cmake-4.2\Modules\CMakeRCInformation.cmake;C:\Program Files (x86)\Microsoft Visual Studio\18\BuildTools\Common7\IDE\CommonExtensions\Microsoft\CMake\CMake\share\cmake-4.2\Modules\CMakeSystemSpecificInformation.cmake;C:\Program Files (x86)\Microsoft Visual Studio\18\BuildTools\Common7\IDE\CommonExtensions\Microsoft\CMake\CMake\share\cmake-4.2\Modules\CMakeSystemSpecificInitialize.cmake;C:\Program Files (x86)\Microsoft Visual Studio\18\BuildTools\Common7\IDE\CommonExtensions\Microsoft\CMake\CMake\share\cmake-4.2\Modules\Compiler\CMakeCommonCompilerMacros.cmake;C:\Program Files (x86)\Microsoft Visual Studio\18\BuildTools\Common7\IDE\CommonExtensions\Microsoft\CMake\CMake\share\cmake-4.2\Modules\Compiler\MSVC-C.cmake;C:\Program Files (x86)\Microsoft Visual Studio\18\BuildTools\Common7\IDE\CommonExtensions\Microsoft\CMake\CMake\share\cmake-4.2\Modules\Compiler\MSVC-CXX.cmake;C:\Program Files (x86)\Microsoft Visual Studio\18\BuildTools\Common7\IDE\CommonExtensions\Microsoft\CMake\CMake\share\cmake-4.2\Modules\Compiler\MSVC.cmake;C:\Program Files (x86)\Microsoft Visual Studio\18\BuildTools\Common7\IDE\CommonExtensions\Microsoft\CMake\CMake\share\cmake-4.2\Modules\Internal\CMakeCLinkerInformation.cmake;C:\Program Files (x86)\Microsoft Visual Studio\18\BuildTools\Common7\IDE\CommonExtensions\Microsoft\CMake\CMake\share\cmake-4.2\Modules\Internal\CMakeCXXLinkerInformation.cmake;C:\Program Files (x86)\Microsoft Visual Studio\18\BuildTools\Common7\IDE\CommonExtensions\Microsoft\CMake\CMake\share\cmake-4.2\Modules\Internal\CMakeCommonLinkerInformation.cmake;C:\Program Files (x86)\Microsoft Visual Studio\18\BuildTools\Common7\IDE\CommonExtensions\Microsoft\CMake\CMake\share\cmake-4.2\Modules\Linker\MSVC-C.cmake;C:\Program Files (x86)\Microsoft Visual Studio\18\BuildTools\Common7\IDE\CommonExtensions\Microsoft\CMake\CMake\share\cmake-4.2\Modules\Linker\MSVC-CXX.cmake;C:\Program Files (x86)\Microsoft Visual Studio\18\BuildTools\Common7\IDE\CommonExtensions\Microsoft\CMake\CMake\share\cmake-4.2\Modules\Linker\MSVC.cmake;C:\Program Files (x86)\Microsoft Visual Studio\18\BuildTools\Common7\IDE\CommonExtensions\Microsoft\CMake\CMake\share\cmake-4.2\Modules\Platform\Linker\Windows-MSVC-C.cmake;C:\Program Files (x86)\Microsoft Visual Studio\18\BuildTools\Common7\IDE\CommonExtensions\Microsoft\CMake\CMake\share\cmake-4.2\Modules\Platform\Linker\Windows-MSVC-CXX.cmake;C:\Program Files (x86)\Microsoft Visual Studio\18\BuildTools\Common7\IDE\CommonExtensions\Microsoft\CMake\CMake\share\cmake-4.2\Modules\Platform\Linker\Windows-MSVC.cmake;C:\Program Files (x86)\Microsoft Visual Studio\18\BuildTools\Common7\IDE\CommonExtensions\Microsoft\CMake\CMake\share\cmake-4.2\Modules\Platform\Windows-Initialize.cmake;C:\Program Files (x86)\Microsoft Visual Studio\18\BuildTools\Common7\IDE\CommonExtensions\Microsoft\CMake\CMake\share\cmake-4.2\Modules\Platform\Windows-MSVC-C.cmake;C:\Program Files (x86)\Microsoft Visual Studio\18\BuildTools\Common7\IDE\CommonExtensions\Microsoft\CMake\CMake\share\cmake-4.2\Modules\Platform\Windows-MSVC-CXX.cmake;C:\Program Files (x86)\Microsoft Visual Studio\18\BuildTools\Common7\IDE\CommonExtensions\Microsoft\CMake\CMake\share\cmake-4.2\Modules\Platform\Windows-MSVC.cmake;C:\Program Files (x86)\Microsoft Visual Studio\18\BuildTools\Common7\IDE\CommonExtensions\Microsoft\CMake\CMake\share\cmake-4.2\Modules\Platform\Windows.cmake;C:\Program Files (x86)\Microsoft Visual Studio\18\BuildTools\Common7\IDE\CommonExtensions\Microsoft\CMake\CMake\share\cmake-4.2\Modules\Platform\WindowsPaths.cmake;C:\Users\Mohamed Said\Desktop\Open_Green_tech\ei-random-test\build\CMakeFiles\4.2.3-msvc3\CMakeCCompiler.cmake;C:\Users\Mohamed Said\Desktop\Open_Green_tech\ei-random-test\build\CMakeFiles\4.2.3-msvc3\CMakeCXXCompiler.cmake;C:\Users\Mohamed Said\Desktop\Open_Green_tech\ei-random-test\build\CMakeFiles\4.2.3-msvc3\CMakeRCCompiler.cmake;C:\Users\Mohamed Said\Desktop\Open_Green_tech\ei-random-test\build\CMakeFiles\4.2.3-msvc3\CMakeSystem.cmake;C:\Users\Mohamed Said\Desktop\Open_Green_tech\ei-random-test\build\CMakeFiles\cmake.verify_globs;%(AdditionalInputs)</AdditionalInputs>
+      <Outputs Condition="'$(Configuration)|$(Platform)'=='MinSizeRel|x64'">C:\Users\Mohamed Said\Desktop\Open_Green_tech\ei-random-test\build\CMakeFiles\generate.stamp</Outputs>
+      <LinkObjects Condition="'$(Configuration)|$(Platform)'=='MinSizeRel|x64'">false</LinkObjects>
+      <Message Condition="'$(Configuration)|$(Platform)'=='RelWithDebInfo|x64'">Building Custom Rule C:/Users/Mohamed Said/Desktop/Open_Green_tech/ei-random-test/CMakeLists.txt</Message>
+      <Command Condition="'$(Configuration)|$(Platform)'=='RelWithDebInfo|x64'">setlocal
+"C:\Program Files (x86)\Microsoft Visual Studio\18\BuildTools\Common7\IDE\CommonExtensions\Microsoft\CMake\CMake\bin\cmake.exe" "-SC:/Users/Mohamed Said/Desktop/Open_Green_tech/ei-random-test" "-BC:/Users/Mohamed Said/Desktop/Open_Green_tech/ei-random-test/build" --check-stamp-file "C:/Users/Mohamed Said/Desktop/Open_Green_tech/ei-random-test/build/CMakeFiles/generate.stamp"
+if %errorlevel% neq 0 goto :cmEnd
+:cmEnd
+endlocal &amp; call :cmErrorLevel %errorlevel% &amp; goto :cmDone
+:cmErrorLevel
+exit /b %1
+:cmDone
+if %errorlevel% neq 0 goto :VCEnd</Command>
+      <AdditionalInputs Condition="'$(Configuration)|$(Platform)'=='RelWithDebInfo|x64'">C:\Program Files (x86)\Microsoft Visual Studio\18\BuildTools\Common7\IDE\CommonExtensions\Microsoft\CMake\CMake\share\cmake-4.2\Modules\CMakeCInformation.cmake;C:\Program Files (x86)\Microsoft Visual Studio\18\BuildTools\Common7\IDE\CommonExtensions\Microsoft\CMake\CMake\share\cmake-4.2\Modules\CMakeCXXInformation.cmake;C:\Program Files (x86)\Microsoft Visual Studio\18\BuildTools\Common7\IDE\CommonExtensions\Microsoft\CMake\CMake\share\cmake-4.2\Modules\CMakeCommonLanguageInclude.cmake;C:\Program Files (x86)\Microsoft Visual Studio\18\BuildTools\Common7\IDE\CommonExtensions\Microsoft\CMake\CMake\share\cmake-4.2\Modules\CMakeGenericSystem.cmake;C:\Program Files (x86)\Microsoft Visual Studio\18\BuildTools\Common7\IDE\CommonExtensions\Microsoft\CMake\CMake\share\cmake-4.2\Modules\CMakeInitializeConfigs.cmake;C:\Program Files (x86)\Microsoft Visual Studio\18\BuildTools\Common7\IDE\CommonExtensions\Microsoft\CMake\CMake\share\cmake-4.2\Modules\CMakeLanguageInformation.cmake;C:\Program Files (x86)\Microsoft Visual Studio\18\BuildTools\Common7\IDE\CommonExtensions\Microsoft\CMake\CMake\share\cmake-4.2\Modules\CMakeRCInformation.cmake;C:\Program Files (x86)\Microsoft Visual Studio\18\BuildTools\Common7\IDE\CommonExtensions\Microsoft\CMake\CMake\share\cmake-4.2\Modules\CMakeSystemSpecificInformation.cmake;C:\Program Files (x86)\Microsoft Visual Studio\18\BuildTools\Common7\IDE\CommonExtensions\Microsoft\CMake\CMake\share\cmake-4.2\Modules\CMakeSystemSpecificInitialize.cmake;C:\Program Files (x86)\Microsoft Visual Studio\18\BuildTools\Common7\IDE\CommonExtensions\Microsoft\CMake\CMake\share\cmake-4.2\Modules\Compiler\CMakeCommonCompilerMacros.cmake;C:\Program Files (x86)\Microsoft Visual Studio\18\BuildTools\Common7\IDE\CommonExtensions\Microsoft\CMake\CMake\share\cmake-4.2\Modules\Compiler\MSVC-C.cmake;C:\Program Files (x86)\Microsoft Visual Studio\18\BuildTools\Common7\IDE\CommonExtensions\Microsoft\CMake\CMake\share\cmake-4.2\Modules\Compiler\MSVC-CXX.cmake;C:\Program Files (x86)\Microsoft Visual Studio\18\BuildTools\Common7\IDE\CommonExtensions\Microsoft\CMake\CMake\share\cmake-4.2\Modules\Compiler\MSVC.cmake;C:\Program Files (x86)\Microsoft Visual Studio\18\BuildTools\Common7\IDE\CommonExtensions\Microsoft\CMake\CMake\share\cmake-4.2\Modules\Internal\CMakeCLinkerInformation.cmake;C:\Program Files (x86)\Microsoft Visual Studio\18\BuildTools\Common7\IDE\CommonExtensions\Microsoft\CMake\CMake\share\cmake-4.2\Modules\Internal\CMakeCXXLinkerInformation.cmake;C:\Program Files (x86)\Microsoft Visual Studio\18\BuildTools\Common7\IDE\CommonExtensions\Microsoft\CMake\CMake\share\cmake-4.2\Modules\Internal\CMakeCommonLinkerInformation.cmake;C:\Program Files (x86)\Microsoft Visual Studio\18\BuildTools\Common7\IDE\CommonExtensions\Microsoft\CMake\CMake\share\cmake-4.2\Modules\Linker\MSVC-C.cmake;C:\Program Files (x86)\Microsoft Visual Studio\18\BuildTools\Common7\IDE\CommonExtensions\Microsoft\CMake\CMake\share\cmake-4.2\Modules\Linker\MSVC-CXX.cmake;C:\Program Files (x86)\Microsoft Visual Studio\18\BuildTools\Common7\IDE\CommonExtensions\Microsoft\CMake\CMake\share\cmake-4.2\Modules\Linker\MSVC.cmake;C:\Program Files (x86)\Microsoft Visual Studio\18\BuildTools\Common7\IDE\CommonExtensions\Microsoft\CMake\CMake\share\cmake-4.2\Modules\Platform\Linker\Windows-MSVC-C.cmake;C:\Program Files (x86)\Microsoft Visual Studio\18\BuildTools\Common7\IDE\CommonExtensions\Microsoft\CMake\CMake\share\cmake-4.2\Modules\Platform\Linker\Windows-MSVC-CXX.cmake;C:\Program Files (x86)\Microsoft Visual Studio\18\BuildTools\Common7\IDE\CommonExtensions\Microsoft\CMake\CMake\share\cmake-4.2\Modules\Platform\Linker\Windows-MSVC.cmake;C:\Program Files (x86)\Microsoft Visual Studio\18\BuildTools\Common7\IDE\CommonExtensions\Microsoft\CMake\CMake\share\cmake-4.2\Modules\Platform\Windows-Initialize.cmake;C:\Program Files (x86)\Microsoft Visual Studio\18\BuildTools\Common7\IDE\CommonExtensions\Microsoft\CMake\CMake\share\cmake-4.2\Modules\Platform\Windows-MSVC-C.cmake;C:\Program Files (x86)\Microsoft Visual Studio\18\BuildTools\Common7\IDE\CommonExtensions\Microsoft\CMake\CMake\share\cmake-4.2\Modules\Platform\Windows-MSVC-CXX.cmake;C:\Program Files (x86)\Microsoft Visual Studio\18\BuildTools\Common7\IDE\CommonExtensions\Microsoft\CMake\CMake\share\cmake-4.2\Modules\Platform\Windows-MSVC.cmake;C:\Program Files (x86)\Microsoft Visual Studio\18\BuildTools\Common7\IDE\CommonExtensions\Microsoft\CMake\CMake\share\cmake-4.2\Modules\Platform\Windows.cmake;C:\Program Files (x86)\Microsoft Visual Studio\18\BuildTools\Common7\IDE\CommonExtensions\Microsoft\CMake\CMake\share\cmake-4.2\Modules\Platform\WindowsPaths.cmake;C:\Users\Mohamed Said\Desktop\Open_Green_tech\ei-random-test\build\CMakeFiles\4.2.3-msvc3\CMakeCCompiler.cmake;C:\Users\Mohamed Said\Desktop\Open_Green_tech\ei-random-test\build\CMakeFiles\4.2.3-msvc3\CMakeCXXCompiler.cmake;C:\Users\Mohamed Said\Desktop\Open_Green_tech\ei-random-test\build\CMakeFiles\4.2.3-msvc3\CMakeRCCompiler.cmake;C:\Users\Mohamed Said\Desktop\Open_Green_tech\ei-random-test\build\CMakeFiles\4.2.3-msvc3\CMakeSystem.cmake;C:\Users\Mohamed Said\Desktop\Open_Green_tech\ei-random-test\build\CMakeFiles\cmake.verify_globs;%(AdditionalInputs)</AdditionalInputs>
+      <Outputs Condition="'$(Configuration)|$(Platform)'=='RelWithDebInfo|x64'">C:\Users\Mohamed Said\Desktop\Open_Green_tech\ei-random-test\build\CMakeFiles\generate.stamp</Outputs>
+      <LinkObjects Condition="'$(Configuration)|$(Platform)'=='RelWithDebInfo|x64'">false</LinkObjects>
+    </CustomBuild>
+  </ItemGroup>
+  <ItemGroup>
+    <ClCompile Include="C:\Users\Mohamed Said\Desktop\Open_Green_tech\ei-random-test\main.cpp" />
+    <ClCompile Include="C:\Users\Mohamed Said\Desktop\Open_Green_tech\mohamed_said-project-1-cpp-mcu-v12-impulse-#5\edge-impulse-sdk\dsp\dct\fast-dct-fft.cpp" />
+    <ClCompile Include="C:\Users\Mohamed Said\Desktop\Open_Green_tech\mohamed_said-project-1-cpp-mcu-v12-impulse-#5\edge-impulse-sdk\dsp\image\processing.cpp" />
+    <ClCompile Include="C:\Users\Mohamed Said\Desktop\Open_Green_tech\mohamed_said-project-1-cpp-mcu-v12-impulse-#5\edge-impulse-sdk\dsp\kissfft\kiss_fft.cpp" />
+    <ClCompile Include="C:\Users\Mohamed Said\Desktop\Open_Green_tech\mohamed_said-project-1-cpp-mcu-v12-impulse-#5\edge-impulse-sdk\dsp\kissfft\kiss_fftr.cpp" />
+    <ClCompile Include="C:\Users\Mohamed Said\Desktop\Open_Green_tech\mohamed_said-project-1-cpp-mcu-v12-impulse-#5\edge-impulse-sdk\dsp\memory.cpp" />
+    <ClCompile Include="C:\Users\Mohamed Said\Desktop\Open_Green_tech\mohamed_said-project-1-cpp-mcu-v12-impulse-#5\edge-impulse-sdk\tensorflow\lite\c\common.c" />
+    <ClCompile Include="C:\Users\Mohamed Said\Desktop\Open_Green_tech\mohamed_said-project-1-cpp-mcu-v12-impulse-#5\tflite-model\model.cpp" />
+  </ItemGroup>
+  <ItemGroup />
+  <ItemGroup>
+    <ProjectReference Include="C:\Users\Mohamed Said\Desktop\Open_Green_tech\ei-random-test\build\ZERO_CHECK.vcxproj">
+      <Project>{F98800AE-1FD6-3F24-BE1B-B909CF26EC7E}</Project>
+      <Name>ZERO_CHECK</Name>
+      <ReferenceOutputAssembly>false</ReferenceOutputAssembly>
+      <CopyToOutputDirectory>Never</CopyToOutputDirectory>
+    </ProjectReference>
+  </ItemGroup>
+  <Import Project="$(VCTargetsPath)\Microsoft.Cpp.targets" />
+  <ImportGroup Label="ExtensionTargets">
+  </ImportGroup>
+</Project>

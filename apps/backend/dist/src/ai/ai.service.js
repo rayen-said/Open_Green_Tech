@@ -96,8 +96,7 @@ Return STRICT JSON only (no markdown) with exactly these keys:
         const model = this.configService.get('OPENAI_MODEL') ?? 'gpt-4o-mini';
         const userPrompt = this.buildPrompt({
             ...input,
-            seasonHint: input.seasonHint ||
-                this.seasonFromMonth(new Date().getUTCMonth()),
+            seasonHint: input.seasonHint || this.seasonFromMonth(new Date().getUTCMonth()),
         });
         let raw = null;
         try {

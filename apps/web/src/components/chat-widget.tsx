@@ -20,12 +20,12 @@ export function ChatWidget() {
   const { t, lang, dir } = useI18n();
   const pushToast = useToastStore((state) => state.pushToast);
   const [open, setOpen] = useState(false);
-  const [loadingHistory, setLoadingHistory] = useState(false);
   const [sending, setSending] = useState(false);
   const [input, setInput] = useState("");
   const [messages, setMessages] = useState<ChatMessage[]>([]);
   const [historyLoaded, setHistoryLoaded] = useState(false);
   const scrollRef = useRef<HTMLDivElement | null>(null);
+  const localMessageIdRef = useRef(0);
 
   const demoQuestions = useMemo(() => DEMO_QUESTION_KEYS.map((key) => t(key)), [t]);
 
@@ -34,7 +34,6 @@ export function ChatWidget() {
       return;
     }
 
-    setLoadingHistory(true);
     void api
       .get<ChatMessage[]>("/chat/history?limit=50", {
         headers: { Authorization: `Bearer ${token}` },
@@ -45,9 +44,6 @@ export function ChatWidget() {
       })
       .catch(() => {
         pushToast({ variant: "error", message: t("chat.errors.history") });
-      })
-      .finally(() => {
-        setLoadingHistory(false);
       });
   }, [open, token, historyLoaded, pushToast, t]);
 
@@ -69,7 +65,7 @@ export function ChatWidget() {
     }
 
     const optimisticMessage: ChatMessage = {
-      id: `local-${Date.now()}`,
+      id: `local-${localMessageIdRef.current++}`,
       role: "user",
       content: prompt,
       createdAt: new Date().toISOString(),
@@ -147,8 +143,8 @@ export function ChatWidget() {
           </div>
 
           <div className="chat-body" ref={scrollRef}>
-            {loadingHistory ? <p className="chat-empty">{t("chat.loading")}</p> : null}
-            {!loadingHistory && messages.length === 0 ? <p className="chat-empty">{t("chat.empty")}</p> : null}
+            {!historyLoaded ? <p className="chat-empty">{t("chat.loading")}</p> : null}
+            {historyLoaded && messages.length === 0 ? <p className="chat-empty">{t("chat.empty")}</p> : null}
 
             {messages.map((message) => (
               <article key={message.id} className={`chat-message ${message.role === "assistant" ? "assistant" : "user"}`}>

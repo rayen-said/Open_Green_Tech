@@ -1,0 +1,13 @@
+﻿<?xml version="1.0" encoding="utf-8"?>
+<Project ToolsVersion="18.0" xmlns="http://schemas.microsoft.com/developer/msbuild/2003">
+  <ItemGroup>
+    <CustomBuild Include="C:\Users\Mohamed Said\Desktop\Open_Green_tech\ei-random-test\build\CMakeFiles\16bb9f4105ba8a5ce12eb473aad0d952\generate.stamp.rule">
+      <Filter>CMake Rules</Filter>
+    </CustomBuild>
+  </ItemGroup>
+  <ItemGroup>
+    <Filter Include="CMake Rules">
+      <UniqueIdentifier>{9EAADE65-E817-3779-96C2-361B703DC684}</UniqueIdentifier>
+    </Filter>
+  </ItemGroup>
+</Project>

@@ -19,6 +19,7 @@ import { DemoModule } from './demo/demo.module';
 import { ChatModule } from './chat/chat.module';
 import { AiModule } from './ai/ai.module';
 import { UserPortalModule } from './user-portal/user-portal.module';
+import { MqttModule } from './mqtt/mqtt.module';
 
 @Module({
   imports: [
@@ -53,6 +54,7 @@ import { UserPortalModule } from './user-portal/user-portal.module';
     ChatModule,
     AiModule,
     UserPortalModule,
+    MqttModule,
   ],
   controllers: [AppController],
   providers: [

@@ -122,8 +122,7 @@ Return STRICT JSON only (no markdown) with exactly these keys:
     const userPrompt = this.buildPrompt({
       ...input,
       seasonHint:
-        input.seasonHint ||
-        this.seasonFromMonth(new Date().getUTCMonth()),
+        input.seasonHint || this.seasonFromMonth(new Date().getUTCMonth()),
     });
 
     let raw: string | null = null;

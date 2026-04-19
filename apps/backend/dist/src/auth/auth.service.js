@@ -51,6 +51,26 @@ const prisma_service_1 = require("../prisma/prisma.service");
 const bcryptjs_1 = require("bcryptjs");
 const client_1 = require("@prisma/client");
 const jwt = __importStar(require("jsonwebtoken"));
+function extractSupabaseUserMetadata(value) {
+    if (typeof value !== 'object' || value === null) {
+        return {};
+    }
+    const record = value;
+    return {
+        full_name: typeof record.full_name === 'string' ? record.full_name : undefined,
+        name: typeof record.name === 'string' ? record.name : undefined,
+    };
+}
+function extractSupabaseJwtData(value) {
+    if (typeof value !== 'object' || value === null) {
+        return {};
+    }
+    const record = value;
+    return {
+        email: typeof record.email === 'string' ? record.email : undefined,
+        user_metadata: record.user_metadata,
+    };
+}
 function parseExpiryToSeconds(value, fallbackSeconds) {
     const match = /^(\d+)([smhd])$/.exec(value.trim());
     if (!match) {
@@ -109,13 +129,14 @@ let AuthService = class AuthService {
     async loginFromSupabaseAccessToken(accessToken) {
         const secret = this.configService.get('SUPABASE_JWT_SECRET');
         if (!secret?.trim()) {
-            throw new common_1.UnauthorizedException('SUPABASE_JWT_SECRET is not configured on the API.');
+            throw new common_1.UnauthorizedException('SUPABASE_JWT_SECRET is not configured on the API. Set it from Supabase Settings -> API -> JWT Secret.');
         }
         let payload;
         try {
-            payload = jwt.verify(accessToken, secret, {
+            const verified = jwt.verify(accessToken, secret, {
                 algorithms: ['HS256'],
             });
+            payload = extractSupabaseJwtData(verified);
         }
         catch {
             throw new common_1.UnauthorizedException('Invalid Supabase access token.');
@@ -125,7 +146,7 @@ let AuthService = class AuthService {
         if (!email) {
             throw new common_1.UnauthorizedException('Supabase token is missing email.');
         }
-        const meta = payload.user_metadata;
+        const meta = extractSupabaseUserMetadata(payload.user_metadata);
         const fullNameGuess = meta?.full_name ?? meta?.name ?? email.split('@')[0] ?? 'Farmer';
         let user = await this.prisma.user.findUnique({ where: { email } });
         if (!user) {
